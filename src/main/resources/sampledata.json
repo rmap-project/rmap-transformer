@@ -1,0 +1,2432 @@
+{
+    "count": 5739301,
+    "time": 0.22,
+    "results": [
+        {
+            "description": "We will report here first principles predictions (d. functional theory with periodic boundary conditions) of the structures,\r\nmechanisms, and acivation barriers for heterogeneous eactions selected from The selective oxidn. and ammoxidn. by\r\nMoVNbTeOx catalysts The Haber Bosch process on Fe.",
+            "contributors": [
+                {
+                    "givenName": "William",
+                    "additionalName": "",
+                    "name": "Goddard, William",
+                    "familyName": "Goddard"
+                },
+                {
+                    "givenName": "Qi",
+                    "additionalName": "",
+                    "name": "An, Qi",
+                    "familyName": "An"
+                },
+                {
+                    "givenName": "Mujeng",
+                    "additionalName": "",
+                    "name": "Cheng, Mujeng",
+                    "familyName": "Cheng"
+                },
+                {
+                    "givenName": "Jin",
+                    "additionalName": "",
+                    "name": "Qian, Jin",
+                    "familyName": "Qian"
+                }
+            ],
+            "title": "Detailed reaction mechanisms for heterogeneous catalysis",
+            "shareProperties": {
+                "source": "caltech",
+                "filetype": "xml",
+                "docID": "oai:authors.library.caltech.edu:65819"
+            },
+            "otherProperties": [
+                {
+                    "name": "date",
+                    "properties": {"date": ["2016-03-31T00:00:00+00:00"]}
+                },
+                {
+                    "name": "type",
+                    "properties": {"type": [
+                        "Conference or Workshop Item",
+                        "PeerReviewed"
+                    ]}
+                },
+                {
+                    "name": "identifier",
+                    "properties": {"identifier": [
+                        "  Goddard, William and An, Qi and Cheng, Mujeng and Qian, Jin  (2016)  Detailed reaction mechanisms for heterogeneous catalysis.  In: 251st American Chemical Society National Meeting & Exposition, March 13-17, 2016, San Diego, CA.     http://resolver.caltech.edu/CaltechAUTHORS:20160331-155552955 <http://resolver.caltech.edu/CaltechAUTHORS:20160331-155552955>  ",
+                        "oai:authors.library.caltech.edu:65819"
+                    ]}
+                },
+                {
+                    "name": "relation",
+                    "properties": {"relation": [
+                        "http://resolver.caltech.edu/CaltechAUTHORS:20160331-155552955",
+                        "http://authors.library.caltech.edu/65819/"
+                    ]}
+                }
+            ],
+            "providerUpdatedDateTime": "2016-03-31T23:03:25+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://resolver.caltech.edu/CaltechAUTHORS:20160331-155552955",
+                "providerUris": ["http://resolver.caltech.edu/CaltechAUTHORS:20160331-155552955"],
+                "objectUris": []
+            }
+        },
+        {
+            "publisher": {"name": "PDXScholar"},
+            "description": "This report describes analysis undertaken to establish a method for incorporating traffic operations and ITS strategies into the GreenSTEP model. We first discuss operations impacts on fuel economy and delay from the literature. Then, an investigation of delay adjustments in GreenSTEP shows that different methods of representing delay changes lead to similar (and small) impacts on fuel economy. From this result we establish average speed adjustment by congestion level as the preferred method for incorporating delay effects from operations improvements. An investigation of aggregate traffic operations impacts produces estimates of base speeds without operations improvements, maximum speeds with full operational improvements, and existing deployments by city size for each congestion level. These estimates are made for ramp metering, incident management, traffic signal coordination, and access management strategies. Additionally, a comparison of constant-speed and drive schedule-based fuel-speed curves generates estimates of potential fuel benefits from eco-driving and speed-smoothing traffic management strategies. Results show that the cumulative impact of delay-based operations strategies on fuel economy is small, though speed-smoothing effects can be large. The operations impacts estimates are used to provide guidance for estimates of operations efficacy in delay reductions and speed smoothing for the GreenSTEP model. The proposed implementation strategy includes an efficacy estimates tool for the net effects of operations strategies, and identifies locations in the model where those effects can be included. Traffic operations impacts on travel demand are separately applied as travel demand management inputs to the existing GreenSTEP model.",
+            "contributors": [
+                {
+                    "givenName": "Kelly",
+                    "additionalName": "",
+                    "name": "Clifton, Kelly",
+                    "familyName": "Clifton"
+                },
+                {
+                    "givenName": "Alexander",
+                    "additionalName": "Y",
+                    "name": "Bigazzi, Alexander Y",
+                    "familyName": "Bigazzi"
+                }
+            ],
+            "title": "Refining GreenSTEP: Impacts of Vehicle Technologies and ITS/Operational Improvements on Travel Speed and Fuel Consumption Curves",
+            "shareProperties": {
+                "source": "pdxscholar",
+                "filetype": "xml",
+                "docID": "oai:pdxscholar.library.pdx.edu:cengin_fac-1355"
+            },
+            "otherProperties": [
+                {
+                    "name": "date",
+                    "properties": {"date": ["2011-11-01T07:00:00+00:00"]}
+                },
+                {
+                    "name": "source",
+                    "properties": {"source": "Civil and Environmental Engineering Faculty Publications and Presentations"}
+                },
+                {
+                    "name": "identifier",
+                    "properties": {"identifier": [
+                        "http://pdxscholar.library.pdx.edu/cengin_fac/342",
+                        "http://pdxscholar.library.pdx.edu/cgi/viewcontent.cgi?article=1355&amp;context=cengin_fac",
+                        "oai:pdxscholar.library.pdx.edu:cengin_fac-1355"
+                    ]}
+                },
+                {
+                    "name": "type",
+                    "properties": {"type": "text"}
+                },
+                {
+                    "name": "setSpec",
+                    "properties": {"setSpec": [
+                        "publication:communities",
+                        "publication:mcecs",
+                        "publication:cengin_fac",
+                        "publication:cengin"
+                    ]}
+                }
+            ],
+            "subjects": [
+                "automobiles",
+                "transportation engineering",
+                "electric vehicles",
+                "civil engineering",
+                "environmental engineering",
+                "automotive fuel consumption",
+                "internal combustion engines",
+                "traffic congestion"
+            ],
+            "providerUpdatedDateTime": "2016-03-31T23:00:41+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://pdxscholar.library.pdx.edu/cengin_fac/342",
+                "providerUris": ["http://pdxscholar.library.pdx.edu/cengin_fac/342"],
+                "objectUris": ["http://pdxscholar.library.pdx.edu/cgi/viewcontent.cgi?article=1355&amp;context=cengin_fac"]
+            }
+        },
+        {
+            "publisher": {"name": "UKnowledge"},
+            "description": "The O.J. Simpson trial. The Lindbergh kidnapping. The death of Marilyn Monroe. The assassination of the Romanovs. The Atlanta child murders. All controversial cases. All investigated with the latest techniques in forensic science. Nationally respected investigators Joe Nickell and John Fischer explain the science behind the criminal investigations that have captured the nation's attention. Crime Science is the only comprehensive guide to forensics. Without being overly technical or treating scientific techniques superficially, the authors introduce readers to the work of firearms experts, document examiners, fingerprint technicians, medical examiners, and forensic anthropologists. Each topic is treated in a separate chapter, in a clear and understandable style. Nickell and Fisher describe fingerprint classification and autopsies, explain how fibers link victims to their killers, and examine the science underlying DNA profiling and toxicological analysis. From weapons analysis to handwriting samples to shoe and tire impressions, Crime Science outlines the indispensable tools and techniques that investigators use to make sense of a crime scene. Each chapter closes with a study of a well-known case, revealing how the principles of forensic science work in practice.\nThe case studies clearly highlight the subject being discussed and bring to life the application of that particular forensic science. -- Gideon Epstein\nExtremely well written and easy to read. -- Journal of Forensic Identification\nAn excellent basic book for the criminologist. -- Lee A. Kilty\nNickell and Fischer, both nationally-recognized forensic scientists, have collaborated on step-by-step descriptions of crime-science investigations. -- Library Journal\nIn this must-read for anyone in the crime-solving field, the authors examine the amazing and complicated crime scene, taking the reader on an educational journey as they explain processes ranging from how to verify a bullet came from a specific gun to how teeth determine the age of a decayed body. -- Paintsville Herald\nNickell and Fischer provide a comprehensive primer of forensic investigation for the uninitiated. -- Publishers Weekly\nBeautifully organized and ingeniously supplemented by real-life criminal case-histories at the end of each chapter, the book provides a detailed\u2014yet simplified\u2014review of the major methods and techniques of forensic science and criminalistics. Anyone and everyone interested in either real crime or crime-fiction or both, will want to read and regularly refer to this comprehensive and informative source by experts in the field. -- Robert A. Baker\nThis book is well-written and should be of considerable value to those training for a career in these areas. -- Science & Justice 1999\nDelivers the goods for the educated layperson. Once getting into the book, readers will be hard-pressed to put it down. -- USA Today",
+            "contributors": [
+                {
+                    "givenName": "Joe",
+                    "additionalName": "",
+                    "name": "Nickell, Joe",
+                    "familyName": "Nickell"
+                },
+                {
+                    "givenName": "John",
+                    "additionalName": "F.",
+                    "name": "Fischer, John F.",
+                    "familyName": "Fischer"
+                }
+            ],
+            "title": "Crime Science: Methods of Forensic Detection",
+            "shareProperties": {
+                "source": "uky",
+                "filetype": "xml",
+                "docID": "oai:uknowledge.uky.edu:upk_legal_studies-1001"
+            },
+            "otherProperties": [
+                {
+                    "name": "date",
+                    "properties": {"date": ["1998-12-17T08:00:00+00:00"]}
+                },
+                {
+                    "name": "source",
+                    "properties": {"source": "Legal Studies"}
+                },
+                {
+                    "name": "identifier",
+                    "properties": {"identifier": [
+                        "http://uknowledge.uky.edu/upk_legal_studies/2",
+                        "http://uknowledge.uky.edu/cgi/viewcontent.cgi?article=1001&amp;context=upk_legal_studies",
+                        "oai:uknowledge.uky.edu:upk_legal_studies-1001"
+                    ]}
+                },
+                {
+                    "name": "type",
+                    "properties": {"type": "text"}
+                },
+                {
+                    "name": "format",
+                    "properties": {"format": "application/pdf"}
+                },
+                {
+                    "name": "setSpec",
+                    "properties": {"setSpec": [
+                        "publication:upk",
+                        "publication:upk_sbs",
+                        "publication:upk_legal_studies"
+                    ]}
+                }
+            ],
+            "subjects": [
+                "criminal investigation",
+                "forensic sciences",
+                "legal studies"
+            ],
+            "providerUpdatedDateTime": "2016-03-31T22:57:59+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://uknowledge.uky.edu/upk_legal_studies/2",
+                "providerUris": ["http://uknowledge.uky.edu/upk_legal_studies/2"],
+                "objectUris": ["http://uknowledge.uky.edu/cgi/viewcontent.cgi?article=1001&amp;context=upk_legal_studies"]
+            }
+        },
+        {
+            "description": "A new method for the photorelease of amines, alcs., and ketones using 700 nm light and the photoredox\r\nchem. of a common synthetic dye has been developed. The uncaging process occurs under physiol. conditions\r\nand is complete within minutes. The synthesis, scope, and applications will be discussed. Efforts to extend the\r\nchromophore into the 900 nm range will be presented.",
+            "contributors": [
+                {
+                    "givenName": "Clinton",
+                    "additionalName": "",
+                    "name": "Regan, Clinton",
+                    "familyName": "Regan"
+                },
+                {
+                    "givenName": "David",
+                    "additionalName": "",
+                    "name": "Walton, David",
+                    "familyName": "Walton"
+                },
+                {
+                    "givenName": "Dennis",
+                    "additionalName": "",
+                    "name": "Dougherty, Dennis",
+                    "familyName": "Dougherty"
+                }
+            ],
+            "title": "Photorelease of biologically relevant molecules using near-IR light",
+            "shareProperties": {
+                "source": "caltech",
+                "filetype": "xml",
+                "docID": "oai:authors.library.caltech.edu:65818"
+            },
+            "otherProperties": [
+                {
+                    "name": "date",
+                    "properties": {"date": ["2016-03-31T00:00:00+00:00"]}
+                },
+                {
+                    "name": "type",
+                    "properties": {"type": [
+                        "Conference or Workshop Item",
+                        "PeerReviewed"
+                    ]}
+                },
+                {
+                    "name": "identifier",
+                    "properties": {"identifier": [
+                        "  Regan, Clinton and Walton, David and Dougherty, Dennis  (2016)  Photorelease of biologically relevant molecules using near-IR light.  In: 251st American Chemical Society National Meeting & Exposition, March 13-17, 2016, San Diego, CA.     http://resolver.caltech.edu/CaltechAUTHORS:20160331-155403000 <http://resolver.caltech.edu/CaltechAUTHORS:20160331-155403000>  ",
+                        "oai:authors.library.caltech.edu:65818"
+                    ]}
+                },
+                {
+                    "name": "relation",
+                    "properties": {"relation": [
+                        "http://resolver.caltech.edu/CaltechAUTHORS:20160331-155403000",
+                        "http://authors.library.caltech.edu/65818/"
+                    ]}
+                }
+            ],
+            "providerUpdatedDateTime": "2016-03-31T22:56:15+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://resolver.caltech.edu/CaltechAUTHORS:20160331-155403000",
+                "providerUris": ["http://resolver.caltech.edu/CaltechAUTHORS:20160331-155403000"],
+                "objectUris": []
+            }
+        },
+        {
+            "description": "It was an Australian/British chemist, Sir Ronald Nyholm, who first spoke of a \"renaissance\" of inorg. chem.; but\r\nits emergence as a newly dynamic subfield, beginning in the 1950s, can be seen even more clearly in the US.\r\nWhile John Bailar is often credited as the \"Father of American Inorg. Chem.,\" it is arguable that Fred Basolo,\r\nBailar's student at Illinois, has had the most lasting impact on the dramatic growth of the field in American\r\nacademia. Our justification for that assertion will include comments and reminiscences from the students (one\r\nof them first-person!) he trained, as well as an examn. of his seminal contributions in the form of both original\r\nresearch and textbooks, particularly the groundbreaking 1958 work \"Mechanisms of Inorg. Reactions,\" written\r\nwith his Northwestern colleague Ralph Pearson, which played a central role in raising the intellectual stature of\r\ninorg. chem. by bringing the study of mechanism to the forefront.",
+            "contributors": [
+                {
+                    "givenName": "Jay",
+                    "additionalName": "",
+                    "name": "Labinger, Jay",
+                    "familyName": "Labinger"
+                },
+                {
+                    "givenName": "Harry",
+                    "additionalName": "",
+                    "name": "Gray, Harry",
+                    "familyName": "Gray"
+                }
+            ],
+            "title": "Fred Basolo and the (re)naissance of American inorganic chemistry",
+            "shareProperties": {
+                "source": "caltech",
+                "filetype": "xml",
+                "docID": "oai:authors.library.caltech.edu:65817"
+            },
+            "otherProperties": [
+                {
+                    "name": "date",
+                    "properties": {"date": ["2016-03-31T00:00:00+00:00"]}
+                },
+                {
+                    "name": "type",
+                    "properties": {"type": [
+                        "Conference or Workshop Item",
+                        "PeerReviewed"
+                    ]}
+                },
+                {
+                    "name": "identifier",
+                    "properties": {"identifier": [
+                        "  Labinger, Jay and Gray, Harry  (2016)  Fred Basolo and the (re)naissance of American inorganic chemistry.  In: 251st American Chemical Society National Meeting & Exposition, March 13-17, 2016, San Diego, CA.     http://resolver.caltech.edu/CaltechAUTHORS:20160331-155214201 <http://resolver.caltech.edu/CaltechAUTHORS:20160331-155214201>  ",
+                        "oai:authors.library.caltech.edu:65817"
+                    ]}
+                },
+                {
+                    "name": "relation",
+                    "properties": {"relation": [
+                        "http://resolver.caltech.edu/CaltechAUTHORS:20160331-155214201",
+                        "http://authors.library.caltech.edu/65817/"
+                    ]}
+                }
+            ],
+            "providerUpdatedDateTime": "2016-03-31T22:55:38+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://resolver.caltech.edu/CaltechAUTHORS:20160331-155214201",
+                "providerUris": ["http://resolver.caltech.edu/CaltechAUTHORS:20160331-155214201"],
+                "objectUris": []
+            }
+        },
+        {
+            "publisher": {"name": "Digital Commons @ Kent State University Libraries"},
+            "description": "Tablets such as iPad, Android, and Windows devices have become ubiquitous in both the home and school settings. Adults and kids of all ages are using these tools and the associated apps to do everything from education to entertainment. Although there has been a positive relationship in the research between mathematics education and technology, very little has been done with apps for math, particularly as it relates to preschool children. The purpose of this experimental study was to examine one app that was selected for its attention to both pedagogy and standards. Results suggest integration of the app over a three-week period was found to be a statistically significant and meaningful predictor of mathematics achievement. These outcomes suggest more broadly that well-designed math apps can be successfully used to support preschool math development. The paper concludes with a call to action for understanding the conditions by which math apps improve teaching and learning.",
+            "contributors": [
+                {
+                    "givenName": "Karl",
+                    "additionalName": "W.",
+                    "name": "Kosko, Karl W.",
+                    "familyName": "Kosko"
+                },
+                {
+                    "givenName": "Richard",
+                    "additionalName": "E.",
+                    "name": "Ferdig, Richard E.",
+                    "familyName": "Ferdig"
+                }
+            ],
+            "title": "Effects of a Tablet-Based Mathematics Application for Pre-School Children",
+            "shareProperties": {
+                "source": "kent",
+                "filetype": "xml",
+                "docID": "oai:digitalcommons.kent.edu:ldespubs-1005"
+            },
+            "otherProperties": [
+                {
+                    "name": "date",
+                    "properties": {"date": ["2016-01-01T08:00:00+00:00"]}
+                },
+                {
+                    "name": "source",
+                    "properties": {"source": "Lifespan Development and Educational Sciences Publications"}
+                },
+                {
+                    "name": "identifier",
+                    "properties": {"identifier": [
+                        "http://digitalcommons.kent.edu/ldespubs/3",
+                        "https://www.learntechlib.org/p/148699/",
+                        "oai:digitalcommons.kent.edu:ldespubs-1005"
+                    ]}
+                },
+                {
+                    "name": "type",
+                    "properties": {"type": "text"}
+                },
+                {
+                    "name": "setSpec",
+                    "properties": {"setSpec": [
+                        "publication:ldes",
+                        "publication:ehhs",
+                        "publication:ldespubs"
+                    ]}
+                }
+            ],
+            "subjects": [
+                "learning outcomes",
+                "educational technology",
+                "evaluation",
+                "and research",
+                "education",
+                "early childhood education",
+                "middle school education",
+                "physical education",
+                "educational assessment",
+                "health and physical education"
+            ],
+            "providerUpdatedDateTime": "2016-03-31T22:55:13+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://digitalcommons.kent.edu/ldespubs/3",
+                "providerUris": [
+                    "http://digitalcommons.kent.edu/ldespubs/3",
+                    "https://www.learntechlib.org/p/148699/"
+                ],
+                "objectUris": []
+            }
+        },
+        {
+            "publisher": {"name": "American Economic Association"},
+            "description": "This paper considers the measurement of consumer loss aversion in product markets. We introduce a test based on a \"substitution effect,\" focusing on how the end of a sale affects sales not of the good itself, but a substitute good. Such an effect cannot be easily confounded with consumer stockpiling. Using a unique dataset from an online hardware retailer, we find evidence consistent with consumer loss aversion. Moreover, we find that less experienced consumers suffer a more prominent loss aversion bias compared to more experienced consumers.",
+            "contributors": [
+                {
+                    "givenName": "Debajyoti",
+                    "additionalName": "",
+                    "name": "Ray, Debajyoti",
+                    "familyName": "Ray"
+                },
+                {
+                    "givenName": "Colin",
+                    "additionalName": "F.",
+                    "name": "Camerer, Colin F.",
+                    "familyName": "Camerer"
+                },
+                {
+                    "givenName": "Matthew",
+                    "additionalName": "",
+                    "name": "Shum, Matthew",
+                    "familyName": "Shum"
+                }
+            ],
+            "title": "Loss Aversion in Post-Sale Purchases of Consumer Products and Their Substitutes",
+            "shareProperties": {
+                "source": "caltech",
+                "filetype": "xml",
+                "docID": "oai:authors.library.caltech.edu:65729"
+            },
+            "otherProperties": [
+                {
+                    "name": "date",
+                    "properties": {"date": ["2015-05-31T00:00:00+00:00"]}
+                },
+                {
+                    "name": "type",
+                    "properties": {"type": [
+                        "Article",
+                        "PeerReviewed"
+                    ]}
+                },
+                {
+                    "name": "format",
+                    "properties": {"format": [
+                        "application/pdf",
+                        "application/pdf",
+                        "application/zip"
+                    ]}
+                },
+                {
+                    "name": "identifier",
+                    "properties": {"identifier": [
+                        "http://authors.library.caltech.edu/65729/1/loss%20aversin%20in%20post%20sales.pdf",
+                        "http://authors.library.caltech.edu/65729/3/Shum-readme.pdf",
+                        "http://authors.library.caltech.edu/65729/2/P2015_1037_data.zip",
+                        "  Ray, Debajyoti and Camerer, Colin F. and Shum, Matthew  (2015)  Loss Aversion in Post-Sale Purchases of Consumer Products and Their Substitutes.  American Economic Review, 105  (5).   pp. 376-380.  ISSN 0002-8282.       http://resolver.caltech.edu/CaltechAUTHORS:20160329-092526564 <http://resolver.caltech.edu/CaltechAUTHORS:20160329-092526564>  ",
+                        "oai:authors.library.caltech.edu:65729"
+                    ]}
+                },
+                {
+                    "name": "relation",
+                    "properties": {"relation": [
+                        "http://resolver.caltech.edu/CaltechAUTHORS:20160329-092526564",
+                        "http://authors.library.caltech.edu/65729/"
+                    ]}
+                }
+            ],
+            "providerUpdatedDateTime": "2016-03-31T22:50:12+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://authors.library.caltech.edu/65729/1/loss%20aversin%20in%20post%20sales.pdf",
+                "providerUris": [
+                    "http://authors.library.caltech.edu/65729/1/loss%20aversin%20in%20post%20sales.pdf",
+                    "http://authors.library.caltech.edu/65729/3/Shum-readme.pdf",
+                    "http://authors.library.caltech.edu/65729/2/P2015_1037_data.zip",
+                    "http://resolver.caltech.edu/CaltechAUTHORS:20160329-092526564"
+                ],
+                "objectUris": []
+            }
+        },
+        {
+            "publisher": {"name": "Wiley-Liss, Inc."},
+            "description": "Iron deposits in the human brain are characteristic of normal aging but have also been implicated in various neurodegenerative diseases. Among nonhuman primates, strepsirhines are of particular interest because hemosiderosis has been consistently observed in captive aged animals. In particular, the cheirogaleids, because of their small size, rapid maturity, fecundity, and relatively short life expectancy, are a useful model system for the study of normal and pathological cerebral aging. This study was therefore undertaken to explore iron localization in the brain of aged cheirogaleids (mouse and dwarf lemurs) with histochemistry and magnetic resonance microscopy. Results obtained with both techniques were comparable. There was no difference between old animals in the two species. The young animals (3 years old) showed no iron deposits. In the old animals (8\u201315 years old), iron pigments were mainly localized in the globus pallidus, the substantia nigra, the neocortical and cerebellar white matter, and anterior forebrain structures, including the nucleus basalis of Meynert. This distribution agrees with previous findings in monkeys and humans. In addition, we observed iron in the thalamus of these aged nonhuman primates. Microscopic NMR images clearly reveal many features seen with the histochemical procedure, and magnetic resonance microscopy is a powerful method for visualizing age-related changes in brain iron.",
+            "contributors": [
+                {
+                    "givenName": "Emmanuel",
+                    "additionalName": "P.",
+                    "name": "Gilissen, Emmanuel P.",
+                    "familyName": "Gilissen"
+                },
+                {
+                    "givenName": "Pratik",
+                    "additionalName": "",
+                    "name": "Ghosh, Pratik",
+                    "familyName": "Ghosh"
+                },
+                {
+                    "givenName": "Russell",
+                    "additionalName": "E.",
+                    "name": "Jacobs, Russell E.",
+                    "familyName": "Jacobs"
+                },
+                {
+                    "givenName": "John",
+                    "additionalName": "M.",
+                    "name": "Allman, John M.",
+                    "familyName": "Allman"
+                }
+            ],
+            "title": "Topographical localization of iron in brains of the aged fat-tailed dwarf lemur (Cheirogaleus medius) and gray lesser mouse lemur (Microcebus murinus)",
+            "shareProperties": {
+                "source": "caltech",
+                "filetype": "xml",
+                "docID": "oai:authors.library.caltech.edu:65811"
+            },
+            "otherProperties": [
+                {
+                    "name": "date",
+                    "properties": {"date": ["1998-03-31T00:00:00+00:00"]}
+                },
+                {
+                    "name": "type",
+                    "properties": {"type": [
+                        "Article",
+                        "PeerReviewed"
+                    ]}
+                },
+                {
+                    "name": "identifier",
+                    "properties": {"identifier": [
+                        "  Gilissen, Emmanuel P. and Ghosh, Pratik and Jacobs, Russell E. and Allman, John M.  (1998)  Topographical localization of iron in brains of the aged fat-tailed dwarf lemur (Cheirogaleus medius) and gray lesser mouse lemur (Microcebus murinus).  American Journal of Primatology, 45  (3).   pp. 291-299.  ISSN 0275-2565.       http://resolver.caltech.edu/CaltechAUTHORS:20160331-132839745 <http://resolver.caltech.edu/CaltechAUTHORS:20160331-132839745>  ",
+                        "oai:authors.library.caltech.edu:65811"
+                    ]}
+                },
+                {
+                    "name": "relation",
+                    "properties": {"relation": [
+                        "http://resolver.caltech.edu/CaltechAUTHORS:20160331-132839745",
+                        "http://authors.library.caltech.edu/65811/"
+                    ]}
+                }
+            ],
+            "providerUpdatedDateTime": "2016-03-31T22:41:14+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://resolver.caltech.edu/CaltechAUTHORS:20160331-132839745",
+                "providerUris": ["http://resolver.caltech.edu/CaltechAUTHORS:20160331-132839745"],
+                "objectUris": []
+            }
+        },
+        {
+            "publisher": {"name": "UKnowledge"},
+            "description": "What essential leadership lessons do we learn by distilling the actions and ideas of great military commanders such as George Washington, Dwight D. Eisenhower, and Colin Powell? That is the fundamental question underlying The Art of Command: Military Leadership from George Washington to Colin Powell. The book illustrates that great leaders become great through conscious effort\u2014a commitment not only to develop vital skills but also to surmount personal shortcomings. Harry S. Laver, Jeffrey J. Matthews, and the other contributing authors identify nine core characteristics of highly effective leadership, such as integrity, determination, vision, and charisma, and nine significant figures in American military history whose careers embody those qualities. The Art of Command\nexamines each figure\u2019s strengths and weaknesses and how those attributes affected their leadership abilities, offering a unique perspective of military leadership in American history. Laver and Matthews have assembled a list of contributors from military, academic, and professional circles, which allows the book to encompass diverse approaches to the study of leadership.\nHarry S. Laver is assistant professor of history and political science at Southeastern Louisiana University. He is the author of Citizens More Than Soldiers: The Kentucky Militia and Society in the Early Republic.\nJeffrey J. Matthews is associate professor of business and leadership at the University of Puget Sound. He is the author of Alanson B. Houghton: Ambassador of the New Era.\n\"The Art of Command makes a significant contribution to scholarship on leadership, especially military leadership, that will stand for many years. Professors Laver and Matthews have assembled an impressive slate of contributors whose intimacy with their subject is clearly evident in each of the essays contained in this volume. The traits of leadership discussed in these essays are as essential to leaders in all walks of life as they have proved to be to those who serve in the armed forces of this great Republic.\" --Terrance J. Winschel, historian, Vicksburg National Park\n\"This collection of essays identifies and illuminates the dominant characteristics of America's most successful--and most innovative--military leaders. Each chapter connects the traits of these extraordinary men to the particular challenges they faced through well-researched, compelling, and intriguing vignettes. Their stories, unified by the thread of historical continuity, are freshly presented to portray nine fascinating and idiosyncratic individuals who endowed the nation with exemplary vision, tenacity, achievement, and devotion to duty.\"--Vice Admiral Kevin P. Green, U.S. Navy, Retired\n\"Interesting, insightful, inspirational. Should be a must-read for aspiring leaders.\"--Admiral Hank Chiles, USN (retired), former professor of leadership, U.S. Naval Academy\nThose who have a lifelong passion for the profession of arms will enjoy reading this new book. It demonstrates the complexities and the many external and internal variables that go into developing a leader.\" --Cmdr. Youseff Aboul-Enein, NDA Waterline\n\"With good footnotes and a list of recommended reading increasing its value, this fits into most military history and leadership/management collections.\" --Library Journal\n\"The traits of leadership discussed in these essays are as essential to leaders in all walks of life as they have proved to be to those who serve in the battalion of this great Republic.\" --Terrance J. Winschel, militarym9p.blogspot.com\n\"The editors have garnered essays on a carefully selected group of distinguished military leaders that hone in on a specific characteristic of the individual\u2019s command style...tells the reader about how each man functioned and met the challenges of his particular environment. Together these essays form a pattern of leadership descriptions that represent the best of the art of command.\" --Journal of America's Military Past\n\"Truly insightful...this engaging work makes Art of Command an indispensible guide on leadership at both the tactical and operational levels...an entertaining yet applicable tool.\" --On Point\n\"Despite differences in the types of command that each man held, what emerges from these essays is the importance of character and their mastery of their craft as critical determinants of their success.\" --NYMAS\n\"Art of Command excels. The reader can follow each leader from inauspicious beginnings to greatness in the course of a short story that chronicles the development of a particular quality in that leader.\" --Marine Corps University Journal\nThe art of command is a well researched and documented collection of historically grounded essays that provide fresh insight into the lives and careers of some of America's most formidable military figures. Highly recommended.\n\u201cA useful and enlightening selection of leaders. A lot can be learned from these analyses.\u201d --Baird Maritime\n\u201cEach chapter is devoted to a particular aspect or style of leadership and to a military leader exemplifying the theme. A sample: integrity and leadership (George Washington); determination (Ulysses S. Grant); institutional leadership (George C. Marshall); adaptive leadership (Harold G. \u2018Hal\u2019 Moore); and exemplary followership (Colin L. Powell), among others.\u201d --Book News, Inc.\n\"Laver and Matthews have created a guide that will help every reader discern the traits that make an effective leader, from the battlefield and beyond.\" -- The Lone Star Book Review",
+            "contributors": [
+                {
+                    "givenName": "Harry",
+                    "additionalName": "S.",
+                    "name": "Laver, Harry S.",
+                    "familyName": "Laver"
+                },
+                {
+                    "givenName": "Jeffrey",
+                    "additionalName": "J.",
+                    "name": "Matthews, Jeffrey J.",
+                    "familyName": "Matthews"
+                }
+            ],
+            "title": "The Art of Command: Military Leadership from George Washington to Colin Powell",
+            "shareProperties": {
+                "source": "uky",
+                "filetype": "xml",
+                "docID": "oai:uknowledge.uky.edu:upk_military_history-1030"
+            },
+            "otherProperties": [
+                {
+                    "name": "date",
+                    "properties": {"date": ["2008-10-17T07:00:00+00:00"]}
+                },
+                {
+                    "name": "source",
+                    "properties": {"source": "Military History"}
+                },
+                {
+                    "name": "identifier",
+                    "properties": {"identifier": [
+                        "http://uknowledge.uky.edu/upk_military_history/31",
+                        "http://uknowledge.uky.edu/cgi/viewcontent.cgi?article=1030&amp;context=upk_military_history",
+                        "oai:uknowledge.uky.edu:upk_military_history-1030"
+                    ]}
+                },
+                {
+                    "name": "type",
+                    "properties": {"type": "text"}
+                },
+                {
+                    "name": "format",
+                    "properties": {"format": "application/pdf"}
+                },
+                {
+                    "name": "setSpec",
+                    "properties": {"setSpec": [
+                        "publication:upk",
+                        "publication:upk_ah",
+                        "publication:upk_military_history",
+                        "publication:upk_history"
+                    ]}
+                }
+            ],
+            "subjects": [
+                "admirals",
+                "generals",
+                "military history",
+                "command of troops",
+                "united states",
+                "armed forces"
+            ],
+            "providerUpdatedDateTime": "2016-03-31T22:40:09+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://uknowledge.uky.edu/upk_military_history/31",
+                "providerUris": ["http://uknowledge.uky.edu/upk_military_history/31"],
+                "objectUris": ["http://uknowledge.uky.edu/cgi/viewcontent.cgi?article=1030&amp;context=upk_military_history"]
+            }
+        },
+        {
+            "publisher": {"name": "Society for Neuroscience"},
+            "description": "Fasciclin I is a homophilic cell adhesion molecule in insects that is dynamically expressed on a subset of axon pathways in the embryonic nervous system, and on a variety of other cells and tissues during development. The fasciclin I protein consists of four homologous 150 amino acid domains. In this article, we describe the complete sequence of the Drosophila fasciclin I (fasI) gene. The gene consists of 15 exons and is distributed over 14 kilobases of DNA. We examine the structure and temporal expression pattern of multiple fasciclin I mRNAs that differ in the lengths of their 3\u2032 untranslated regions. We also show that a highly conserved sequence at the end of the second domain can be altered by the addition of three or six amino acids that are encoded by two alternatively spliced 9 base pair (bp) micro-exons. In grasshopper fasciclin I mRNAs, there are 9 bp and 6 bp insertions at the same position. The first of these insertions is identical in sequence to the first fly micro-exon. The grasshopper insertions are not found together in the same mRNA, so grasshopper fasciclin I species differ by the addition of three or two extra amino acids to the second domain. The alternatively spliced mRNAs are differentially expressed during embryogenesis, and all three of them are present in nerve cord preparations. We suggest that the amino acids inserted by alternative micro-exon splicing may alter the binding specificity of fasciclin I.",
+            "contributors": [
+                {
+                    "givenName": "Linda",
+                    "additionalName": "",
+                    "name": "McAllister, Linda",
+                    "familyName": "McAllister"
+                },
+                {
+                    "givenName": "E.",
+                    "additionalName": "Jay",
+                    "name": "Rehm, E. Jay",
+                    "familyName": "Rehm"
+                },
+                {
+                    "givenName": "Corey",
+                    "additionalName": "S.",
+                    "name": "Goodman, Corey S.",
+                    "familyName": "Goodman"
+                },
+                {
+                    "givenName": "Kai",
+                    "additionalName": "",
+                    "name": "Zinn, Kai",
+                    "familyName": "Zinn"
+                }
+            ],
+            "title": "Alternative Splicing of Micro-Exons Creates Multiple Forms of the Insect Cell Adhesion Molecule Fasciclin I",
+            "shareProperties": {
+                "source": "caltech",
+                "filetype": "xml",
+                "docID": "oai:authors.library.caltech.edu:65816"
+            },
+            "otherProperties": [
+                {
+                    "name": "date",
+                    "properties": {"date": ["1992-03-01T00:00:00+00:00"]}
+                },
+                {
+                    "name": "type",
+                    "properties": {"type": [
+                        "Article",
+                        "PeerReviewed"
+                    ]}
+                },
+                {
+                    "name": "format",
+                    "properties": {"format": "application/pdf"}
+                },
+                {
+                    "name": "identifier",
+                    "properties": {"identifier": [
+                        "http://authors.library.caltech.edu/65816/1/895.full.pdf",
+                        "  McAllister, Linda and Rehm, E. Jay and Goodman, Corey S. and Zinn, Kai  (1992)  Alternative Splicing of Micro-Exons Creates Multiple Forms of the Insect Cell Adhesion Molecule Fasciclin I.  Journal of Neuroscience, 12  (3).   pp. 895-905.  ISSN 0270-6474.       http://resolver.caltech.edu/CaltechAUTHORS:20160331-152056865 <http://resolver.caltech.edu/CaltechAUTHORS:20160331-152056865>  ",
+                        "oai:authors.library.caltech.edu:65816"
+                    ]}
+                },
+                {
+                    "name": "relation",
+                    "properties": {"relation": [
+                        "http://resolver.caltech.edu/CaltechAUTHORS:20160331-152056865",
+                        "http://authors.library.caltech.edu/65816/"
+                    ]}
+                }
+            ],
+            "providerUpdatedDateTime": "2016-03-31T22:39:53+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://authors.library.caltech.edu/65816/1/895.full.pdf",
+                "providerUris": [
+                    "http://authors.library.caltech.edu/65816/1/895.full.pdf",
+                    "http://resolver.caltech.edu/CaltechAUTHORS:20160331-152056865"
+                ],
+                "objectUris": []
+            }
+        },
+        {
+            "publisher": {"name": "International Astronautical Federation"},
+            "description": "This paper summarizes the results of a 2014 KISS workshop that identified a wide variety of ways that the technologies (and their near-term derivatives) developed for the proposed Asteroid Redirect Mission (ARM) would beneficially impact the Nation\u2019s space interests including: human missions to Mars and its moons, planetary defense, orbital debris removal, robotic deep-space science missions, commercial communication satellites, and commercial asteroid resource utilization missions. This wide applicability of asteroid retrieval technology is, in many ways, is just as surprising as was the initial finding about the feasibility of ARM. The current Asteroid Redirect Mission concept consists of two major parts: the development of an advanced Solar Electric Propulsion (SEP) capability and the retrieval of a near-Earth asteroid. The improvement in SEP technology required by ARM provides an extensible path to support human missions to Mars, is applicable to all planetary defense techniques, could reduce the time required for the LEO-to-GEO transfer of large commercial or military satellites, would enable new deep space robotic science missions, and could enable affordable removal of large orbital debris objects. The asteroid retrieval part of ARM would greatly improve the understanding of the structure of rubble-pile asteroids necessary to evaluate the effectiveness of primary asteroid deflection techniques, demonstrate at least one secondary asteroid deflection technique, greatly accelerate the use of material resources obtained in space to further space exploration and exploitation, and further planetary science.",
+            "contributors": [
+                {
+                    "givenName": "John",
+                    "additionalName": "R.",
+                    "name": "Brophy, John R.",
+                    "familyName": "Brophy"
+                },
+                {
+                    "givenName": "Louis",
+                    "additionalName": "",
+                    "name": "Friedman, Louis",
+                    "familyName": "Friedman"
+                },
+                {
+                    "givenName": "Nathan",
+                    "additionalName": "J.",
+                    "name": "Strange, Nathan J.",
+                    "familyName": "Strange"
+                },
+                {
+                    "givenName": "Thomas",
+                    "additionalName": "A.",
+                    "name": "Prince, Thomas A.",
+                    "familyName": "Prince"
+                },
+                {
+                    "givenName": "Damon",
+                    "additionalName": "",
+                    "name": "Landau, Damon",
+                    "familyName": "Landau"
+                },
+                {
+                    "givenName": "Thomas",
+                    "additionalName": "",
+                    "name": "Jones, Thomas",
+                    "familyName": "Jones"
+                },
+                {
+                    "givenName": "Russell",
+                    "additionalName": "",
+                    "name": "Schweickart, Russell",
+                    "familyName": "Schweickart"
+                },
+                {
+                    "givenName": "Chris",
+                    "additionalName": "",
+                    "name": "Lewicki, Chris",
+                    "familyName": "Lewicki"
+                },
+                {
+                    "givenName": "Martin",
+                    "additionalName": "",
+                    "name": "Elvis, Martin",
+                    "familyName": "Elvis"
+                },
+                {
+                    "givenName": "David",
+                    "additionalName": "",
+                    "name": "Manzella, David",
+                    "familyName": "Manzella"
+                }
+            ],
+            "title": "Synergies of Robotic Asteroid Redirection Technologies and Human Space Exploration",
+            "shareProperties": {
+                "source": "caltech",
+                "filetype": "xml",
+                "docID": "oai:authors.library.caltech.edu:65812"
+            },
+            "otherProperties": [
+                {
+                    "name": "date",
+                    "properties": {"date": ["2014-10-31T00:00:00+00:00"]}
+                },
+                {
+                    "name": "type",
+                    "properties": {"type": [
+                        "Conference or Workshop Item",
+                        "PeerReviewed"
+                    ]}
+                },
+                {
+                    "name": "format",
+                    "properties": {"format": "application/pdf"}
+                },
+                {
+                    "name": "identifier",
+                    "properties": {"identifier": [
+                        "http://authors.library.caltech.edu/65812/1/IAC-2014-ARM-KISSpaper.pdf",
+                        "  Brophy, John R. and Friedman, Louis and Strange, Nathan J. and Prince, Thomas A. and Landau, Damon and Jones, Thomas and Schweickart, Russell and Lewicki, Chris and Elvis, Martin and Manzella, David  (2014)  Synergies of Robotic Asteroid Redirection Technologies and Human Space Exploration.  In: 65th International Astronautical Congress (IAC-2014), 29 September - 3 October 2014, Toronto, Canada.     http://resolver.caltech.edu/CaltechAUTHORS:20160331-133431420 <http://resolver.caltech.edu/CaltechAUTHORS:20160331-133431420>  ",
+                        "oai:authors.library.caltech.edu:65812"
+                    ]}
+                },
+                {
+                    "name": "relation",
+                    "properties": {"relation": [
+                        "http://resolver.caltech.edu/CaltechAUTHORS:20160331-133431420",
+                        "http://authors.library.caltech.edu/65812/"
+                    ]}
+                }
+            ],
+            "providerUpdatedDateTime": "2016-03-31T22:37:56+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://authors.library.caltech.edu/65812/1/IAC-2014-ARM-KISSpaper.pdf",
+                "providerUris": [
+                    "http://authors.library.caltech.edu/65812/1/IAC-2014-ARM-KISSpaper.pdf",
+                    "http://resolver.caltech.edu/CaltechAUTHORS:20160331-133431420"
+                ],
+                "objectUris": []
+            }
+        },
+        {
+            "publisher": {"name": "Nature Publishing Group"},
+            "description": "As RNA-binding proteins (RBPs) play essential roles in cellular physiology by interacting with target RNA molecules, binding site identification by UV crosslinking and immunoprecipitation (CLIP) of ribonucleoprotein complexes is critical to understanding RBP function. However, current CLIP protocols are technically demanding and yield low-complexity libraries with high experimental failure rates. We have developed an enhanced CLIP (eCLIP) protocol that decreases requisite amplification by ~1,000-fold, decreasing discarded PCR duplicate reads by ~60% while maintaining single-nucleotide binding resolution. By simplifying the generation of paired IgG and size-matched input controls, eCLIP improves specificity in the discovery of authentic binding sites. We generated 102 eCLIP experiments for 73 diverse RBPs in HepG2 and K562 cells (available at https://www.encodeproject.org), demonstrating that eCLIP enables large-scale and robust profiling, with amplification and sample requirements similar to those of ChIP-seq. eCLIP enables integrative analysis of diverse RBPs to reveal factor-specific profiles, common artifacts for CLIP and RNA-centric perspectives on RBP activity.",
+            "contributors": [
+                {
+                    "givenName": "Eric",
+                    "additionalName": "L.",
+                    "name": "Van Nostrand, Eric L.",
+                    "familyName": "Van Nostrand"
+                },
+                {
+                    "givenName": "Gabriel",
+                    "additionalName": "A.",
+                    "name": "Pratt, Gabriel A.",
+                    "familyName": "Pratt"
+                },
+                {
+                    "givenName": "Alexander",
+                    "additionalName": "A.",
+                    "name": "Shishkin, Alexander A.",
+                    "familyName": "Shishkin"
+                },
+                {
+                    "givenName": "Chelsea",
+                    "additionalName": "",
+                    "name": "Gelboin-Burkhart, Chelsea",
+                    "familyName": "Gelboin-Burkhart"
+                },
+                {
+                    "givenName": "Mark",
+                    "additionalName": "Y.",
+                    "name": "Fang, Mark Y.",
+                    "familyName": "Fang"
+                },
+                {
+                    "givenName": "Balaji",
+                    "additionalName": "",
+                    "name": "Sundararaman, Balaji",
+                    "familyName": "Sundararaman"
+                },
+                {
+                    "givenName": "Steven",
+                    "additionalName": "M.",
+                    "name": "Blue, Steven M.",
+                    "familyName": "Blue"
+                },
+                {
+                    "givenName": "Thai",
+                    "additionalName": "B.",
+                    "name": "Nguyen, Thai B.",
+                    "familyName": "Nguyen"
+                },
+                {
+                    "givenName": "Christine",
+                    "additionalName": "",
+                    "name": "Surka, Christine",
+                    "familyName": "Surka"
+                },
+                {
+                    "givenName": "Keri",
+                    "additionalName": "",
+                    "name": "Elkins, Keri",
+                    "familyName": "Elkins"
+                },
+                {
+                    "givenName": "Rebecca",
+                    "additionalName": "",
+                    "name": "Stanton, Rebecca",
+                    "familyName": "Stanton"
+                },
+                {
+                    "givenName": "Frank",
+                    "additionalName": "",
+                    "name": "Rigo, Frank",
+                    "familyName": "Rigo"
+                },
+                {
+                    "givenName": "Mitchell",
+                    "additionalName": "",
+                    "name": "Guttman, Mitchell",
+                    "familyName": "Guttman"
+                },
+                {
+                    "givenName": "Gene",
+                    "additionalName": "W.",
+                    "name": "Yeo, Gene W.",
+                    "familyName": "Yeo"
+                }
+            ],
+            "title": "Robust transcriptome-wide discovery of RNA-binding protein binding sites with enhanced CLIP (eCLIP)",
+            "shareProperties": {
+                "source": "caltech",
+                "filetype": "xml",
+                "docID": "oai:authors.library.caltech.edu:64400"
+            },
+            "otherProperties": [
+                {
+                    "name": "date",
+                    "properties": {"date": ["2016-03-28T00:00:00+00:00"]}
+                },
+                {
+                    "name": "type",
+                    "properties": {"type": [
+                        "Article",
+                        "PeerReviewed"
+                    ]}
+                },
+                {
+                    "name": "format",
+                    "properties": {"format": [
+                        "image/jpeg",
+                        "image/jpeg",
+                        "image/jpeg",
+                        "image/jpeg",
+                        "image/jpeg",
+                        "image/jpeg",
+                        "image/jpeg",
+                        "image/jpeg",
+                        "image/jpeg",
+                        "image/jpeg",
+                        "image/jpeg",
+                        "image/jpeg",
+                        "image/jpeg",
+                        "image/jpeg",
+                        "image/jpeg",
+                        "application/pdf",
+                        "application/vnd.ms-excel",
+                        "application/vnd.ms-excel"
+                    ]}
+                },
+                {
+                    "name": "identifier",
+                    "properties": {"identifier": [
+                        "http://authors.library.caltech.edu/64400/3/nmeth.3810-SF1.jpg",
+                        "http://authors.library.caltech.edu/64400/4/nmeth.3810-SF2.jpg",
+                        "http://authors.library.caltech.edu/64400/5/nmeth.3810-SF3.jpg",
+                        "http://authors.library.caltech.edu/64400/6/nmeth.3810-SF4.jpg",
+                        "http://authors.library.caltech.edu/64400/7/nmeth.3810-SF5.jpg",
+                        "http://authors.library.caltech.edu/64400/8/nmeth.3810-SF6.jpg",
+                        "http://authors.library.caltech.edu/64400/9/nmeth.3810-SF7.jpg",
+                        "http://authors.library.caltech.edu/64400/10/nmeth.3810-SF8.jpg",
+                        "http://authors.library.caltech.edu/64400/11/nmeth.3810-SF9.jpg",
+                        "http://authors.library.caltech.edu/64400/12/nmeth.3810-SF10.jpg",
+                        "http://authors.library.caltech.edu/64400/13/nmeth.3810-SF11.jpg",
+                        "http://authors.library.caltech.edu/64400/14/nmeth.3810-SF12.jpg",
+                        "http://authors.library.caltech.edu/64400/15/nmeth.3810-SF13.jpg",
+                        "http://authors.library.caltech.edu/64400/16/nmeth.3810-SF14.jpg",
+                        "http://authors.library.caltech.edu/64400/17/nmeth.3810-SF15.jpg",
+                        "http://authors.library.caltech.edu/64400/18/nmeth.3810-S1.pdf",
+                        "http://authors.library.caltech.edu/64400/19/nmeth.3810-S2.xlsx",
+                        "http://authors.library.caltech.edu/64400/20/nmeth.3810-S3.xlsx",
+                        "  Van Nostrand, Eric L. and Pratt, Gabriel A. and Shishkin, Alexander A. and Gelboin-Burkhart, Chelsea and Fang, Mark Y. and Sundararaman, Balaji and Blue, Steven M. and Nguyen, Thai B. and Surka, Christine and Elkins, Keri and Stanton, Rebecca and Rigo, Frank and Guttman, Mitchell and Yeo, Gene W.  (2016)  Robust transcriptome-wide discovery of RNA-binding protein binding sites with enhanced CLIP (eCLIP).  Nature Methods .    ISSN 1548-7091.      (In Press)  http://resolver.caltech.edu/CaltechAUTHORS:20160210-225928240 <http://resolver.caltech.edu/CaltechAUTHORS:20160210-225928240>  ",
+                        "oai:authors.library.caltech.edu:64400"
+                    ]}
+                },
+                {
+                    "name": "relation",
+                    "properties": {"relation": [
+                        "http://resolver.caltech.edu/CaltechAUTHORS:20160210-225928240",
+                        "http://authors.library.caltech.edu/64400/"
+                    ]}
+                }
+            ],
+            "providerUpdatedDateTime": "2016-03-31T22:30:50+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://authors.library.caltech.edu/64400/3/nmeth.3810-SF1.jpg",
+                "providerUris": [
+                    "http://authors.library.caltech.edu/64400/3/nmeth.3810-SF1.jpg",
+                    "http://authors.library.caltech.edu/64400/4/nmeth.3810-SF2.jpg",
+                    "http://authors.library.caltech.edu/64400/5/nmeth.3810-SF3.jpg",
+                    "http://authors.library.caltech.edu/64400/6/nmeth.3810-SF4.jpg",
+                    "http://authors.library.caltech.edu/64400/7/nmeth.3810-SF5.jpg",
+                    "http://authors.library.caltech.edu/64400/8/nmeth.3810-SF6.jpg",
+                    "http://authors.library.caltech.edu/64400/9/nmeth.3810-SF7.jpg",
+                    "http://authors.library.caltech.edu/64400/10/nmeth.3810-SF8.jpg",
+                    "http://authors.library.caltech.edu/64400/11/nmeth.3810-SF9.jpg",
+                    "http://authors.library.caltech.edu/64400/12/nmeth.3810-SF10.jpg",
+                    "http://authors.library.caltech.edu/64400/13/nmeth.3810-SF11.jpg",
+                    "http://authors.library.caltech.edu/64400/14/nmeth.3810-SF12.jpg",
+                    "http://authors.library.caltech.edu/64400/15/nmeth.3810-SF13.jpg",
+                    "http://authors.library.caltech.edu/64400/16/nmeth.3810-SF14.jpg",
+                    "http://authors.library.caltech.edu/64400/17/nmeth.3810-SF15.jpg",
+                    "http://authors.library.caltech.edu/64400/18/nmeth.3810-S1.pdf",
+                    "http://authors.library.caltech.edu/64400/19/nmeth.3810-S2.xlsx",
+                    "http://authors.library.caltech.edu/64400/20/nmeth.3810-S3.xlsx",
+                    "http://resolver.caltech.edu/CaltechAUTHORS:20160210-225928240"
+                ],
+                "objectUris": []
+            }
+        },
+        {
+            "publisher": {"name": "Digital Commons @ Kent State University Libraries"},
+            "description": "This study sought to establish a baseline for understanding the epidemiology of online K-12 students with special health care needs, determine the prevalence in K-12 online schooling of students from certain racial/ethnic backgrounds, those with socioeconomic disadvantages, and determine how these students perform in online classes compared to their prior experiences in traditional, face-to-face programs. Data from two different studies was used to address these questions with the goal to support virtual K-12 schools, blended programs, and teachers as they continue to implement best practices for all students. Students with special health care needs attending virtual school are underrepresented in the literature. A possible explanation is that these students are not identified. However, current research suggests that high-risk students, with or without a disability, are choosing virtual school as a viable option (Cavanaugh, Repetto, & Wayer, 2011). The Children with Special Health Care Needs screener can be used to identify these students in order to provide support beyond their Individualized Education Program (IEP). Students who need extra support, self-pacing, or cannot attend school physically can potentially benefit from virtual schooling.",
+            "contributors": [
+                {
+                    "givenName": "Heidi",
+                    "additionalName": "",
+                    "name": "Fernandez, Heidi",
+                    "familyName": "Fernandez"
+                },
+                {
+                    "givenName": "Richard",
+                    "additionalName": "E.",
+                    "name": "Ferdig, Richard E.",
+                    "familyName": "Ferdig"
+                },
+                {
+                    "givenName": "Lindsay",
+                    "additionalName": "A.",
+                    "name": "Thompson, Lindsay A.",
+                    "familyName": "Thompson"
+                },
+                {
+                    "givenName": "Katherine",
+                    "additionalName": "",
+                    "name": "Schottke, Katherine",
+                    "familyName": "Schottke"
+                },
+                {
+                    "givenName": "E.",
+                    "additionalName": "W.",
+                    "name": "Black, E. W.",
+                    "familyName": "Black"
+                }
+            ],
+            "title": "Students with Special Health Care Needs in K-12 Virtual Schools.",
+            "shareProperties": {
+                "source": "kent",
+                "filetype": "xml",
+                "docID": "oai:digitalcommons.kent.edu:ldespubs-1004"
+            },
+            "otherProperties": [
+                {
+                    "name": "date",
+                    "properties": {"date": ["2016-01-01T08:00:00+00:00"]}
+                },
+                {
+                    "name": "source",
+                    "properties": {"source": "Lifespan Development and Educational Sciences Publications"}
+                },
+                {
+                    "name": "identifier",
+                    "properties": {"identifier": [
+                        "http://digitalcommons.kent.edu/ldespubs/2",
+                        "http://digitalcommons.kent.edu/cgi/viewcontent.cgi?article=1004&amp;context=ldespubs",
+                        "oai:digitalcommons.kent.edu:ldespubs-1004"
+                    ]}
+                },
+                {
+                    "name": "type",
+                    "properties": {"type": "text"}
+                },
+                {
+                    "name": "setSpec",
+                    "properties": {"setSpec": [
+                        "publication:ldes",
+                        "publication:ehhs",
+                        "publication:ldespubs"
+                    ]}
+                }
+            ],
+            "subjects": [
+                "k-12 learning",
+                "virtual schools",
+                "education",
+                "online education",
+                "child with special health care needs screener",
+                "students with special health care needs"
+            ],
+            "providerUpdatedDateTime": "2016-03-31T22:30:11+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://digitalcommons.kent.edu/ldespubs/2",
+                "providerUris": ["http://digitalcommons.kent.edu/ldespubs/2"],
+                "objectUris": ["http://digitalcommons.kent.edu/cgi/viewcontent.cgi?article=1004&amp;context=ldespubs"]
+            }
+        },
+        {
+            "publisher": {"name": "DigitalCommons@University of Nebraska - Lincoln"},
+            "description": "Arachnologists have uncovered tantalizing details about amblypygid behavioral ecology\u2014the study of the fitness consequences of their behavior. Thus, it is the aim of this review to position Amblypygi as a useful system in which to investigate the principles of animal behavioral ecology. We synthesize amblypygid habitat preference and navigation modalities; predator, prey, parasite, parasitoid, cannibal, and commensal interactions; resource contests and territoriality; mating systems and mate choice; parental investment and sociality; and genetics and genomics as they relate to behavioral ecology. We present ideas for future research in each of these areas and discuss future directions for Amblypygi behavioral ecology research as they relate to four areas of behavioral ecology: adaptation, evolutionary history, mechano-sensory control of behavior, and behavioral development. We conclude by identifying several avenues of Amblypygi behavioral ecology that we think have the highest potential for transformative discoveries.",
+            "contributors": [
+                {
+                    "givenName": "Kenneth",
+                    "additionalName": "J.",
+                    "name": "Chapin, Kenneth J.",
+                    "familyName": "Chapin"
+                },
+                {
+                    "givenName": "Eileen",
+                    "additionalName": "A",
+                    "name": "Hebets, Eileen A",
+                    "familyName": "Hebets"
+                }
+            ],
+            "title": "The behavioral ecology of amblypygids",
+            "shareProperties": {
+                "source": "unl_digitalcommons",
+                "filetype": "xml",
+                "docID": "oai:digitalcommons.unl.edu:bioscihebets-1056"
+            },
+            "otherProperties": [
+                {
+                    "name": "type",
+                    "properties": {"type": "text"}
+                },
+                {
+                    "name": "identifier",
+                    "properties": {"identifier": [
+                        "http://digitalcommons.unl.edu/bioscihebets/57",
+                        "http://digitalcommons.unl.edu/cgi/viewcontent.cgi?article=1056&amp;context=bioscihebets",
+                        "oai:digitalcommons.unl.edu:bioscihebets-1056"
+                    ]}
+                },
+                {
+                    "name": "format",
+                    "properties": {"format": "application/pdf"}
+                },
+                {
+                    "name": "date",
+                    "properties": {"date": ["2016-01-01T08:00:00+00:00"]}
+                },
+                {
+                    "name": "source",
+                    "properties": {"source": "Eileen Hebets Publications"}
+                },
+                {
+                    "name": "setSpec",
+                    "properties": {"setSpec": [
+                        "publication:bioscihebets",
+                        "publication:biologicalsciences",
+                        "publication:bioscipapers"
+                    ]}
+                }
+            ],
+            "subjects": [
+                "other animal sciences",
+                "paraphrynus",
+                "life sciences",
+                "damon",
+                "whip spiders",
+                "tailless whip scorpions",
+                "territoriality",
+                "behavior and ethology",
+                "phrynus",
+                "cannibalism",
+                "animal sciences",
+                "microhabitat preference",
+                "heterophrynus",
+                "navigation",
+                "entomology",
+                "fitness"
+            ],
+            "providerUpdatedDateTime": "2016-03-31T22:28:04+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://digitalcommons.unl.edu/bioscihebets/57",
+                "providerUris": ["http://digitalcommons.unl.edu/bioscihebets/57"],
+                "objectUris": ["http://digitalcommons.unl.edu/cgi/viewcontent.cgi?article=1056&amp;context=bioscihebets"]
+            }
+        },
+        {
+            "publisher": {"name": "Wiley-Liss Inc."},
+            "description": "The present study was undertaken to explore the distribution of lipofuscin in the brain of cheirogaleids by autofluorescence and compare it to other studies of iron distribution. Aged dwarf (Cheirogaleus medius) and mouse (Microcebus murinus) lemurs provide a reliable model for the study of normal and pathological cerebral aging. Accumulation of lipofuscin, an age pigment derived by lipid peroxidation, constitutes the most reliable cytological change correlated with neuronal aging. Brain sections of four aged (8\u201315 year old) and 3 young (2\u20133 year old) animals were examined. Lipofuscin accumulation was observed in the aged animals but not in the young ones. Affected regions include the hippocampus (granular and pyramidal cells), where no iron accumulation was observed, the olfactory nucleus and the olfactory bulb (mitral cells), the basal forebrain, the hypothalamus, the cerebellum (Purkinje cells), the neocortex (essentially in the pyramidal cells), and the brainstem. Even though iron is known to catalyse lipid oxidation, our data indicate that iron deposits and lipofuscin accumulation are not coincident. Different biochemical and morphological cellular compartments might be involved in iron and lipofuscin deposition. The nonuniform distribution of lipofuscin indicates that brain structures are not equally sensitive to the factors causing lipofuscin accumulation. The small size, the rapid maturity, and the relatively short life expectancy of the cheirogaleids make them a good model system in which to investigate the mechanisms of lipofuscinogenesis in primates.",
+            "contributors": [
+                {
+                    "givenName": "Emmanuel",
+                    "additionalName": "P.",
+                    "name": "Gilissen, Emmanuel P.",
+                    "familyName": "Gilissen"
+                },
+                {
+                    "givenName": "Russell",
+                    "additionalName": "E.",
+                    "name": "Jacobs, Russell E.",
+                    "familyName": "Jacobs"
+                },
+                {
+                    "givenName": "Evelynn",
+                    "additionalName": "R.",
+                    "name": "McGuinness, Evelynn R.",
+                    "familyName": "McGuinness"
+                },
+                {
+                    "givenName": "John",
+                    "additionalName": "M.",
+                    "name": "Allman, John M.",
+                    "familyName": "Allman"
+                }
+            ],
+            "title": "Topographical localization of lipofuscin pigment in the brain of the aged fat-tailed dwarf lemur(Cheirogaleus Medius) and grey lesser mouse lemur (Microcebus Murinus): Comparison to iron localization",
+            "shareProperties": {
+                "source": "caltech",
+                "filetype": "xml",
+                "docID": "oai:authors.library.caltech.edu:65813"
+            },
+            "otherProperties": [
+                {
+                    "name": "date",
+                    "properties": {"date": ["1999-10-31T00:00:00+00:00"]}
+                },
+                {
+                    "name": "type",
+                    "properties": {"type": [
+                        "Article",
+                        "PeerReviewed"
+                    ]}
+                },
+                {
+                    "name": "identifier",
+                    "properties": {"identifier": [
+                        "  Gilissen, Emmanuel P. and Jacobs, Russell E. and McGuinness, Evelynn R. and Allman, John M.  (1999)  Topographical localization of lipofuscin pigment in the brain of the aged fat-tailed dwarf lemur(Cheirogaleus Medius) and grey lesser mouse lemur (Microcebus Murinus): Comparison to iron localization.  American Journal of Primatology, 49  (2).   pp. 183-193.  ISSN 0275-2565.       http://resolver.caltech.edu/CaltechAUTHORS:20160331-135211335 <http://resolver.caltech.edu/CaltechAUTHORS:20160331-135211335>  ",
+                        "oai:authors.library.caltech.edu:65813"
+                    ]}
+                },
+                {
+                    "name": "relation",
+                    "properties": {"relation": [
+                        "http://resolver.caltech.edu/CaltechAUTHORS:20160331-135211335",
+                        "http://authors.library.caltech.edu/65813/"
+                    ]}
+                }
+            ],
+            "providerUpdatedDateTime": "2016-03-31T22:27:13+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://resolver.caltech.edu/CaltechAUTHORS:20160331-135211335",
+                "providerUris": ["http://resolver.caltech.edu/CaltechAUTHORS:20160331-135211335"],
+                "objectUris": []
+            }
+        },
+        {
+            "publisher": {"name": "UKnowledge"},
+            "description": "The Civil War scene in Kentucky, site of few full-scale battles, was one of crossroad skirmishes and guerrilla terror, of quick incursions against specific targets and equally quick withdrawals. Yet Kentucky was crucial to the military strategy of the war. For either side, a Kentucky held secure against the adversary would have meant easing of supply problems and an immeasurably stronger base of operations. The state, along with many of its institutions and many of its families, was hopelessly divided against itself. The fiercest partisans of the South tended to be doubtful about the wisdom of secession, and the staunchest Union men questioned the legality of many government measures. What this division meant militarily is made clear as Lowell H. Harrison traces the movement of troops and the outbreaks of violence. What it meant to the social and economic fabric of Kentucky and to its postwar political stance is another theme of this book. And not forgotten is the life of the ordinary citizen in the midst of such dissension and uncertainty.\n\"A vivid treatment of the Civil War in Kentucky.\"--Filson Club History Quarterly\n\"A compact, judicious account of Kentucky in the war.\"--Journal of American History\n\"This book deals exclusively with Kentucky during the Civil War and is one of the most concise books on a subject that is oftentimes bypassed by Civil War historians.\"--Leatherneck\n\"This book is sharp as a tack\u2014well researched, condensed, and eminently readable.\"--Lexington Herald-Leader\n\"A crisp, concise, well-written study of a state thrust into a unique wilderness by the secession crisis.\"--North Carolina Historical Review\nSpecialists in Kentucky Civil War history should be delighted with the concise, balanced interpretations and sound conclusions.\"--Register of the Kentucky Historical Society\n\"Harrison explores the complexities of the conflict in Kentucky and why the state played such a crucial role in shaping the political, socioeconomic and military aspects of the war.\"--Kentucky Monthly\n\"The Bluegrass State was torn in two by battling ideologies. At first, Kentucky was able to maintain its neutrality, offering neither side its soldiers or allegiance. In late summer 1861, the Civil War came to Kentucky,. And there was little doubt that the prevailing sentiment was Unionist.\"--Book Bit, WTBF-AM/FM\n\"Dr. Harrison has done yeoman work in showing the myriad records of families whose ancestors claim to have passed on tales of the Civil War. Kith and kin at family gatherings keep alive this most important era of America. To delete this period from Kentucky history leaves little for historians to discuss. Any futile attempt to improve on the UK Press and Dr. Harrison\u2019s literary work wastes the time of historians.\" --James Allison Jones, Bits and Pieces (Hardin Co. Historical Society)\n\"This book should be on everyone's library. . . . Harrison thoroughly investigates the consequences of Kentucky's division on the lives of ordinary citizens, providing important information about the roles that civilians played in detemining the direction of the Civil War in the state.\"--Northern Kentucky Heritage",
+            "contributors": [{
+                "givenName": "Lowell",
+                "additionalName": "H.",
+                "name": "Harrison, Lowell H.",
+                "familyName": "Harrison"
+            }],
+            "title": "The Civil War in Kentucky",
+            "shareProperties": {
+                "source": "uky",
+                "filetype": "xml",
+                "docID": "oai:uknowledge.uky.edu:upk_military_history-1032"
+            },
+            "otherProperties": [
+                {
+                    "properties": {"date": ["1987-01-09T08:00:00+00:00"]},
+                    "name": "date"
+                },
+                {
+                    "properties": {"source": "Military History"},
+                    "name": "source"
+                },
+                {
+                    "properties": {"identifier": [
+                        "http://uknowledge.uky.edu/upk_military_history/33",
+                        "http://uknowledge.uky.edu/cgi/viewcontent.cgi?article=1032&amp;context=upk_military_history",
+                        "oai:uknowledge.uky.edu:upk_military_history-1032"
+                    ]},
+                    "name": "identifier"
+                },
+                {
+                    "properties": {"type": "text"},
+                    "name": "type"
+                },
+                {
+                    "properties": {"format": "application/pdf"},
+                    "name": "format"
+                },
+                {
+                    "properties": {"setSpec": [
+                        "publication:upk",
+                        "publication:upk_ah",
+                        "publication:upk_military_history",
+                        "publication:upk_history"
+                    ]},
+                    "name": "setSpec"
+                }
+            ],
+            "subjects": [
+                "kentucky",
+                "military history",
+                "civil war",
+                "united states"
+            ],
+            "providerUpdatedDateTime": "2016-03-31T22:25:56+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://uknowledge.uky.edu/upk_military_history/33",
+                "providerUris": ["http://uknowledge.uky.edu/upk_military_history/33"],
+                "objectUris": ["http://uknowledge.uky.edu/cgi/viewcontent.cgi?article=1032&amp;context=upk_military_history"]
+            }
+        },
+        {
+            "publisher": {"name": "UKnowledge"},
+            "description": "Alois Dwenger, writing from the front in May of 1942, complained that people forgot \u201cthe actions of simple soldiers . . . . I believe that true heroism lies in bearing this dreadful everyday life.\u201d In exploring the reality of the Landser, the average German soldier in World War II, through letters, diaries, memoirs, and oral histories, Stephen G. Fritz provides the definitive account of the everyday war of the German front soldier.\nThe personal documents of these soldiers, most from the Russian front, where the majority of German infantrymen saw service, paint a richly textured portrait of the Landser that illustrates the complexity and paradox of his daily life. Although clinging to a self-image as a decent fellow, the German soldier nonetheless committed terrible crimes in the name of National Socialism. When the war was finally over, and his country lay in ruins, the Landser faced a bitter truth: all his exertions and sacrifices had been in the name of a deplorable regime that had committed unprecedented crimes.\nWith chapters on training, images of combat, living conditions, combat stress, the personal sensations of war, the bonds of comradeship, and ideology and motivation, Fritz offers a sense of immediacy and intimacy, revealing war through the eyes of these self-styled \u201clittle men.\u201d A fascinating look at the day-to-day life of German soldiers, this is a book not about war but about men. It will be vitally important for anyone interested in World War II, German history, or the experiences of common soldiers throughout the world.\nStephen G. Fritz, professor of history at East Tennessee State University, is the author of Ostkrieg: Hitler\u2019s War of Extermination in the East and Endkampf: Soldiers, Civilians, and the Death of the Third Reich.\n\"Fritz does an impressive job of detailing what war was like for the average German soldier on the front lines in World War II.\" -- Paper Wars\n\"Drawn from letters, diaries and memoirs, this impressive study presents a rounded, detailed picture of the daily life of the Landser\u2014the ordinary German infantryman of WWII\u2014and takes an unblinking look at the stark realities of combat. . . . Helps explain why the German army was so relentlessly efficient in battle.\" -- Publishers Weekly\n\u201cA moving account of personal observations combined with a thoughtful commentary in which the author provides numerous insights into the combat environment.\u201d -- American Historical Review\n\u201cSo readable as to be difficult to put down. . . . Should prove enlightening to students of German as well as military history.\u201d -- Virginia Quarterly Review",
+            "contributors": [{
+                "givenName": "Stephen",
+                "additionalName": "G.",
+                "name": "Fritz, Stephen G.",
+                "familyName": "Fritz"
+            }],
+            "title": "Frontsoldaten: The German Soldier in World War II",
+            "shareProperties": {
+                "source": "uky",
+                "filetype": "xml",
+                "docID": "oai:uknowledge.uky.edu:upk_military_history-1031"
+            },
+            "otherProperties": [
+                {
+                    "name": "date",
+                    "properties": {"date": ["1995-08-31T07:00:00+00:00"]}
+                },
+                {
+                    "name": "source",
+                    "properties": {"source": "Military History"}
+                },
+                {
+                    "name": "identifier",
+                    "properties": {"identifier": [
+                        "http://uknowledge.uky.edu/upk_military_history/32",
+                        "http://uknowledge.uky.edu/cgi/viewcontent.cgi?article=1031&amp;context=upk_military_history",
+                        "oai:uknowledge.uky.edu:upk_military_history-1031"
+                    ]}
+                },
+                {
+                    "name": "type",
+                    "properties": {"type": "text"}
+                },
+                {
+                    "name": "format",
+                    "properties": {"format": "application/pdf"}
+                },
+                {
+                    "name": "setSpec",
+                    "properties": {"setSpec": [
+                        "publication:upk",
+                        "publication:upk_ah",
+                        "publication:upk_military_history",
+                        "publication:upk_history"
+                    ]}
+                }
+            ],
+            "subjects": [
+                "germany",
+                "military history",
+                "military life",
+                "world war ii",
+                "soldiers"
+            ],
+            "providerUpdatedDateTime": "2016-03-31T22:25:48+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://uknowledge.uky.edu/upk_military_history/32",
+                "providerUris": ["http://uknowledge.uky.edu/upk_military_history/32"],
+                "objectUris": ["http://uknowledge.uky.edu/cgi/viewcontent.cgi?article=1031&amp;context=upk_military_history"]
+            }
+        },
+        {
+            "publisher": {"name": "Wiley"},
+            "description": "The Brn-3 class of POU-domain transcription factors includes three genes in mammals which have key roles in the development of specific groups of sensory neurons. Here, we have identified three avian genes which correspond to the murine genes Brn-3.0, Brn-3.1, and Brn-3.2. Using an in situ hybridization probe generic for this gene class, the earliest detectable expression of Brn-3 in the chick is at stage 15, in placodal and migrating precursors of the trigeminal ganglion. By stage 19, Brn-3.0 protein is detectable in the trigeminal and vestibulocochlear ganglia with Brn-3.0-specific antisera, and Brn-3 message expression has extended to the dorsal root ganglia. At later stages, when condensation of the trigeminal ganglion is complete, Brn-3.0-immunoreactive neurons are concentrated in the portion of the ganglion distal to the brain stem. To examine the developmental origin of the Brn-3 expressing cells, we combined lipophilic dye (DiI) labeling with in situ hybridization. DiI labeling of the placodal surface ectoderm and of premigratory neural crest cells in the neural tube reveals that all, or nearly all, of the Brn-3-expressing neurons in the trigeminal ganglia are derived from the sensory placodes and not from the neural crest, and thus, that Brn-3 is an early marker of the placode-derived sensory neural lineage.",
+            "contributors": [
+                {
+                    "givenName": "Kristin",
+                    "additionalName": "B.",
+                    "name": "Artinger, Kristin B.",
+                    "familyName": "Artinger"
+                },
+                {
+                    "givenName": "Natalia",
+                    "additionalName": "",
+                    "name": "Fedtsova, Natalia",
+                    "familyName": "Fedtsova"
+                },
+                {
+                    "givenName": "Jerry",
+                    "additionalName": "M.",
+                    "name": "Rhee, Jerry M.",
+                    "familyName": "Rhee"
+                },
+                {
+                    "givenName": "Marianne",
+                    "additionalName": "",
+                    "name": "Bronner-Fraser, Marianne",
+                    "familyName": "Bronner-Fraser"
+                },
+                {
+                    "givenName": "Eric",
+                    "additionalName": "",
+                    "name": "Turner, Eric",
+                    "familyName": "Turner"
+                }
+            ],
+            "title": "Placodal Origin of Brn-3\u2014Expressing Cranial Sensory Neurons",
+            "shareProperties": {
+                "source": "caltech",
+                "filetype": "xml",
+                "docID": "oai:authors.library.caltech.edu:65814"
+            },
+            "otherProperties": [
+                {
+                    "name": "date",
+                    "properties": {"date": ["1998-09-15T00:00:00+00:00"]}
+                },
+                {
+                    "name": "type",
+                    "properties": {"type": [
+                        "Article",
+                        "PeerReviewed"
+                    ]}
+                },
+                {
+                    "name": "identifier",
+                    "properties": {"identifier": [
+                        "  Artinger, Kristin B. and Fedtsova, Natalia and Rhee, Jerry M. and Bronner-Fraser, Marianne and Turner, Eric  (1998)  Placodal Origin of Brn-3\u2014Expressing Cranial Sensory Neurons.  Journal of Neurobiology, 36  (4).   pp. 572-585.  ISSN 0022-3034.       http://resolver.caltech.edu/CaltechAUTHORS:20160331-142049577 <http://resolver.caltech.edu/CaltechAUTHORS:20160331-142049577>  ",
+                        "oai:authors.library.caltech.edu:65814"
+                    ]}
+                },
+                {
+                    "name": "relation",
+                    "properties": {"relation": [
+                        "http://resolver.caltech.edu/CaltechAUTHORS:20160331-142049577",
+                        "http://authors.library.caltech.edu/65814/"
+                    ]}
+                }
+            ],
+            "providerUpdatedDateTime": "2016-03-31T22:25:33+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://resolver.caltech.edu/CaltechAUTHORS:20160331-142049577",
+                "providerUris": ["http://resolver.caltech.edu/CaltechAUTHORS:20160331-142049577"],
+                "objectUris": []
+            }
+        },
+        {
+            "publisher": {"name": "DigitalCommons@University of Nebraska - Lincoln"},
+            "description": "Navigation is an ideal behavioral model for the study of sensory system integration and the neural substrates associated with complex behavior. For this broader purpose, however, it may be profitable to develop new model systems that are both tractable and sufficiently complex to ensure that information derived from a single sensory modality and path integration are inadequate to locate a goal. Here, we discuss some recent discoveries related to navigation by amblypygids, nocturnal arachnids that inhabit the tropics and sub-tropics. Nocturnal displacement experiments under the cover of a tropical rainforest reveal that these animals possess navigational abilities that are reminiscent, albeit on a smaller spatial scale, of true-navigating vertebrates. Specialized legs, called antenniform legs, which possess hundreds of olfactory and tactile sensory hairs, and vision appear to be involved. These animals also have enormous mushroom bodies, higher-order brain regions that, in insects, integrate contextual cues and may be involved in spatial memory. In amblypygids, the complexity of a nocturnal rainforest may impose navigational challenges that favor the integration of information derived from multimodal cues. Moreover, the movement of these animals is easily studied in the laboratory and putative neural integration sites of sensory information can be manipulated. Thus, amblypygids could serve as model organisms for the discovery of neural substrates associated with a unique and potentially sophisticated navigational capability. The diversity of habitats in which amblypygids are found also offers an opportunity for comparative studies of sensory integration and ecological selection pressures on navigation mechanisms.",
+            "contributors": [
+                {
+                    "givenName": "Daniel",
+                    "additionalName": "D.",
+                    "name": "Wiegmann, Daniel D.",
+                    "familyName": "Wiegmann"
+                },
+                {
+                    "givenName": "Eileen",
+                    "additionalName": "A",
+                    "name": "Hebets, Eileen A",
+                    "familyName": "Hebets"
+                },
+                {
+                    "givenName": "Wulfila",
+                    "additionalName": "",
+                    "name": "Gronenberg, Wulfila",
+                    "familyName": "Gronenberg"
+                },
+                {
+                    "givenName": "Jacob",
+                    "additionalName": "M.",
+                    "name": "Graving, Jacob M.",
+                    "familyName": "Graving"
+                },
+                {
+                    "givenName": "Verner",
+                    "additionalName": "P.",
+                    "name": "Bingman, Verner P.",
+                    "familyName": "Bingman"
+                }
+            ],
+            "title": "Amblypygids: Model Organisms for the Study of Arthropod Navigation Mechanisms in Complex Environments?",
+            "shareProperties": {
+                "source": "unl_digitalcommons",
+                "filetype": "xml",
+                "docID": "oai:digitalcommons.unl.edu:bioscihebets-1055"
+            },
+            "otherProperties": [
+                {
+                    "name": "type",
+                    "properties": {"type": "text"}
+                },
+                {
+                    "name": "identifier",
+                    "properties": {"identifier": [
+                        "http://digitalcommons.unl.edu/bioscihebets/56",
+                        "http://digitalcommons.unl.edu/cgi/viewcontent.cgi?article=1055&amp;context=bioscihebets",
+                        "oai:digitalcommons.unl.edu:bioscihebets-1055"
+                    ]}
+                },
+                {
+                    "name": "format",
+                    "properties": {"format": "application/pdf"}
+                },
+                {
+                    "name": "date",
+                    "properties": {"date": ["2016-01-01T08:00:00+00:00"]}
+                },
+                {
+                    "name": "source",
+                    "properties": {"source": "Eileen Hebets Publications"}
+                },
+                {
+                    "name": "setSpec",
+                    "properties": {"setSpec": [
+                        "publication:bioscihebets",
+                        "publication:biologicalsciences",
+                        "publication:bioscipapers"
+                    ]}
+                }
+            ],
+            "subjects": [
+                "multimodal sensory integration",
+                "other animal sciences",
+                "life sciences",
+                "amblypygid",
+                "mushroom bodies",
+                "phrynus",
+                "behavior and ethology",
+                "animal sciences",
+                "navigation mechanisms",
+                "entomology"
+            ],
+            "providerUpdatedDateTime": "2016-03-31T22:22:01+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://digitalcommons.unl.edu/bioscihebets/56",
+                "providerUris": ["http://digitalcommons.unl.edu/bioscihebets/56"],
+                "objectUris": ["http://digitalcommons.unl.edu/cgi/viewcontent.cgi?article=1055&amp;context=bioscihebets"]
+            }
+        },
+        {
+            "publisher": {"name": "Wiley"},
+            "description": "Leukemia inhibitory factor (LIF) can regulate the survival and differentiation of certain neurons and glial cells in culture. To determine the role of this cytokine in the central nervous system in vivo, we examined the brains of young and adult mice in which the LIF gene was disrupted. Immunohistochemical staining of neurons for choline acetyltransferase, tyrosine hydroxylase, serotonin, parvalbumin, calbindin, neuropeptide Y, vasoactive intestinal polypeptide, and calcitonin gene-related peptide revealed no significant differences between null mutant and wild-type (WT) brains. In contrast, analysis of glial phenotypes demonstrated striking deficits in the LIF-knockout brain. Staining with several anti-glial fibrillary acidic protein (GFAP) antibodies showed that the number of GFAP-positive cells in various regions of the hippocampus in the female mutant is much lower than in the WT. The null male hippocampus also displays a significant, though less marked deficit. The number of astrocytes in the mutant hippocampus, as determined by S-100 staining, is not, however, significantly different from WT. In addition, quantification of immunohistochemical staining of female, but not male, mutants reveals a significant deficit in myelin basic protein content in three brain regions, suggesting alterations in oligodendrocytes as well. Thus, while overall brain histology appears normal, the absence of LIF in vivo leads to specific, sexually dimorphic alterations in glial phenotype.",
+            "contributors": [
+                {
+                    "givenName": "Lakshmi",
+                    "additionalName": "",
+                    "name": "Bugga, Lakshmi",
+                    "familyName": "Bugga"
+                },
+                {
+                    "givenName": "Reto",
+                    "additionalName": "A.",
+                    "name": "Gadient, Reto A.",
+                    "familyName": "Gadient"
+                },
+                {
+                    "givenName": "Karen",
+                    "additionalName": "",
+                    "name": "Kwan, Karen",
+                    "familyName": "Kwan"
+                },
+                {
+                    "givenName": "Colin",
+                    "additionalName": "L.",
+                    "name": "Stewart, Colin L.",
+                    "familyName": "Stewart"
+                },
+                {
+                    "givenName": "Paul",
+                    "additionalName": "H.",
+                    "name": "Patterson, Paul H.",
+                    "familyName": "Patterson"
+                }
+            ],
+            "title": "Analysis of Neuronal and Glial Phenotypes in Brains of Mice Deficient in Leukemia Inhibitory Factor",
+            "shareProperties": {
+                "source": "caltech",
+                "filetype": "xml",
+                "docID": "oai:authors.library.caltech.edu:65815"
+            },
+            "otherProperties": [
+                {
+                    "name": "date",
+                    "properties": {"date": ["1998-09-15T00:00:00+00:00"]}
+                },
+                {
+                    "name": "type",
+                    "properties": {"type": [
+                        "Article",
+                        "PeerReviewed"
+                    ]}
+                },
+                {
+                    "name": "identifier",
+                    "properties": {"identifier": [
+                        "  Bugga, Lakshmi and Gadient, Reto A. and Kwan, Karen and Stewart, Colin L. and Patterson, Paul H.  (1998)  Analysis of Neuronal and Glial Phenotypes in Brains of Mice Deficient in Leukemia Inhibitory Factor.  Journal of Neurobiology, 36  (4).   pp. 509-524.  ISSN 0022-3034.       http://resolver.caltech.edu/CaltechAUTHORS:20160331-150934424 <http://resolver.caltech.edu/CaltechAUTHORS:20160331-150934424>  ",
+                        "oai:authors.library.caltech.edu:65815"
+                    ]}
+                },
+                {
+                    "name": "relation",
+                    "properties": {"relation": [
+                        "http://resolver.caltech.edu/CaltechAUTHORS:20160331-150934424",
+                        "http://authors.library.caltech.edu/65815/"
+                    ]}
+                }
+            ],
+            "providerUpdatedDateTime": "2016-03-31T22:20:55+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://resolver.caltech.edu/CaltechAUTHORS:20160331-150934424",
+                "providerUris": ["http://resolver.caltech.edu/CaltechAUTHORS:20160331-150934424"],
+                "objectUris": []
+            }
+        },
+        {
+            "description": "The purpose of this note is twofold: (1) document the second release of ECCO version 4 state estimates (ECCO v4-r2); (2) provide a citable identifier to distinguish it from the previous release (ECCO v4-r1; Forget et al 2015).",
+            "contributors": [
+                {
+                    "givenName": "Gael",
+                    "additionalName": "",
+                    "name": "Forget, Gael",
+                    "familyName": "Forget"
+                },
+                {
+                    "givenName": "Jean-Michel",
+                    "additionalName": "",
+                    "name": "Campin, Jean-Michel",
+                    "familyName": "Campin"
+                },
+                {
+                    "givenName": "Patrick",
+                    "additionalName": "",
+                    "name": "Heimbach, Patrick",
+                    "familyName": "Heimbach"
+                },
+                {
+                    "givenName": "Christopher",
+                    "additionalName": "N.",
+                    "name": "Hill, Christopher N.",
+                    "familyName": "Hill"
+                },
+                {
+                    "givenName": "Rui",
+                    "additionalName": "M.",
+                    "name": "Ponte, Rui M.",
+                    "familyName": "Ponte"
+                },
+                {
+                    "givenName": "Carl",
+                    "additionalName": "",
+                    "name": "Wunsch, Carl",
+                    "familyName": "Wunsch"
+                }
+            ],
+            "title": "ECCO Version 4: Second Release",
+            "shareProperties": {
+                "source": "mit",
+                "filetype": "xml",
+                "docID": "oai:dspace.mit.edu:1721.1/102062"
+            },
+"otherProperties": [
+    {
+        "name": "type",
+        "properties": {"type": "Dataset"}
+    },
+    {
+        "name": "rights",
+        "properties": {"rights": [
+            "Attribution-ShareAlike 3.0 United States",
+            "http://creativecommons.org/licenses/by-sa/3.0/us/"
+        ]}
+    },
+    {
+        "name": "identifier",
+        "properties": {"identifier": [
+            "http://hdl.handle.net/1721.1/102062",
+            "oai:dspace.mit.edu:1721.1/102062"
+        ]}
+    },
+    {
+        "name": "date",
+        "properties": {"date": [
+            "2016-03-31T22:08:56+00:00",
+            "2016-03-31T22:08:56+00:00",
+            "2016-03-31T00:00:00+00:00"
+        ]}
+    },
+    {
+        "name": "description",
+        "properties": {"description": [
+            "The purpose of this note is twofold: (1) document the second release of ECCO version 4 state estimates (ECCO v4-r2); (2) provide a citable identifier to distinguish it from the previous release (ECCO v4-r1; Forget et al 2015).",
+            "Major support for this work was provided through NASA\u2019s Physical Oceanography Program. The bulk of the calculations was performed on the NASA Advanced Supercomputing (NAS) division\u2019s Pleiades supercomputer at NASA/ARC."
+        ]}
+    },
+    {
+        "name": "setSpec",
+        "properties": {"setSpec": "hdl_1721.1_30597"}
+    }
+],
+            "subjects": ["ocean state estimate estimation ecco v4 release mitgcm solution"],
+            "providerUpdatedDateTime": "2016-03-31T22:08:56+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://hdl.handle.net/1721.1/102062",
+                "providerUris": ["http://hdl.handle.net/1721.1/102062"],
+                "objectUris": []
+            }
+        },
+        {
+            "publisher": {"name": "DigitalCommons@University of Nebraska - Lincoln"},
+            "description": "7.5' topgraphic quadrangle showing exposures of bedrock formations and other geologic information.\n41° 15' \u2014 41° 22'30\"\n101° 00' \u2014 101° 07'30\"\nScale 1:24,000\nCompleted 11 July 1978",
+            "contributors": [{
+                "givenName": "Robert",
+                "additionalName": "",
+                "name": "Diffendal, Robert, Jr.",
+                "familyName": "Diffendal"
+            }],
+            "title": "Green Ranch Quadrangle, Lincoln County, Nebraska",
+            "shareProperties": {
+                "source": "unl_digitalcommons",
+                "filetype": "xml",
+                "docID": "oai:digitalcommons.unl.edu:diffendal-1012"
+            },
+            "otherProperties": [
+                {
+                    "name": "type",
+                    "properties": {"type": "text"}
+                },
+                {
+                    "name": "identifier",
+                    "properties": {"identifier": [
+                        "http://digitalcommons.unl.edu/diffendal/13",
+                        "http://digitalcommons.unl.edu/cgi/viewcontent.cgi?article=1012&amp;context=diffendal",
+                        "oai:digitalcommons.unl.edu:diffendal-1012"
+                    ]}
+                },
+                {
+                    "name": "format",
+                    "properties": {"format": "application/pdf"}
+                },
+                {
+                    "name": "date",
+                    "properties": {"date": ["1978-07-11T07:00:00+00:00"]}
+                },
+                {
+                    "name": "source",
+                    "properties": {"source": "Robert F. Diffendal, Jr., Publications"}
+                },
+                {
+                    "name": "setSpec",
+                    "properties": {"setSpec": [
+                        "publication:diffendal",
+                        "publication:natres"
+                    ]}
+                }
+            ],
+            "subjects": [
+                "earth sciences",
+                "stratigraphy",
+                "geology",
+                "physical sciences and mathematics"
+            ],
+            "providerUpdatedDateTime": "2016-03-31T22:02:28+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://digitalcommons.unl.edu/diffendal/13",
+                "providerUris": ["http://digitalcommons.unl.edu/diffendal/13"],
+                "objectUris": ["http://digitalcommons.unl.edu/cgi/viewcontent.cgi?article=1012&amp;context=diffendal"]
+            }
+        },
+        {
+            "contributors": [{
+                "sameAs": ["https://osf.io/gnf5p/"],
+                "givenName": "Kyla",
+                "additionalName": "",
+                "name": "Kyla Haimovitz",
+                "familyName": "Haimovitz"
+            }],
+            "title": "Methods and Measures",
+            "shareProperties": {
+                "source": "osf",
+                "filetype": "json",
+                "docID": "tv9jf"
+            },
+            "otherProperties": [
+                {
+                    "properties": {"category": "registration"},
+                    "name": "category"
+                },
+                {
+                    "properties": {"wiki_link": "/tv9jf/wiki/"},
+                    "name": "wiki_link"
+                },
+                {
+                    "properties": {"is_registration": true},
+                    "name": "is_registration"
+                }
+            ],
+            "providerUpdatedDateTime": "2016-03-31T22:00:22.908000+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "https://osf.io/tv9jf/",
+                "providerUris": ["https://osf.io/tv9jf/"]
+            }
+        },
+        {
+            "publisher": {"name": "Digital Repository @ Iowa State University"},
+            "description": "The objective of this study was to explore a new method of analyzing the performance of substate economies. A major limitation of conventional analyses of economic diversity and growth is the reliance on static measures of economic structure. Such measures do not capture the patterns of growth dynamics or structural change the region may be experiencing. This paper discusses a new measure of dynamic economic diversity and explores its relationship to economic performance. The measure is a statistical index that reflects the degree to which employment in a county's industries move together over time. The more the industries' employment levels move together, the higher the value of the index. A high index indicates a high degree of regional economic integration.",
+            "contributors": [
+                {
+                    "givenName": "Richard",
+                    "additionalName": "",
+                    "name": "McHugh, Richard",
+                    "familyName": "McHugh"
+                },
+                {
+                    "givenName": "Ronald",
+                    "additionalName": "",
+                    "name": "Cooper, Ronald",
+                    "familyName": "Cooper"
+                },
+                {
+                    "givenName": "Sheila",
+                    "additionalName": "",
+                    "name": "Martin, Sheila",
+                    "familyName": "Martin"
+                },
+                {
+                    "givenName": "Daniel",
+                    "additionalName": "",
+                    "name": "Otto, Daniel",
+                    "familyName": "Otto"
+                },
+                {
+                    "givenName": "Stanley",
+                    "additionalName": "R.",
+                    "name": "Johnson, Stanley R.",
+                    "familyName": "Johnson"
+                }
+            ],
+            "title": "Measuring Dynamic Patterns in the Structure of Economies",
+            "shareProperties": {
+                "source": "iastate",
+                "filetype": "xml",
+                "docID": "oai:lib.dr.iastate.edu:card_staffreports-1065"
+            },
+            "otherProperties": [
+                {
+                    "name": "source",
+                    "properties": {"source": "CARD Staff Reports"}
+                },
+                {
+                    "name": "identifier",
+                    "properties": {"identifier": [
+                        "http://lib.dr.iastate.edu/card_staffreports/68",
+                        "http://lib.dr.iastate.edu/cgi/viewcontent.cgi?article=1065&amp;context=card_staffreports",
+                        "oai:lib.dr.iastate.edu:card_staffreports-1065"
+                    ]}
+                },
+                {
+                    "name": "date",
+                    "properties": {"date": ["1990-01-01T08:00:00+00:00"]}
+                },
+                {
+                    "name": "type",
+                    "properties": {"type": "text"}
+                },
+                {
+                    "name": "format",
+                    "properties": {"format": "application/pdf"}
+                },
+                {
+                    "name": "setSpec",
+                    "properties": {"setSpec": [
+                        "publication:card_publications",
+                        "publication:econ_ag",
+                        "publication:card_staffreports",
+                        "publication:card",
+                        "publication:ag"
+                    ]}
+                }
+            ],
+            "subjects": [
+                "agriculture",
+                "substate economics",
+                "agricultural and resource economics",
+                "regional economics",
+                "growth and development",
+                "economic growth"
+            ],
+            "providerUpdatedDateTime": "2016-03-31T21:58:05+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://lib.dr.iastate.edu/card_staffreports/68",
+                "providerUris": ["http://lib.dr.iastate.edu/card_staffreports/68"],
+                "objectUris": ["http://lib.dr.iastate.edu/cgi/viewcontent.cgi?article=1065&amp;context=card_staffreports"]
+            }
+        },
+        {
+            "publisher": {"name": "Digital Repository @ Iowa State University"},
+            "description": "The objective of this study was twofold: (1) to identify nontraditional sources of data that can be used to monitor economic activity in rural areas, and (2) to test the relationship between such data and trends in traditional measures, such as income and employment.",
+            "contributors": [
+                {
+                    "givenName": "Richard",
+                    "additionalName": "",
+                    "name": "McHugh, Richard",
+                    "familyName": "McHugh"
+                },
+                {
+                    "givenName": "Ronald",
+                    "additionalName": "",
+                    "name": "Cooper, Ronald",
+                    "familyName": "Cooper"
+                },
+                {
+                    "givenName": "Sheila",
+                    "additionalName": "",
+                    "name": "Martin, Sheila",
+                    "familyName": "Martin"
+                },
+                {
+                    "givenName": "Daniel",
+                    "additionalName": "",
+                    "name": "Otto, Daniel",
+                    "familyName": "Otto"
+                },
+                {
+                    "givenName": "Stanley",
+                    "additionalName": "R.",
+                    "name": "Johnson, Stanley R.",
+                    "familyName": "Johnson"
+                }
+            ],
+            "title": "Traditional and Nontraditional Data as Indicators of Economic Activity in Rural Communities",
+            "shareProperties": {
+                "source": "iastate",
+                "filetype": "xml",
+                "docID": "oai:lib.dr.iastate.edu:card_staffreports-1066"
+            },
+            "otherProperties": [
+                {
+                    "name": "source",
+                    "properties": {"source": "CARD Staff Reports"}
+                },
+                {
+                    "name": "identifier",
+                    "properties": {"identifier": [
+                        "http://lib.dr.iastate.edu/card_staffreports/67",
+                        "http://lib.dr.iastate.edu/cgi/viewcontent.cgi?article=1066&amp;context=card_staffreports",
+                        "oai:lib.dr.iastate.edu:card_staffreports-1066"
+                    ]}
+                },
+                {
+                    "name": "date",
+                    "properties": {"date": ["1990-01-01T08:00:00+00:00"]}
+                },
+                {
+                    "name": "type",
+                    "properties": {"type": "text"}
+                },
+                {
+                    "name": "format",
+                    "properties": {"format": "application/pdf"}
+                },
+                {
+                    "name": "setSpec",
+                    "properties": {"setSpec": [
+                        "publication:card_publications",
+                        "publication:econ_ag",
+                        "publication:card_staffreports",
+                        "publication:card",
+                        "publication:ag"
+                    ]}
+                }
+            ],
+            "subjects": [
+                "agriculture",
+                "economic indicators",
+                "rural sociology",
+                "agricultural and resource economics",
+                "econometrics",
+                "behavioral economics"
+            ],
+            "providerUpdatedDateTime": "2016-03-31T21:57:46+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://lib.dr.iastate.edu/card_staffreports/67",
+                "providerUris": ["http://lib.dr.iastate.edu/card_staffreports/67"],
+                "objectUris": ["http://lib.dr.iastate.edu/cgi/viewcontent.cgi?article=1066&amp;context=card_staffreports"]
+            }
+        },
+        {
+            "publisher": {"name": "Digital Repository @ Iowa State University"},
+            "description": "Within the Conservation Reserve (CR) program, a change in program criteria could reduce the amount of erosion material entering our nation's waterways. The inclusion of land adjacent to water bodies, flowing streams, and river waterways may reduce erosion from these lands and improve water quality. These buffer strip areas, removed from production and placed in the reserve with a vegetative cover, would limit sedimentation and act to prevent upland erosion materials from reaching waterway channels, thus enhancing the programs' environmental benefits. This paper analyzes the economic benefits of including buffer strups as eligible CR land, and it reviews the problems of identifying such areas.",
+            "contributors": [
+                {
+                    "givenName": "Klaus",
+                    "additionalName": "",
+                    "name": "Frohberg, Klaus",
+                    "familyName": "Frohberg"
+                },
+                {
+                    "givenName": "Doug",
+                    "additionalName": "",
+                    "name": "Haney, Doug",
+                    "familyName": "Haney"
+                },
+                {
+                    "givenName": "Matthew",
+                    "additionalName": "",
+                    "name": "Holt, Matthew",
+                    "familyName": "Holt"
+                },
+                {
+                    "givenName": "Derald",
+                    "additionalName": "J.",
+                    "name": "Holtkamp, Derald J.",
+                    "familyName": "Holtkamp"
+                },
+                {
+                    "givenName": "Stanley",
+                    "additionalName": "R.",
+                    "name": "Johnson, Stanley R.",
+                    "familyName": "Johnson"
+                },
+                {
+                    "givenName": "William",
+                    "additionalName": "H.",
+                    "name": "Meyers, William H.",
+                    "familyName": "Meyers"
+                },
+                {
+                    "givenName": "Leland",
+                    "additionalName": "C.",
+                    "name": "Thompson, Leland C.",
+                    "familyName": "Thompson"
+                },
+                {
+                    "givenName": "Gregory",
+                    "additionalName": "J.",
+                    "name": "Traxler, Gregory J.",
+                    "familyName": "Traxler"
+                },
+                {
+                    "givenName": "Patrick",
+                    "additionalName": "C.",
+                    "name": "Westhoff, Patrick C.",
+                    "familyName": "Westhoff"
+                }
+            ],
+            "title": "National and Regional Implications of Targeting the Conservation Reserve",
+            "shareProperties": {
+                "source": "iastate",
+                "filetype": "xml",
+                "docID": "oai:lib.dr.iastate.edu:card_staffreports-1067"
+            },
+            "otherProperties": [
+                {
+                    "name": "source",
+                    "properties": {"source": "CARD Staff Reports"}
+                },
+                {
+                    "name": "identifier",
+                    "properties": {"identifier": [
+                        "http://lib.dr.iastate.edu/card_staffreports/66",
+                        "http://lib.dr.iastate.edu/cgi/viewcontent.cgi?article=1067&amp;context=card_staffreports",
+                        "oai:lib.dr.iastate.edu:card_staffreports-1067"
+                    ]}
+                },
+                {
+                    "name": "date",
+                    "properties": {"date": ["1989-11-01T08:00:00+00:00"]}
+                },
+                {
+                    "name": "type",
+                    "properties": {"type": "text"}
+                },
+                {
+                    "name": "format",
+                    "properties": {"format": "application/pdf"}
+                },
+                {
+                    "name": "setSpec",
+                    "properties": {"setSpec": [
+                        "publication:card_publications",
+                        "publication:econ_ag",
+                        "publication:card_staffreports",
+                        "publication:card",
+                        "publication:ag"
+                    ]}
+                }
+            ],
+            "subjects": [
+                "agriculture",
+                "policy",
+                "agricultural and resource economics",
+                "water resource management",
+                "water quality quantity and management",
+                "natural resources management and policy"
+            ],
+            "providerUpdatedDateTime": "2016-03-31T21:57:27+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://lib.dr.iastate.edu/card_staffreports/66",
+                "providerUris": ["http://lib.dr.iastate.edu/card_staffreports/66"],
+                "objectUris": ["http://lib.dr.iastate.edu/cgi/viewcontent.cgi?article=1067&amp;context=card_staffreports"]
+            }
+        },
+        {
+            "publisher": {"name": "DigitalCommons@University of Nebraska - Lincoln"},
+            "description": "Defendants' Motion to Strike Portions of Plaintiffs' Remand Brief and to Disregard Declaration [Doc. 502] is GRANTED. This case is currently before the Court for fair use analysis with respect to 48 infringement claims. Plaintiffs are entitled to prevail on the claims involving 7 works in Georgia State classes. With respect to the other infringement claims, Defendants are entitled to prevail.\nDefendants are the prevailing side and are entitled to an award of costs and attorneys' fees.",
+            "contributors": [{
+                "givenName": "Orinda",
+                "additionalName": "D.",
+                "name": "Evans, Orinda D.",
+                "familyName": "Evans"
+            }],
+            "title": "Remanded Decision in Cambridge University Press, Oxford University Press, & SAGE Publications vs. Georgia State University et al.",
+            "shareProperties": {
+                "source": "unl_digitalcommons",
+                "filetype": "xml",
+                "docID": "oai:digitalcommons.unl.edu:scholcom-1013"
+            },
+            "otherProperties": [
+                {
+                    "name": "type",
+                    "properties": {"type": "text"}
+                },
+                {
+                    "name": "identifier",
+                    "properties": {"identifier": [
+                        "http://digitalcommons.unl.edu/scholcom/14",
+                        "http://digitalcommons.unl.edu/cgi/viewcontent.cgi?article=1013&amp;context=scholcom",
+                        "oai:digitalcommons.unl.edu:scholcom-1013"
+                    ]}
+                },
+                {
+                    "name": "format",
+                    "properties": {"format": "application/pdf"}
+                },
+                {
+                    "name": "date",
+                    "properties": {"date": ["2016-03-31T07:00:00+00:00"]}
+                },
+                {
+                    "name": "source",
+                    "properties": {"source": "Copyright, Fair Use, Scholarly Communication, etc."}
+                },
+                {
+                    "name": "setSpec",
+                    "properties": {"setSpec": [
+                        "publication:scholcom",
+                        "publication:libraries"
+                    ]}
+                }
+            ],
+            "subjects": [
+                "scholarly publishing",
+                "intellectual property law",
+                "scholarly communication",
+                "library and information science"
+            ],
+            "providerUpdatedDateTime": "2016-03-31T21:40:19+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://digitalcommons.unl.edu/scholcom/14",
+                "providerUris": ["http://digitalcommons.unl.edu/scholcom/14"],
+                "objectUris": ["http://digitalcommons.unl.edu/cgi/viewcontent.cgi?article=1013&amp;context=scholcom"]
+            }
+        },
+        {
+            "publisher": {"name": "PDXScholar"},
+            "description": "This project summary report describes the execution of OTREC Project #298 (Development, Deployment and Assessment of a New Educational Paradigm for Transportation Professionals and University Students). The project is one facet of a multiyear collaboration of the Region X Transportation Consortium that was sponsored by the Federal Highway Administration (FHWA). The regional collaboration aims to shift the traditional paradigm of engineering course delivery to foster a more hands-on approach. The University of Idaho, for example, has created activity-based modules for a traffic signals course, while the University of Washington developed similar modules for a freight systems course. The focus of the work undertaken at Portland State University (PSU) is aimed at introducing transportation engineering graduate students to methods for evaluating and analyzing transportation data.",
+            "contributors": [
+                {
+                    "givenName": "Christopher",
+                    "additionalName": "M.",
+                    "name": "Monsere, Christopher M.",
+                    "familyName": "Monsere"
+                },
+                {
+                    "givenName": "Ashley",
+                    "additionalName": "",
+                    "name": "Haire, Ashley",
+                    "familyName": "Haire"
+                }
+            ],
+            "title": "Development, Deployment, and Assessment of a New Educational Paradigm for Transportation Professionals and University Students",
+            "shareProperties": {
+                "source": "pdxscholar",
+                "filetype": "xml",
+                "docID": "oai:pdxscholar.library.pdx.edu:trec_briefs-1020"
+            },
+            "otherProperties": [
+                {
+                    "name": "date",
+                    "properties": {"date": ["2013-04-01T07:00:00+00:00"]}
+                },
+                {
+                    "name": "source",
+                    "properties": {"source": "TREC Project Briefs"}
+                },
+                {
+                    "name": "identifier",
+                    "properties": {"identifier": [
+                        "http://pdxscholar.library.pdx.edu/trec_briefs/20",
+                        "http://pdxscholar.library.pdx.edu/cgi/viewcontent.cgi?article=1020&amp;context=trec_briefs",
+                        "oai:pdxscholar.library.pdx.edu:trec_briefs-1020"
+                    ]}
+                },
+                {
+                    "name": "type",
+                    "properties": {"type": "text"}
+                },
+                {
+                    "name": "setSpec",
+                    "properties": {"setSpec": [
+                        "publication:centers",
+                        "publication:trec",
+                        "publication:communities",
+                        "publication:mcecs",
+                        "publication:trec_briefs",
+                        "publication:cengin_fac",
+                        "publication:cengin"
+                    ]}
+                }
+            ],
+            "subjects": [
+                "urban studies",
+                "transportation",
+                "urban studies and planning",
+                "transportation -- planning -- study and teaching",
+                "transportation -- planning -- curriculum",
+                "urban transportation"
+            ],
+            "providerUpdatedDateTime": "2016-03-31T21:34:34+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://pdxscholar.library.pdx.edu/trec_briefs/20",
+                "providerUris": ["http://pdxscholar.library.pdx.edu/trec_briefs/20"],
+                "objectUris": ["http://pdxscholar.library.pdx.edu/cgi/viewcontent.cgi?article=1020&amp;context=trec_briefs"]
+            }
+        },
+        {
+            "publisher": {"name": "Digital Repository @ Iowa State University"},
+            "description": "The expanded role of state governments in economic development has increased their need for a wide variety of economic, demographic, and marketing information. Many state governments have responded to these needs by developing systems to deliver economic and related information to state and local economic development offices, businesses, and the general public. This paper reports the results of a survey of economic development officials designed to disclose information about how extensive automated system development is, as well as to learn about system structure and operating characteristics, the quality and quantity of the data distributed, and any particular system strengths and weaknesses. A clear definition of agency goals, cooperation among state agencies, and communication with the targeted users are found to be important to the success of a development data system.",
+            "contributors": [
+                {
+                    "givenName": "Sheila",
+                    "additionalName": "A.",
+                    "name": "Martin, Sheila A.",
+                    "familyName": "Martin"
+                },
+                {
+                    "givenName": "Richard",
+                    "additionalName": "",
+                    "name": "McHugh, Richard",
+                    "familyName": "McHugh"
+                },
+                {
+                    "givenName": "Stanley",
+                    "additionalName": "R.",
+                    "name": "Johnson, Stanley R.",
+                    "familyName": "Johnson"
+                }
+            ],
+            "title": "State Economic Development Information Systems",
+            "shareProperties": {
+                "source": "iastate",
+                "filetype": "xml",
+                "docID": "oai:lib.dr.iastate.edu:card_staffreports-1051"
+            },
+            "otherProperties": [
+                {
+                    "name": "source",
+                    "properties": {"source": "CARD Staff Reports"}
+                },
+                {
+                    "name": "identifier",
+                    "properties": {"identifier": [
+                        "http://lib.dr.iastate.edu/card_staffreports/65",
+                        "http://lib.dr.iastate.edu/cgi/viewcontent.cgi?article=1051&amp;context=card_staffreports",
+                        "oai:lib.dr.iastate.edu:card_staffreports-1051"
+                    ]}
+                },
+                {
+                    "name": "date",
+                    "properties": {"date": ["1991-08-01T07:00:00+00:00"]}
+                },
+                {
+                    "name": "type",
+                    "properties": {"type": "text"}
+                },
+                {
+                    "name": "format",
+                    "properties": {"format": "application/pdf"}
+                },
+                {
+                    "name": "setSpec",
+                    "properties": {"setSpec": [
+                        "publication:card_publications",
+                        "publication:econ_ag",
+                        "publication:card_staffreports",
+                        "publication:card",
+                        "publication:ag"
+                    ]}
+                }
+            ],
+            "subjects": [
+                "agriculture",
+                "management information systems",
+                "agricultural and resource economics",
+                "economic development",
+                "information systems",
+                "growth and development"
+            ],
+            "providerUpdatedDateTime": "2016-03-31T21:26:49+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://lib.dr.iastate.edu/card_staffreports/65",
+                "providerUris": ["http://lib.dr.iastate.edu/card_staffreports/65"],
+                "objectUris": ["http://lib.dr.iastate.edu/cgi/viewcontent.cgi?article=1051&amp;context=card_staffreports"]
+            }
+        },
+        {
+            "publisher": {"name": "Digital Repository @ Iowa State University"},
+            "description": "Atrazine is the most widely used herbicide for corn and sorghum and the most commonly encountered in surface water and groundwater. In addition to water quality problems, atrazine poses hazards through atmospheric transport, food residues, and exposure of applicators and wildlife. If atrazine use is restricted, substitute herbicides will come into wider use, increasing the likelihood of occurrence of their own sets of undesirable side effects and imposing cost or efficacy penalties. This paper describes a configuration of the Comprehensive Environmental Economic Policy Evaluation System (CEEPES) to provide decision support for regulation of atrazine and related corn and sorghum herbicides.",
+            "contributors": [
+                {
+                    "givenName": "Richard",
+                    "additionalName": "",
+                    "name": "Cabe, Richard",
+                    "familyName": "Cabe"
+                },
+                {
+                    "givenName": "Peter",
+                    "additionalName": "J.",
+                    "name": "Kuch, Peter J.",
+                    "familyName": "Kuch"
+                },
+                {
+                    "givenName": "Jason",
+                    "additionalName": "F.",
+                    "name": "Shogren, Jason F.",
+                    "familyName": "Shogren"
+                }
+            ],
+            "title": "Integrating Economic and Environmental Process Models: An Application of CEEPES to Atrazine",
+            "shareProperties": {
+                "source": "iastate",
+                "filetype": "xml",
+                "docID": "oai:lib.dr.iastate.edu:card_staffreports-1052"
+            },
+            "otherProperties": [
+                {
+                    "name": "source",
+                    "properties": {"source": "CARD Staff Reports"}
+                },
+                {
+                    "name": "identifier",
+                    "properties": {"identifier": [
+                        "http://lib.dr.iastate.edu/card_staffreports/64",
+                        "http://lib.dr.iastate.edu/cgi/viewcontent.cgi?article=1052&amp;context=card_staffreports",
+                        "oai:lib.dr.iastate.edu:card_staffreports-1052"
+                    ]}
+                },
+                {
+                    "name": "date",
+                    "properties": {"date": ["1991-05-01T07:00:00+00:00"]}
+                },
+                {
+                    "name": "type",
+                    "properties": {"type": "text"}
+                },
+                {
+                    "name": "format",
+                    "properties": {"format": "application/pdf"}
+                },
+                {
+                    "name": "setSpec",
+                    "properties": {"setSpec": [
+                        "publication:card_publications",
+                        "publication:econ_ag",
+                        "publication:card_staffreports",
+                        "publication:card",
+                        "publication:ag"
+                    ]}
+                }
+            ],
+            "subjects": [
+                "agriculture",
+                "environmental and economic impacts",
+                "agricultural science",
+                "soils and agronomy",
+                "policy",
+                "agricultural and resource economics",
+                "environmental indicators and impact assessment",
+                "agronomy and crop sciences",
+                "natural resources management and policy"
+            ],
+            "providerUpdatedDateTime": "2016-03-31T21:26:33+00:00",
+            "highlight": {},
+            "uris": {
+                "canonicalUri": "http://lib.dr.iastate.edu/card_staffreports/64",
+                "providerUris": ["http://lib.dr.iastate.edu/card_staffreports/64"],
+                "objectUris": ["http://lib.dr.iastate.edu/cgi/viewcontent.cgi?article=1052&amp;context=card_staffreports"]
+            }
+        }
+    ],
+    "aggs": null,
+    "aggregations": null
+}

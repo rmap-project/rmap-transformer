@@ -93,6 +93,7 @@ public class JsonFileBasedRecordImporter extends FileBasedRecordImporter {
 	    	jsonFileContents = Files.toString(file, Charset.defaultCharset());
 	    	JSONObject jsonRecords = new JSONObject(jsonFileContents);
 	    	jsonArray = jsonRecords.getJSONArray(recordRoot);
+	    	this.recordArraySize = jsonArray.length();
 	    }
 	    catch (Exception e) {
 	    	throw new RuntimeException("Error while retrieving contents from file " + file.getPath());

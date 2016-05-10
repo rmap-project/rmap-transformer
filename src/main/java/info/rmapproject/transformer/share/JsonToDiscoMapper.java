@@ -1,9 +1,11 @@
 package info.rmapproject.transformer.share;
 
+import info.rmapproject.cos.share.client.model.Record;
 import info.rmapproject.transformer.TextToDiscoMapper;
-import info.rmapproject.transformer.share.model.SHARERecord;
 
 import java.io.OutputStream;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /** 
  * Coordinates mapping from SHARE JSON to RDF.  
@@ -12,7 +14,7 @@ import java.io.OutputStream;
  * @author khanson
  *
  */
-public class SHAREJsonToDiscoMapper implements TextToDiscoMapper {
+public class JsonToDiscoMapper implements TextToDiscoMapper {
 
 	/**
 	 * Convert a single SHARE JSON record to an DiSCO.
@@ -21,12 +23,15 @@ public class SHAREJsonToDiscoMapper implements TextToDiscoMapper {
 	public OutputStream toDiscoRdf(String record) throws Exception{
 		if (record==null){
 			throw new RuntimeException("Null record value - cannot convert null to RDF");
-		}
+		}		
+
+		// Convert JSON string to Object
+		ObjectMapper mapper = new ObjectMapper();
+		Record sharerec = (Record) mapper.readValue(record, Record.class);
 		
-		SHAREJsonToModelMapper modelmapper = new SHAREJsonToModelMapper();
-		SHAREModelToDiscoMapper rdfmapper = new SHAREModelToDiscoMapper();
-		SHARERecord shareRec = modelmapper.toModel(record);
-		OutputStream rdf = rdfmapper.toRDF(shareRec);
+		//Now map to RDF
+		ModelToDiscoMapper rdfmapper = new ModelToDiscoMapper();
+		OutputStream rdf = rdfmapper.toRDF(sharerec);
 		
 		return rdf;
 	}

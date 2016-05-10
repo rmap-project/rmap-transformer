@@ -1,6 +1,6 @@
 package info.rmapproject.transformer;
 
-import info.rmapproject.transformer.share.SHAREJsonToDiscoMapper;
+import info.rmapproject.transformer.share.JsonToDiscoMapper;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -25,19 +25,19 @@ import org.slf4j.LoggerFactory;
  */
 public class RMapTransformer {
     
-    /** Path of file containing SHARE API data as JSON */
+    /** Path of file containing API data as JSON */
     @Option(name = "-t", aliases = {"-type"}, usage = "Type of import. Options available: SHARE (default: SHARE)")
     public String type = "SHARE";
 	
-    /** Path of file containing SHARE API data as JSON */
+    /** Path of file containing API data as JSON */
     @Option(name = "-i", aliases = {"-inputpath"}, usage = "Path that holds input data files (default: current folder")
     public String inputpath = ".";
     
-    /** File extension for SHARE metadata file(s) */
+    /** File extension for metadata file(s) */
     @Option(name = "-iex", aliases = {"-inputfileext"}, usage = "File extension for input data files (default: json)")
     public String inputFileExtension = "json";
     
-    /** Path of file containing SHARE API data as JSON */
+    /** Path of file containing API data as JSON */
     @Option(name = "-o", aliases = {"-outputpath"}, usage = "Path of output files(s) for DiSCOs")
     public String outputpath = ".";
     
@@ -111,15 +111,15 @@ public class RMapTransformer {
 		//TODO: make this an enum, or handle this better
 		if (type=="SHARE"){
 			importer = new JsonFileBasedRecordImporter(inputpath, inputFileExtension, RECORD_ROOT_ELEMENT);			
-			mapper = new SHAREJsonToDiscoMapper();
+			mapper = new JsonToDiscoMapper();
 		}
 		else { //defaults to SHARE
 			importer = new JsonFileBasedRecordImporter(inputpath, inputFileExtension, RECORD_ROOT_ELEMENT);			
-			mapper = new SHAREJsonToDiscoMapper();			
+			mapper = new JsonToDiscoMapper();			
 		}
 		
 		//Format for output file name
-		String newfileName = outputFolder + "disco_####." + outputFileExtension;
+		String newfileName = outputFolder + "/disco_####." + outputFileExtension;
 		
 		//Reset counter
 		Integer counter = COUNTER_START;
@@ -147,12 +147,8 @@ public class RMapTransformer {
 
 		Integer totalTransformed = counter - COUNTER_START ;
 		log.info("Transform complete! " + totalTransformed.toString() + " records processed.");
-		
-		
-		
+				
 	}
-	
-
 	
 
 }

@@ -58,7 +58,6 @@ public class Terms {
 	
 	/*Harvester names*/
 	public static final String RMAPAGENT_NAMESPACE = "http://rmap-project.org/rmap/agents/";
-	public static final String SHAREAGENT = "RMap-SHARE-Harvester-0.1";
 		
 	/*other terms*/
 	public static final String MAILTO = "mailto:";
@@ -69,8 +68,6 @@ public class Terms {
 	public static final IRI ORE_AGGREGATES;
 	/** vcard:additional-name */
 	public static final IRI VCARD_ADDITIONALNAME;
-	/** IRI for SHARE HARVEST AGENT */
-	public static final IRI SHARE_HARVEST_AGENT;
 	/** pro:holdsRoleInTime */
 	public static final IRI PRO_HOLDSROLEINTIME;
 	/** pro:RoleInTime */
@@ -100,7 +97,6 @@ public class Terms {
 		RMAP_DISCO = f.createIRI(RMAP_NAMESPACE, DISCO);
 		ORE_AGGREGATES = f.createIRI(ORE_NAMESPACE, AGGREGATES);
 		VCARD_ADDITIONALNAME = f.createIRI(VCARD_NAMESPACE, ADDITIONALNAME);
-		SHARE_HARVEST_AGENT = f.createIRI(RMAPAGENT_NAMESPACE, SHAREAGENT);
 		PRO_HOLDSROLEINTIME = f.createIRI(PRO_NAMESPACE, HOLDSROLEINTIME);
 		PRO_ROLEINTIME = f.createIRI(PRO_NAMESPACE, ROLEINTIME);
 		PRO_WITHROLE = f.createIRI(PRO_NAMESPACE, WITHROLE);

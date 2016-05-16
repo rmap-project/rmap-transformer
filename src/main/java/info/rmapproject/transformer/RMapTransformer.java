@@ -1,12 +1,12 @@
 package info.rmapproject.transformer;
 
-import info.rmapproject.transformer.share.JsonToDiscoMapper;
+import info.rmapproject.transformer.osf.OsfRegApiTransformMgr;
+import info.rmapproject.transformer.share.ShareApiTransformMgr;
+import info.rmapproject.transformer.share.ShareLocalTransformMgr;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.OutputStream;
 
+import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
@@ -24,10 +24,34 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class RMapTransformer {
+
+	private static final String TYPE_SHARE="SHARE";
+	private static final String TYPE_OSF_REGISTRATIONS="OSF_REGISTRATIONS";
+	private static final String TYPE_OSF_USERS="OSF_USERS";
+	
+	private static final String SOURCE_API = "api";
+	private static final String SOURCE_LOCAL = "local";
+	
+	private static final String DEFAULT_TYPE = TYPE_SHARE;
+	private static final String DEFAULT_SOURCE = SOURCE_LOCAL;
+	private static final String DEFAULT_INPUT_FILEEXT = "json";
+	private static final Integer DEFAULT_NUM_RECORDS = 100;
+	
+    /** Type of import e.g. SHARE, OSF_REGISTRATION, OSF_USER */
+    @Argument(index = 0, metaVar = "Transform type", usage = "Type of transform. Options available: "
+    														+ "SHARE, "
+    														+ "OSF_REGISTRATIONS, "
+    														+ "OSF_USERS "
+    														+ "(default: SHARE)")
+    private String transformType = DEFAULT_TYPE;
+        
+    /** Source of data - local or api **/
+    @Option(name="-src", aliases = {"-source"}, usage = "Source of the data - either api or local")
+    private String source = DEFAULT_SOURCE;
     
-    /** Path of file containing API data as JSON */
-    @Option(name = "-t", aliases = {"-type"}, usage = "Type of import. Options available: SHARE (default: SHARE)")
-    public String type = "SHARE";
+    /** API params **/
+    @Option(name="-f", aliases = {"-queryfilters"}, usage = "API request filters formatted in the style of a querystring e.g. q=osf&size=30&sort=providerUpdatedDateTime")
+    public String filters = "";
 	
     /** Path of file containing API data as JSON */
     @Option(name = "-i", aliases = {"-inputpath"}, usage = "Path that holds input data files (default: current folder")
@@ -35,26 +59,29 @@ public class RMapTransformer {
     
     /** File extension for metadata file(s) */
     @Option(name = "-iex", aliases = {"-inputfileext"}, usage = "File extension for input data files (default: json)")
-    public String inputFileExtension = "json";
+    public String inputFileExtension = DEFAULT_INPUT_FILEEXT;
     
     /** Path of file containing API data as JSON */
     @Option(name = "-o", aliases = {"-outputpath"}, usage = "Path of output files(s) for DiSCOs")
     public String outputpath = ".";
+
+    /** DiSCO creator URI */
+    @Option(name = "-dc", aliases = {"-discocreator"}, usage = "Custom URI for DiSCO creator e.g. http://rmap-project.org/agent/shareharvester-v1")
+    public String discoCreator = "";
+
+    /** DiSCO description */
+    @Option(name = "-dd", aliases = {"-discodesc"}, usage = "Custom Description for DiSCO")
+    public String discoDescription = "";
     
     /** File extension for DiSCO metadata file(s) */
-    @Option(name = "-oex", aliases = {"-outputfileext"}, usage = "File extension for output data files (default: rdf)")
-    public String outputFileExtension = "rdf";
+    @Option(name = "-n", aliases = {"-numrecords"}, usage = "Maximum number of records to be converted. (default: 100)")
+    public Integer numrecords = DEFAULT_NUM_RECORDS;
 
     /** Request for help/usage documentation */
     @Option(name = "-h", aliases = {"-help", "--help"}, usage = "Print help message")
     public boolean help = false;
-    
-    private static final Integer COUNTER_START= 10000000;
-    
-    private static final String RECORD_ROOT_ELEMENT = "results";
-    
-    private static final Logger log = LoggerFactory
-	            .getLogger(RMapTransformer.class);
+        
+    private static final Logger log = LoggerFactory.getLogger(RMapTransformer.class);
 	    
 	/**
 	 * @param args
@@ -93,6 +120,7 @@ public class RMapTransformer {
         } catch (Exception e) {
         	//general error message
         	System.err.println(e.getMessage());
+        	e.printStackTrace();
         	System.exit(1);
         }
     }	
@@ -103,51 +131,25 @@ public class RMapTransformer {
 		if (!outputFolder.exists() || !outputFolder.isDirectory()) {
 			outputFolder.mkdir();
 		}
-		
-		//initiate importer for iteration through files
-		FileBasedRecordImporter importer = null;
-		TextToDiscoMapper mapper = null;
-		
-		//TODO: make this an enum, or handle this better
-		if (type=="SHARE"){
-			importer = new JsonFileBasedRecordImporter(inputpath, inputFileExtension, RECORD_ROOT_ELEMENT);			
-			mapper = new JsonToDiscoMapper();
-		}
-		else { //defaults to SHARE
-			importer = new JsonFileBasedRecordImporter(inputpath, inputFileExtension, RECORD_ROOT_ELEMENT);			
-			mapper = new JsonToDiscoMapper();			
-		}
-		
-		//Format for output file name
-		String newfileName = outputFolder + "/disco_####." + outputFileExtension;
-		
-		//Reset counter
-		Integer counter = COUNTER_START;
-		
-		do {
-			String record = importer.getNextRecord();
-			counter = counter + 1;
-			
-			//pass a JSON record to mapper class and get back RDF
-			OutputStream rdf = mapper.toDiscoRdf(record);
-			
-			File outputFile = new File(newfileName.replace("####",counter.toString()));
-			if  (outputFile.createNewFile()) {
-				FileWriter fw = new FileWriter(outputFile.getAbsoluteFile());
-				BufferedWriter bw = new BufferedWriter(fw);
-				bw.write(rdf.toString());
-				bw.close();
+		Integer totalTransformed = 0;
+		if (transformType.equals(TYPE_SHARE)){
+			if (source.equals(SOURCE_API)){
+				TransformMgr datatransform = new ShareApiTransformMgr(outputpath, filters, discoCreator, discoDescription);
+				totalTransformed = datatransform.transform(numrecords);
+			} else {
+				TransformMgr datatransform = new ShareLocalTransformMgr(outputpath, inputpath, inputFileExtension, discoCreator, discoDescription);
+				totalTransformed = datatransform.transform(numrecords);
 			}
-			else {
-				throw new RuntimeException("Could not create new DiSCO output file + " + outputFile.getName());
-			}
-			log.info("DiSCO RDF saved to file " + outputFile.getName());
-			
-		} while (!importer.isLastRecord());
-
-		Integer totalTransformed = counter - COUNTER_START ;
+		} else if (transformType.equals(TYPE_OSF_REGISTRATIONS)){
+			TransformMgr datatransform = new OsfRegApiTransformMgr(outputpath, filters, discoCreator, discoDescription);
+			totalTransformed = datatransform.transform(numrecords);
+		} else if (transformType.equals(TYPE_OSF_USERS)) {
+			TransformMgr datatransform = new OsfRegApiTransformMgr(outputpath, filters, discoCreator, discoDescription);
+			totalTransformed = datatransform.transform(numrecords);
+		}
+		
 		log.info("Transform complete! " + totalTransformed.toString() + " records processed.");
-				
+		
 	}
 	
 

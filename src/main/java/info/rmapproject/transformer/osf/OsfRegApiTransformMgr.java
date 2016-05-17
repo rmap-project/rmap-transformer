@@ -42,17 +42,28 @@ public class OsfRegApiTransformMgr extends TransformMgr {
 			throw new IllegalArgumentException("URL invalid, parameters could not be parsed");
 		}
 
-        ShareApiIterator shareApiIterator = new ShareApiIterator(params);
-        
+		ShareApiIterator shareApiIterator = new ShareApiIterator(params);
+        Record record = null;
 		do {
-        	counter = counter + 1;
-        	Record record = shareApiIterator.next();
-          	DiscoConverter discoConverter = new ShareDiscoConverter(record, this.discoCreator, this.discoDescription);
-			OutputStream rdf = discoConverter.generateDiscoRdf();
-			String filename = getNewFilename(counter.toString());
-			DiscoFile disco = new DiscoFile(rdf, this.outputPath, filename);
-			disco.writeFile();
-		} while((counter-COUNTER_START)<(numRecords));
+	        try {	
+	        	record = shareApiIterator.next();
+	        	if (record!=null){
+		          	DiscoConverter discoConverter = new ShareDiscoConverter(record, this.discoCreator, this.discoDescription);
+					OutputStream rdf = discoConverter.generateDiscoRdf();
+					String filename = getNewFilename(counter.toString());
+					DiscoFile disco = new DiscoFile(rdf, this.outputPath, filename);
+					disco.writeFile();
+		        	counter = counter + 1;
+	        	}
+			} catch (Exception e) {
+				String logMsg = "Could not complete export for record " + counter + "\n Continuing to next record. Msg: " + e.getMessage();
+				if (record!=null){
+					logMsg = "Could not complete export for docId: " + record.getShareProperties().getDocID()
+	    					+ "\n Continuing to next record. Msg: " + e.getMessage();
+				} 
+				log.error(logMsg,e);
+			}
+		} while((counter-COUNTER_START)<(numRecords) && record!=null);
 
         
 		Integer totalTransformed = counter - COUNTER_START ;

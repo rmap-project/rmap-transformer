@@ -53,15 +53,15 @@ public class DiscoFile {
 				BufferedWriter bw = new BufferedWriter(fw);
 				bw.write(rdf.toString());
 				bw.close();
-				log.info("DiSCO RDF saved to file " + this.filename);
+				//log.info("DiSCO RDF saved to file " + this.filename);
 			}
 			else {
-				log.error("Could not create new DiSCO output file + " + this.filename);
-				throw new RuntimeException("Could not create new DiSCO output file + " + this.filename);
+				throw new Exception("Create new file failed");
 			}
 		} catch (Exception e){
-			log.error("Could not create new DiSCO output file + " + this.filename);
-			throw new RuntimeException("Could not create new DiSCO output file + " + this.filename);			
+			log.error("Stopping process: Could not create new DiSCO output file " + this.filename 
+					+ ". Please verify the output folder is accessible and that this file does not already exist.", e);
+			System.exit(0);		
 		}
 	}
 	

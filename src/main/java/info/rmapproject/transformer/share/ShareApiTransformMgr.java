@@ -44,7 +44,7 @@ public class ShareApiTransformMgr extends TransformMgr {
 		}
 
 		//Reset counter
-		Integer counter = COUNTER_START;
+		Integer counter = 0;
 		
 		// split out params
 		HashMap<String,String> params=null;
@@ -54,23 +54,37 @@ public class ShareApiTransformMgr extends TransformMgr {
 			throw new IllegalArgumentException("URL invalid, parameters could not be parsed");
 		}
 
-        ShareApiIterator shareApiIterator = new ShareApiIterator(params);
+		ShareApiIterator iterator = new ShareApiIterator(params);
+        
         Record record = null;
 		do {
-        	record = shareApiIterator.next();
-        	if (record!=null){
-	          	DiscoConverter discoConverter = new ShareDiscoConverter(record);
-				OutputStream rdf = discoConverter.generateDiscoRdf();
-				String filename = getNewFilename(counter.toString());
-				DiscoFile disco = new DiscoFile(rdf, this.outputPath, filename);
-				disco.writeFile();
-	        	counter = counter + 1;
-        	}
-		} while((counter-COUNTER_START)<(numRecords) && record != null);
+	        String docID = null;
+    		try {
+    			record = iterator.next();
+    			if (record!=null){
+    				docID = record.getShareProperties().getDocID();
+		          	
+    				DiscoConverter discoConverter = new ShareDiscoConverter(record);
+					OutputStream rdf = discoConverter.generateDiscoRdf();
+					
+					String filename = getNewFilename(counter+COUNTER_START);
+					DiscoFile disco = new DiscoFile(rdf, this.outputPath, filename);
+					disco.writeFile();
+		        	
+					counter = counter + 1;
+					log.info("DiSCO created: " + docID + " -> " + filename);
+    			}
+    		} catch (Exception e) {
+    			String logMsg = "Could not complete export for record " + counter + "\n Continuing to next record. Msg: " + e.getMessage();
+    			if (record!=null){
+    				logMsg = "Could not complete export for docId: " + docID
+        					+ "\n Continuing to next record. Msg: " + e.getMessage();
+    			} 
+    			log.error(logMsg,e);
+    		}
+		} while(iterator.hasNext() && counter<numRecords);
 
-        
-		Integer totalTransformed = counter - COUNTER_START ;
-		return totalTransformed;		
+		return counter;		
 	}
 	    
 }

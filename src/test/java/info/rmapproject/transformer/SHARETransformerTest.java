@@ -31,7 +31,10 @@ public class SHARETransformerTest {
 	
 	@After
 	public void removefiles() throws Exception {
-		FileUtils.deleteDirectory(new File("testshare"));
+		File file = new File("testshare");
+		if (file.exists()){
+			FileUtils.deleteDirectory(new File("testshare"));
+		}
 	}
 
 	@Test
@@ -65,12 +68,20 @@ public class SHARETransformerTest {
 	
 	@Test 
 	public void testShareQueryWithNoMatches() throws Exception{
-		String[] args = {"-src", "api","-f", "?q=asdfd", "-n","5", "-o", "testshare/"};
+		String[] args = {"-src", "api","-f", "?q=asdfda", "-n","5", "-o", "testshare/"};
 		RMapTransformer.main(args);
 		//check output files
 		Integer numfiles = new File("testshare").list().length;
 		assertTrue(numfiles.equals(0));
 	}
 	
+	@Test 
+	public void testShareQueryWithOneMatch() throws Exception{
+		String[] args = {"-src", "api","-f", "?q=asdfd", "-n","5", "-o", "testshare/"};
+		RMapTransformer.main(args);
+		//check output files
+		Integer numfiles = new File("testshare").list().length;
+		assertTrue(numfiles.equals(1));
+	}
 	
 }

@@ -1,12 +1,14 @@
 package info.rmapproject.transformer.model;
 
 import java.io.File;
+import java.util.Iterator;
 
 /**
  * Supports iteration through files on a particular path to retrieve JSON records one at a time
  * @author khanson
+ * @param <E>
  */
-public class JsonFileRecordIterator implements FileRecordIterator {
+public class JsonFileRecordIterator<E> implements Iterator<String> {
 	
 	/**
 	 * Stores file list so that we don't need to rebuild the file list for each record request
@@ -85,7 +87,7 @@ public class JsonFileRecordIterator implements FileRecordIterator {
        
     public boolean hasNext(){
 	   	//are we on last record of last file?
-		return (!inputFileList.hasNext() && !records.hasNext());
+		return (inputFileList.hasNext() || records.hasNext());
     }
 	
 }

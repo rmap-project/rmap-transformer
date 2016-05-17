@@ -19,7 +19,7 @@ public abstract class TransformMgr {
         
     /** For output DiSCO files, a simple naming convention embeds a counter number
      *  This is the starting value for this counter.     */
-    protected static final Integer COUNTER_START= 10000000;
+    protected static final Integer COUNTER_START= 10000001;
 	
 	/**
 	* Template for disco filename.  outputFileExt will be added to the end, 
@@ -88,6 +88,15 @@ public abstract class TransformMgr {
 		uniqueval = uniqueval.replaceAll("[^a-zA-Z0-9.-]", "_"); //make filename safe
 		String newFilename = this.discoFilenameTemplate.replace("####",uniqueval);
 		return newFilename;
+	}
+	
+	/**
+	 * Generates filename for new file using the discoFilenameTemplate and a value provided by the transform process
+	 * - often this will be a counter if a simple uniqueid is unavailable.
+	 * @return filename
+	 */
+	protected String getNewFilename(Integer counter){
+		return getNewFilename(counter.toString());
 	}
 	
 

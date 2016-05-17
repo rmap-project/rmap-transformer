@@ -103,7 +103,7 @@ public class JsonRecordList {
 	 * @return
 	 */
     public boolean hasNext() {
-    	//are we on last record of last file?
+    	//do we have another file?
     	return (this.size!=(currRecordIndex+1));
     }
     

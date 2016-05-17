@@ -4,10 +4,10 @@ import info.rmapproject.cos.share.client.model.Record;
 import info.rmapproject.transformer.DiscoConverter;
 import info.rmapproject.transformer.TransformMgr;
 import info.rmapproject.transformer.model.DiscoFile;
-import info.rmapproject.transformer.model.FileRecordIterator;
 import info.rmapproject.transformer.model.JsonFileRecordIterator;
 
 import java.io.OutputStream;
+import java.util.Iterator;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -48,43 +48,54 @@ public class ShareLocalTransformMgr extends TransformMgr {
 	 * Collect SHARE data from files on a particular path and transform them to DiSCOs.
 	 * @param inputpath - path of files to be converted
 	 * @param inputFileExt - file extension of files to be converted
-	 * @param maxNumRecords - limits many records should be processed.  Default is no limit
+	 * @param numRecords - limits many records should be processed.  Default is no limit
 	 * @return Integer number of records converted
 	 * @throws Exception
 	 */
-	public Integer transform(Integer maxNumRecords) throws Exception{		
-		//initiate importer for iteration through files
-		FileRecordIterator importer = new JsonFileRecordIterator(this.inputpath, this.inputFileExt, ROOT_ELEMENT);			
-				
+	public Integer transform(Integer numRecords) throws Exception{		
+		if (numRecords==null){
+			throw new IllegalArgumentException("numRecords cannot be null");
+		}
 		//Reset counter
-		Integer counter = COUNTER_START;
+		Integer counter = 0;
 		
+		//initiate importer for iteration through files
+		Iterator<String> iterator = 
+				new JsonFileRecordIterator<String>(this.inputpath, this.inputFileExt, ROOT_ELEMENT);			
+				
 		do {
+        	String docID = null;
+        	try {
+        		String record = iterator.next();
+        		if (record!=null){
+					// Convert JSON string to Object
+					ObjectMapper mapper = new ObjectMapper();
+		        	Record sharerec = (Record) mapper.readValue(record, Record.class);
+		        	
+					docID = sharerec.getShareProperties().getDocID();
+		
+					//pass a JSON record to mapper class and get back RDF
+					DiscoConverter discoConverter = new ShareDiscoConverter(sharerec);
+					OutputStream rdf = discoConverter.generateDiscoRdf();
+		
+					String filename = getNewFilename(counter+COUNTER_START);
+					DiscoFile disco = new DiscoFile(rdf, this.outputPath, filename);
+					disco.writeFile();
+					
+					counter = counter + 1;
+					log.info("DiSCO created: " + docID + " -> " + filename);
+        		}
+    		} catch (Exception e) {
+    			String logMsg = "Could not complete export for record " + counter + "\n Continuing to next record. Msg: " + e.getMessage();
+    			if (docID!=null){
+    				logMsg = "Could not complete export for docId: " + docID
+        					+ "\n Continuing to next record. Msg: " + e.getMessage();
+    			} 
+    			log.error(logMsg,e);
+    		}
+		} while (iterator.hasNext() && counter < numRecords);
 
-        	if ((counter-COUNTER_START) == maxNumRecords){
-        		//reached the maximum number of records
-        		log.info("Processing stopped because you've reached your target number of records. More records are available.");
-        		break;
-        	}
-			String record = importer.next();
-			counter = counter + 1;
-
-			// Convert JSON string to Object
-			ObjectMapper mapper = new ObjectMapper();
-			Record sharerec = (Record) mapper.readValue(record, Record.class);
-
-			//pass a JSON record to mapper class and get back RDF
-			DiscoConverter discoConverter = new ShareDiscoConverter(sharerec);
-			OutputStream rdf = discoConverter.generateDiscoRdf();
-
-			String filename = getNewFilename(counter.toString());
-			DiscoFile disco = new DiscoFile(rdf, this.outputPath, filename);
-			disco.writeFile();
-			
-		} while (!importer.hasNext());
-
-		Integer totalTransformed = counter - COUNTER_START ;
-		return totalTransformed;
+		return counter;
 	}
 	
 }

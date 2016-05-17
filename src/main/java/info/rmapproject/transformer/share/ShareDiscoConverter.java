@@ -139,8 +139,10 @@ public class ShareDiscoConverter extends DiscoConverter  {
 		}
 		
 		//title
+		if (record.getTitle()!=null && record.getTitle().length()>0){
 		stmt = factory.createStatement(canonicalUri, DCTERMS.TITLE, factory.createLiteral(record.getTitle()));
 		disco.add(stmt);
+		}
 		
 		//description
 		if (record.getDescription()!=null && record.getDescription().length()>0){
@@ -228,7 +230,7 @@ public class ShareDiscoConverter extends DiscoConverter  {
 			        	break;
 			        case FORMATS:
 						for (String format:propVal.getFormats()){
-							stmt = createStmtWithIRIorLiteralObject(subjectIri, DCTERMS.TYPE, format);
+							stmt = createStmtWithIRIorLiteralObject(subjectIri, DCTERMS.FORMAT, format);
 							if (stmt!=null) {
 								model.add(stmt);
 							}
@@ -276,7 +278,7 @@ public class ShareDiscoConverter extends DiscoConverter  {
 						break;
 			        case LINKS:
 						for (String link : propVal.getLinks()){
-							stmt = createStmtWithIRIorLiteralObject(subjectIri, DCTERMS.IDENTIFIER, link);
+							stmt = createStmtWithIRIorLiteralObject(subjectIri, RDFS.SEEALSO, link);
 							if (stmt!=null) {
 								model.add(stmt);
 							}
@@ -287,7 +289,7 @@ public class ShareDiscoConverter extends DiscoConverter  {
 							if (!relation.toString().equals(subjectIri.toString())){
 								try {
 									URI uriRelation = new URI (relation);
-									stmt = factory.createStatement(subjectIri, DCTERMS.IDENTIFIER, factory.createIRI(uriRelation.toString()));			
+									stmt = factory.createStatement(subjectIri, DCTERMS.RELATION, factory.createIRI(uriRelation.toString()));			
 								}catch (Exception e){
 									stmt = factory.createStatement(subjectIri, DCTERMS.RELATION, factory.createLiteral(relation));			
 								}

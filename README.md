@@ -21,18 +21,18 @@ $ java -jar rmap-transformer-0.1.jar -h
                             (default: SHARE)
  -dc (-discocreator) VAL  : Custom URI for DiSCO creator e.g.
                             http://rmap-project.org/agent/shareharvester-v1
-                            (default: )
- -dd (-discodesc) VAL     : Custom Description for DiSCO (default: )
+                            (default: [varies by type])
+ -dd (-discodesc) VAL     : Custom Description for DiSCO (default: [varies by type])
  -f (-queryfilters) VAL   : API request filters formatted in the style of a
                             querystring e.g. q=osf&size=30&sort=providerUpdatedD
-                            ateTime (default: )
+                            ateTime (default: [blank])
  -h (-help, --help)       : Print help message (default: true)
  -i (-inputpath) VAL      : Path that holds input data files (default: current
                             folder (default: .)
  -iex (-inputfileext) VAL : File extension for input data files (default: json)
                             (default: json)
  -n (-numrecords) N       : Maximum number of records to be converted.
-                            (default: 100) (default: 100)
+                            (default: 100)
  -o (-outputpath) VAL     : Path of output files(s) for DiSCOs (default: .)
  -src (-source) VAL       : Source of the data - either api or local (default:
                             local)
@@ -46,5 +46,11 @@ java -jar rmap-transformer-0.1.jar SHARE -src local -i jsonfiles/ -iex txt -o di
 ```
 This example reads in any files in the folder /jsonfiles/ and loops through retrieving SHARE records. 
 It converts these records to DiSCO RDF.
+
+Here is another example for running against an API:
+```
+java -jar rmap-transformer-0.1.jar SHARE -src api -o discofiles/ -oex disco  -f ?q=heart
+```
+
 
 

@@ -19,10 +19,7 @@ $ java -jar rmap-transformer-0.1.jar -h
  Transform type           : Type of transform. Options available: SHARE,
                             OSF_REGISTRATIONS, OSF_USERS (default: SHARE)
                             (default: SHARE)
- -dc (-discocreator) VAL  : Custom URI for DiSCO creator e.g.
-                            http://rmap-project.org/agent/shareharvester-v1
-                            (default: [varies by type])
- -dd (-discodesc) VAL     : Custom Description for DiSCO (default: [varies by type])
+ -desc (-discodesc) VAL   : Custom Description for DiSCO (default: [varies by type])
  -f (-queryfilters) VAL   : API request filters formatted in the style of a
                             querystring e.g. q=osf&size=30&sort=providerUpdatedD
                             ateTime (default: [blank])

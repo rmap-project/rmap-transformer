@@ -1,10 +1,14 @@
-package info.rmapproject.transformer.model;
+package info.rmapproject.transformer;
 
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.OutputStream;
 
+import org.openrdf.model.Model;
+import org.openrdf.rio.RDFFormat;
+import org.openrdf.rio.Rio;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,10 +18,10 @@ public class DiscoFile {
     
 	private String filename;
 	private String filepath;
-	private OutputStream rdf;
+	private Model model;
 		
-	public DiscoFile(OutputStream rdf, String filepath, String filename){
-		if (rdf==null){
+	public DiscoFile(Model model, String filepath, String filename){
+		if (model==null){
 			throw new IllegalArgumentException("rdf cannot be null");
 		}
 		if (filepath==null){
@@ -26,7 +30,7 @@ public class DiscoFile {
 		if (filename==null){
 			throw new IllegalArgumentException("filename cannot be null");
 		}
-		this.rdf = rdf;
+		this.model = model;
 		//add forward slash to end of filepath to make sure folder name parsed correctly
 		//unless the filepath is blank, in which case it will write to classpath folder.
 		if (filepath=="."){
@@ -46,6 +50,8 @@ public class DiscoFile {
 		String writePath = null;
 		writePath = this.filepath + this.filename;
 
+		OutputStream rdf = generateRdf(model);
+		
 		File outputFile = new File(writePath);
 		try {
 			if  (outputFile.createNewFile()) {
@@ -64,5 +70,19 @@ public class DiscoFile {
 			System.exit(0);		
 		}
 	}
+	
+	
+	protected static OutputStream generateRdf(Model model) {
+		OutputStream bOut = new ByteArrayOutputStream();
+		try {
+			Rio.write(model, bOut, RDFFormat.TURTLE);
+		} catch (Exception e) {
+			throw new RuntimeException("Exception thrown creating RDF from statement list", e);
+		}
+		return bOut;	
+	}
+	
+	
+	
 	
 }

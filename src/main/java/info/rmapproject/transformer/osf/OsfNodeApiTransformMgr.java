@@ -30,11 +30,11 @@ import com.github.jasminb.jsonapi.retrofit.JSONAPIConverterFactory;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 
-public class OsfRegApiTransformMgr extends TransformMgr {
+public class OsfNodeApiTransformMgr extends TransformMgr {
 	
     private String filters;
            
-    public OsfRegApiTransformMgr(String outputpath, String filters, String discoDescription){
+    public OsfNodeApiTransformMgr(String outputpath, String filters, String discoDescription){
     	super(outputpath, discoDescription);
     	this.filters = filters;
     }
@@ -63,31 +63,31 @@ public class OsfRegApiTransformMgr extends TransformMgr {
 			throw new IllegalArgumentException("URL invalid, parameters could not be parsed");
 		}
 
-		List<Registration> registrations = tempGetRegList(params);
+		List<Node> nodes = tempGetNodeList(params);
         
-        for (Registration reg : registrations) {
+        for (Node node : nodes) {
         	if (counter==numRecords) {
         		break;
         	}
-	        String regId = null;
+	        String nodeId = null;
     		try {
-    			if (reg!=null){
-    				regId = reg.getId();
+    			if (node!=null){
+    				nodeId = node.getId();
 		          	
-    				DiscoModel discoModel = new OsfRegistrationDiscoModel(reg);
+    				DiscoModel discoModel = new OsfNodeDiscoModel(node);
 					Model model = discoModel.getModel();
 					
-					String filename = getNewFilename(regId);
+					String filename = getNewFilename(nodeId);
 					DiscoFile disco = new DiscoFile(model, this.outputPath, filename);
 					disco.writeFile();
 		        	
 					counter = counter + 1;
-					log.info("DiSCO created: " + regId + " -> " + filename);
+					log.info("DiSCO created: " + nodeId + " -> " + filename);
     			}
     		} catch (Exception e) {
-    			String logMsg = "Could not complete export for registration " + counter + "\n Continuing to next record. Msg: " + e.getMessage();
-    			if (reg!=null){
-    				logMsg = "Could not complete export for regId: " + regId
+    			String logMsg = "Could not complete export for node " + counter + "\n Continuing to next record. Msg: " + e.getMessage();
+    			if (node!=null){
+    				logMsg = "Could not complete export for nodeId: " + nodeId
         					+ "\n Continuing to next record. Msg: " + e.getMessage();
     			} 
     			log.error(logMsg,e);
@@ -103,7 +103,7 @@ public class OsfRegApiTransformMgr extends TransformMgr {
 	 * @return
 	 * @throws Exception
 	 */
-	private List<Registration> tempGetRegList(Map<String,String> params) throws Exception{	
+	private List<Node> tempGetNodeList(Map<String,String> params) throws Exception{	
 		URI baseUrl = new URI("http://192.168.99.100:8000/v2/");
 		
     	// Create object mapper
@@ -132,14 +132,14 @@ public class OsfRegApiTransformMgr extends TransformMgr {
 
         OsfService osfSvc = retrofit.create(OsfService.class);
 
-        Call<List<Registration>> listCall = osfSvc.registrationList(params);
-        Response<List<Registration>> res = listCall.execute();
+        Call<List<Node>> listCall = osfSvc.nodeList(params);
+        Response<List<Node>> res = listCall.execute();
        
-        List<Registration> registrations = null;
+        List<Node> nodes = null;
         if (res.isSuccess()) {
-         	registrations = res.body();
+        	nodes = res.body();
         }
-        return registrations;
+        return nodes;
 	}
 	
 	

@@ -55,6 +55,12 @@ public class Terms {
 	public static final String SCORO_NAMESPACE = "http://purl.org/spar/scoro/";
 	public static final String SCORO_PREFIX = "scoro";
 	public static final String AFFILIATE = "affiliate";
+		
+
+	/*Premis vocabulary constants*/
+	public static final String PREMIS_NAMESPACE = "http://www.loc.gov/premis/rdf/v1#";
+	public static final String PREMIS_PREFIX = "premis";
+	public static final String FILE = "File";
 	
 	/*Harvester names*/
 	public static final String RMAPAGENT_NAMESPACE = "http://rmap-project.org/rmap/agents/";
@@ -90,6 +96,8 @@ public class Terms {
 	public static final IRI FRAPO_FUNDING;
 	/** fabio:Expression */
 	public static final IRI FABIO_EXPRESSION;
+	/** premis:File */
+	public static final IRI PREMIS_FILE;
 	
 	static {
 		final ValueFactory f = SimpleValueFactory.getInstance();
@@ -107,6 +115,7 @@ public class Terms {
 		FRAPO_ISAWARDEDBY = f.createIRI(FRAPO_NAMESPACE, ISAWARDEDBY);		
 		FRAPO_FUNDINGAGENCY = f.createIRI(FRAPO_NAMESPACE, FUNDINGAGENCY);		
 		FRAPO_FUNDING = f.createIRI(FRAPO_NAMESPACE, FUNDING);		
-		FABIO_EXPRESSION = f.createIRI(FABIO_NAMESPACE, EXPRESSION);		
+		FABIO_EXPRESSION = f.createIRI(FABIO_NAMESPACE, EXPRESSION);	
+		PREMIS_FILE = f.createIRI(PREMIS_NAMESPACE, FILE);		
 	}
 }

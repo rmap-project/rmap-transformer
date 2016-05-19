@@ -1,13 +1,14 @@
 package info.rmapproject.transformer.share;
 
 import info.rmapproject.cos.share.client.model.Record;
-import info.rmapproject.transformer.DiscoConverter;
+import info.rmapproject.transformer.DiscoFile;
+import info.rmapproject.transformer.DiscoModel;
 import info.rmapproject.transformer.TransformMgr;
-import info.rmapproject.transformer.model.DiscoFile;
-import info.rmapproject.transformer.model.JsonFileRecordIterator;
+import info.rmapproject.transformer.fileiterator.JsonFileRecordIterator;
 
-import java.io.OutputStream;
 import java.util.Iterator;
+
+import org.openrdf.model.Model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -27,12 +28,12 @@ public class ShareLocalTransformMgr extends TransformMgr {
 	private String inputFileExt;
 	
 	public ShareLocalTransformMgr(String outputpath, String inputpath, String inputFileExt){
-		this(outputpath, inputpath, inputFileExt, null, null);
+		this(outputpath, inputpath, inputFileExt, null);
 	}	
 
 	
-	public ShareLocalTransformMgr(String outputpath, String inputpath, String inputFileExt, String discoCreator, String discoDescription){
-		super(outputpath, discoCreator, discoDescription);
+	public ShareLocalTransformMgr(String outputpath, String inputpath, String inputFileExt, String discoDescription){
+		super(outputpath, discoDescription);
 		if (inputpath==null){
 			throw new IllegalArgumentException("inputpath cannot be null");
 		}
@@ -75,8 +76,8 @@ public class ShareLocalTransformMgr extends TransformMgr {
 					docID = sharerec.getShareProperties().getDocID();
 		
 					//pass a JSON record to mapper class and get back RDF
-					DiscoConverter discoConverter = new ShareDiscoConverter(sharerec);
-					OutputStream rdf = discoConverter.generateDiscoRdf();
+					DiscoModel discoModel = new ShareDiscoModel(sharerec, discoDescription);
+					Model rdf = discoModel.getModel();
 		
 					String filename = getNewFilename(counter+COUNTER_START);
 					DiscoFile disco = new DiscoFile(rdf, this.outputPath, filename);

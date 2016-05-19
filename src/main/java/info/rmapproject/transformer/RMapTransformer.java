@@ -1,5 +1,6 @@
 package info.rmapproject.transformer;
 
+import info.rmapproject.transformer.osf.OsfNodeApiTransformMgr;
 import info.rmapproject.transformer.osf.OsfRegApiTransformMgr;
 import info.rmapproject.transformer.share.ShareApiTransformMgr;
 import info.rmapproject.transformer.share.ShareLocalTransformMgr;
@@ -28,6 +29,7 @@ public class RMapTransformer {
 	private static final String TYPE_SHARE="SHARE";
 	private static final String TYPE_OSF_REGISTRATIONS="OSF_REGISTRATIONS";
 	private static final String TYPE_OSF_USERS="OSF_USERS";
+	private static final String TYPE_OSF_NODES="OSF_NODES";
 	
 	private static final String SOURCE_API = "api";
 	private static final String SOURCE_LOCAL = "local";
@@ -41,6 +43,7 @@ public class RMapTransformer {
     @Argument(index = 0, metaVar = "Transform type", usage = "Type of transform. Options available: "
     														+ "SHARE, "
     														+ "OSF_REGISTRATIONS, "
+    														+ "OSF_NODES, "
     														+ "OSF_USERS "
     														+ "(default: SHARE)")
     private String transformType = DEFAULT_TYPE;
@@ -65,12 +68,8 @@ public class RMapTransformer {
     @Option(name = "-o", aliases = {"-outputpath"}, usage = "Path of output files(s) for DiSCOs")
     public String outputpath = ".";
 
-    /** DiSCO creator URI */
-    @Option(name = "-dc", aliases = {"-discocreator"}, usage = "Custom URI for DiSCO creator e.g. http://rmap-project.org/agent/shareharvester-v1")
-    public String discoCreator = "";
-
     /** DiSCO description */
-    @Option(name = "-dd", aliases = {"-discodesc"}, usage = "Custom Description for DiSCO")
+    @Option(name = "-desc", aliases = {"-discodesc"}, usage = "Custom Description for DiSCO")
     public String discoDescription = "";
     
     /** File extension for DiSCO metadata file(s) */
@@ -134,17 +133,20 @@ public class RMapTransformer {
 		Integer totalTransformed = 0;
 		if (transformType.equals(TYPE_SHARE)){
 			if (source.equals(SOURCE_API)){
-				TransformMgr datatransform = new ShareApiTransformMgr(outputpath, filters, discoCreator, discoDescription);
+				TransformMgr datatransform = new ShareApiTransformMgr(outputpath, filters, discoDescription);
 				totalTransformed = datatransform.transform(numrecords);
 			} else {
-				TransformMgr datatransform = new ShareLocalTransformMgr(outputpath, inputpath, inputFileExtension, discoCreator, discoDescription);
+				TransformMgr datatransform = new ShareLocalTransformMgr(outputpath, inputpath, inputFileExtension, discoDescription);
 				totalTransformed = datatransform.transform(numrecords);
 			}
 		} else if (transformType.equals(TYPE_OSF_REGISTRATIONS)){
-			TransformMgr datatransform = new OsfRegApiTransformMgr(outputpath, filters, discoCreator, discoDescription);
+			TransformMgr datatransform = new OsfRegApiTransformMgr(outputpath, filters, discoDescription);
+			totalTransformed = datatransform.transform(numrecords);
+		} else if (transformType.equals(TYPE_OSF_NODES)){
+			TransformMgr datatransform = new OsfNodeApiTransformMgr(outputpath, filters, discoDescription);
 			totalTransformed = datatransform.transform(numrecords);
 		} else if (transformType.equals(TYPE_OSF_USERS)) {
-			TransformMgr datatransform = new OsfRegApiTransformMgr(outputpath, filters, discoCreator, discoDescription);
+			TransformMgr datatransform = new OsfRegApiTransformMgr(outputpath, filters, discoDescription);
 			totalTransformed = datatransform.transform(numrecords);
 		}
 		

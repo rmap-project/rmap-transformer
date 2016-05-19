@@ -1,4 +1,4 @@
-package info.rmapproject.transformer.model;
+package info.rmapproject.transformer.fileiterator;
 
 import java.io.File;
 import java.nio.charset.Charset;

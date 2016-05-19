@@ -2,13 +2,14 @@ package info.rmapproject.transformer.share;
 
 import info.rmapproject.cos.share.client.model.Record;
 import info.rmapproject.cos.share.client.service.ShareApiIterator;
-import info.rmapproject.transformer.DiscoConverter;
+import info.rmapproject.transformer.DiscoFile;
+import info.rmapproject.transformer.DiscoModel;
 import info.rmapproject.transformer.TransformMgr;
-import info.rmapproject.transformer.model.DiscoFile;
 
-import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.util.HashMap;
+
+import org.openrdf.model.Model;
 
 /**
  * Manages the transform of SHARE data read directly from API
@@ -21,11 +22,11 @@ public class ShareApiTransformMgr extends TransformMgr {
     private String requestpath;
 
 	public ShareApiTransformMgr(String outputpath, String requestpath){
-		this(outputpath, requestpath, null, null);
+		this(outputpath, requestpath, null);
 	}
 	
-    public ShareApiTransformMgr(String outputpath, String requestpath, String discoCreator, String discoDescription){
-    	super(outputpath, discoCreator, discoDescription);
+    public ShareApiTransformMgr(String outputpath, String requestpath, String discoDescription){
+    	super(outputpath, discoDescription);
     	if (requestpath==null){
     		throw new IllegalArgumentException("requestpath cannot be null");
     	}
@@ -64,11 +65,11 @@ public class ShareApiTransformMgr extends TransformMgr {
     			if (record!=null){
     				docID = record.getShareProperties().getDocID();
 		          	
-    				DiscoConverter discoConverter = new ShareDiscoConverter(record);
-					OutputStream rdf = discoConverter.generateDiscoRdf();
+    				DiscoModel discoModel = new ShareDiscoModel(record, discoDescription);
+					Model model = discoModel.getModel();
 					
 					String filename = getNewFilename(counter+COUNTER_START);
-					DiscoFile disco = new DiscoFile(rdf, this.outputPath, filename);
+					DiscoFile disco = new DiscoFile(model, this.outputPath, filename);
 					disco.writeFile();
 		        	
 					counter = counter + 1;

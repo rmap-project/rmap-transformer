@@ -34,26 +34,17 @@ public abstract class TransformMgr {
 	 * Output path for new DiSCOs
 	 */
 	protected String outputPath=".";
-	protected URI discoCreator = null;
 	protected String discoDescription="";
 			
 	/**
 	 * Initialize transformer with outputpath
 	 * @param outputPath
 	 */
-	protected TransformMgr(String outputPath, String discoCreator, String discoDescription) {
+	protected TransformMgr(String outputPath, String discoDescription) {
 		if (outputPath==null){
 			throw new IllegalArgumentException("outputPath cannot be null");
 		}
 		this.outputPath = outputPath;
-		discoCreator = Utils.setEmptyToNull(discoCreator);
-		if (discoCreator!=null){
-			try {
-				this.discoCreator = new URI(discoCreator);
-			} catch(URISyntaxException e){
-				throw new IllegalArgumentException("DiSCO Creator must be a valid URI", e);
-			}
-		}
 		discoDescription = Utils.setEmptyToNull(discoDescription);
 		this.discoDescription = discoDescription;
 	}

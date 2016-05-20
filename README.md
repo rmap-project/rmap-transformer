@@ -17,7 +17,7 @@ Use -h to show the help screen:
 ```
 $ java -jar rmap-transformer-0.1.jar -h
  Transform type           : Type of transform. Options available: SHARE,
-                            OSF_REGISTRATIONS, OSF_USERS (default: SHARE)
+                            OSF_REGISTRATIONS, OSF_NODES, OSF_USERS (default: SHARE)
                             (default: SHARE)
  -desc (-discodesc) VAL   : Custom Description for DiSCO (default: [varies by type])
  -f (-queryfilters) VAL   : API request filters formatted in the style of a

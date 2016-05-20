@@ -50,6 +50,7 @@ public class Terms {
 	public static final String FABIO_NAMESPACE = "http://purl.org/spar/fabio/";
 	public static final String FABIO_PREFIX = "fabio";
 	public static final String EXPRESSION = "Expression";
+	public static final String COMPUTERFILE = "ComputerFile";
 
 	/*SCORO vocabulary constants*/
 	public static final String SCORO_NAMESPACE = "http://purl.org/spar/scoro/";
@@ -96,6 +97,8 @@ public class Terms {
 	public static final IRI FRAPO_FUNDING;
 	/** fabio:Expression */
 	public static final IRI FABIO_EXPRESSION;
+	/** fabio:ComputerFile */
+	public static final IRI FABIO_COMPUTERFILE;
 	/** premis:File */
 	public static final IRI PREMIS_FILE;
 	
@@ -116,6 +119,7 @@ public class Terms {
 		FRAPO_FUNDINGAGENCY = f.createIRI(FRAPO_NAMESPACE, FUNDINGAGENCY);		
 		FRAPO_FUNDING = f.createIRI(FRAPO_NAMESPACE, FUNDING);		
 		FABIO_EXPRESSION = f.createIRI(FABIO_NAMESPACE, EXPRESSION);	
+		FABIO_COMPUTERFILE = f.createIRI(FABIO_NAMESPACE, COMPUTERFILE);
 		PREMIS_FILE = f.createIRI(PREMIS_NAMESPACE, FILE);		
 	}
 }

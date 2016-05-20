@@ -4,7 +4,6 @@ import info.rmapproject.transformer.DiscoModel;
 import info.rmapproject.transformer.vocabulary.Terms;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
 import java.net.URLEncoder;
 import java.util.List;
 
@@ -12,10 +11,10 @@ import org.dataconservancy.cos.osf.client.model.Category;
 import org.dataconservancy.cos.osf.client.model.Contributor;
 import org.dataconservancy.cos.osf.client.model.File;
 import org.dataconservancy.cos.osf.client.model.Node;
+import org.dataconservancy.cos.osf.client.model.NodeBase;
 import org.dataconservancy.cos.osf.client.model.Registration;
 import org.openrdf.model.IRI;
 import org.openrdf.model.Model;
-import org.openrdf.model.Resource;
 import org.openrdf.model.vocabulary.DCTERMS;
 import org.openrdf.model.vocabulary.FOAF;
 import org.openrdf.model.vocabulary.RDF;
@@ -29,9 +28,10 @@ import org.openrdf.model.vocabulary.SKOS;
  * @author khanson
  *
  */
+
 public class OsfNodeDiscoModel extends DiscoModel {
 
-	private Node node;
+	private Node record;
 
 	protected static final String DEFAULT_CREATOR = Terms.RMAPAGENT_NAMESPACE + "RMap-OSF-Harvester-0.1";
 	protected static final String DEFAULT_DESCRIPTION = "Record harvested from OSF API";
@@ -41,53 +41,48 @@ public class OsfNodeDiscoModel extends DiscoModel {
 	protected static final String OSF_PROJECT = "http://osf.io/terms/Project";
 	protected static final String OSF_CATEGORY = "http://osf.io/terms/category/";
 	
-	/**
-	 * Constructor for Registrations to pass params up to super()
-	 * @param discoCreator
-	 * @param discoDescription
-	 */
-	protected OsfNodeDiscoModel(URI discoCreator, String discoDescription){
-		super(discoCreator, discoDescription);
-	}
-	/**
-	 * Constructor for Registrations to pass params up to super()
-	 * @param discoCreator
-	 * @param discoDescription
-	 */
-	protected OsfNodeDiscoModel(String discoCreator, String discoDescription){
-		super(discoCreator, discoDescription);
-	}
 	
 	/**
-	 * Initiates converter - uses values provided for discoCreator and discoDescription
-	 * @param record
+	 * Constructor for Node to pass default params up to super()
+	 * @param discoCreator
+	 * @param discoDescription
 	 */
-	public OsfNodeDiscoModel(Node node, URI discoCreator, String discoDescription){
-		this(discoCreator, discoDescription);
-		if (node==null){
-			throw new IllegalArgumentException("Record cannot be null");
-		}
-		this.node = node;
+	public OsfNodeDiscoModel(){
+		super(DEFAULT_CREATOR, DEFAULT_DESCRIPTION);
+	}
+	
+	
+	/**
+	 * Constructor for Node to pass params up to super()
+	 * @param discoDescription
+	 */
+	public OsfNodeDiscoModel(String discoDescription){
+		super(DEFAULT_CREATOR, discoDescription);
 	}
 		
+	
 	/**
-	 * Initiates converter - will assign default values to discoCreator and discoDescription
-	 * @param record
+	 * Constructor for Node to pass params up to super()
+	 * @param discoCreator
+	 * @param discoDescription
 	 */
-	public OsfNodeDiscoModel(Node node){
-		this(DEFAULT_CREATOR, DEFAULT_DESCRIPTION);
-		if (node==null){
-			throw new IllegalArgumentException("Node cannot be null");
-		}
-		this.node = node;
+	public OsfNodeDiscoModel(String discoCreator, String discoDescription){
+		super(discoCreator, discoDescription);
+	}
+
+
+	
+	@Override
+	public void setRecord(Object record) {
+		this.record = (Node) record;
 	}
 	
 	@Override
-	public Model getModel() throws Exception 	{		
+	public Model getModel()	{		
 								
 		//disco header
 		addDiscoHeader();
-		addNode(node, null);
+		addNode(record, null);
 		
 		//fill in
 		
@@ -117,7 +112,7 @@ public class OsfNodeDiscoModel extends DiscoModel {
 		addLiteralStmt(nodeId, DCTERMS.DESCRIPTION, node.getDescription());
 		
 		addContributors(node.getContributors(), nodeId);				
-		addChildNodes(node.getChildNodes(), nodeId);
+		addChildNodes(node.getChildren(), nodeId);
 		addFiles(node, nodeId);
 	}
 	
@@ -134,27 +129,6 @@ public class OsfNodeDiscoModel extends DiscoModel {
 			}
 		}
 		
-	}
-	
-	
-	
-	/**
-	 * Convert an OSF API path to a OSF URL - will only work correctly if ID at end of path.
-	 * e.g. for https://api.osf.io/v2/registrations/sdfkj/ sdfkj will be extracted
-	 * @param linkUrl
-	 * @return
-	 */
-	protected static Resource extractOsfNodeId(String linkUrl){
-		if (linkUrl!=null && linkUrl.length()>0){
-			if (linkUrl.endsWith("/")){
-				linkUrl = linkUrl.substring(0,linkUrl.length()-1);
-			}
-			String id = linkUrl.substring(linkUrl.lastIndexOf('/') + 1);							
-			Resource origNodeId = factory.createIRI(OSF_PATH_PREFIX + id);
-			return origNodeId;
-		} else {
-			return null;
-		}		
 	}
 	
 	
@@ -190,7 +164,7 @@ public class OsfNodeDiscoModel extends DiscoModel {
 			File file = (File) root;
 			files = file.getFiles();
 		} else if (root instanceof Node){
-			Node node = (Node) root;
+			NodeBase node = (NodeBase) root;
 			files = node.getFiles();
 		}
 		
@@ -210,7 +184,7 @@ public class OsfNodeDiscoModel extends DiscoModel {
 		if (file.getKind().equals("file")){
 			IRI fileId = factory.createIRI(file.getLinks().get("download").toString());
 			addStmt(parentRegId, DCTERMS.HAS_PART, fileId);
-			addStmt(fileId, RDF.TYPE, Terms.PREMIS_FILE);		
+			addStmt(fileId, RDF.TYPE, Terms.FABIO_COMPUTERFILE);		
 			//TODO:giving these temp predicates... need to find terms for these
 			addLiteralStmt(fileId, RDFS.LABEL, file.getName());
 			addLiteralStmt(fileId, SKOS.ALT_LABEL, file.getMaterialized_path());

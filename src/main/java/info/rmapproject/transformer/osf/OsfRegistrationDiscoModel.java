@@ -2,7 +2,6 @@ package info.rmapproject.transformer.osf;
 
 import info.rmapproject.transformer.vocabulary.Terms;
 
-import java.net.URI;
 import java.util.List;
 
 import org.dataconservancy.cos.osf.client.model.Registration;
@@ -21,38 +20,35 @@ import org.openrdf.model.vocabulary.RDF;
  */
 public class OsfRegistrationDiscoModel extends OsfNodeDiscoModel {
 
-	private Registration reg;
-	
-	/**
-	 * Initiates converter - uses values provided for discoCreator and discoDescription
-	 * @param record
-	 */
-	public OsfRegistrationDiscoModel(Registration reg, URI discoCreator, String discoDescription){
-		super(discoCreator, discoDescription);
-		if (reg==null){
-			throw new IllegalArgumentException("Record cannot be null");
-		}
-		this.reg = reg;
-	}
+	private Registration record;
 		
 	/**
 	 * Initiates converter - will assign default values to discoCreator and discoDescription
 	 * @param record
 	 */
-	public OsfRegistrationDiscoModel(Registration reg){
+	public OsfRegistrationDiscoModel(){
 		super(DEFAULT_CREATOR, DEFAULT_DESCRIPTION);
-		if (reg==null){
-			throw new IllegalArgumentException("Record cannot be null");
-		}
-		this.reg = reg;
+	}
+
+	/**
+	 * Initiates converter - uses values provided for discoCreator and discoDescription
+	 * @param record
+	 */
+	public OsfRegistrationDiscoModel(String discoDescription){
+		super(DEFAULT_CREATOR, discoDescription);
 	}
 	
 	@Override
-	public Model getModel() throws Exception 	{		
+	public void setRecord(Object record){
+		this.record = (Registration) record;
+	}
+	
+	@Override
+	public Model getModel() {		
 								
 		//disco header
 		addDiscoHeader();
-		addRegistration(reg, null);
+		addRegistration(record, null);
 		
 		//fill in
 		
@@ -91,10 +87,11 @@ public class OsfRegistrationDiscoModel extends OsfNodeDiscoModel {
 //		}
 		
 		addContributors(registration.getContributors(), regId);				
-		addChildRegistrations(registration.getChildRegistrations(), regId);
+		addChildRegistrations(registration.getChildren(), regId);
 		
 		String regFrom = registration.getRegistered_from();
-		Resource origNodeId = extractOsfNodeId(regFrom);
+		String sOrigNodeId = OsfUtils.extractLastSubFolder(regFrom);							
+		Resource origNodeId = factory.createIRI(OSF_PATH_PREFIX + sOrigNodeId);
 		addStmt(regId, DCTERMS.IS_VERSION_OF, origNodeId);
 		addIriStmt(origNodeId, RDF.TYPE, OSF_PROJECT);
 		

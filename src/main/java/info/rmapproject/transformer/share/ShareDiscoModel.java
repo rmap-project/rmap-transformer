@@ -40,12 +40,8 @@ public class ShareDiscoModel extends DiscoModel  {
 	 * Initiates converter - will assign default values to discoCreator and discoDescription
 	 * @param record
 	 */
-	public ShareDiscoModel(Record record){
+	public ShareDiscoModel(){
 		super(DEFAULT_CREATOR, DEFAULT_DESCRIPTION);
-		if (record==null){
-			throw new IllegalArgumentException("Record cannot be null");
-		}
-		this.record = record;
 	}
 
 	/**
@@ -55,22 +51,25 @@ public class ShareDiscoModel extends DiscoModel  {
 	 * @param discoCreator
 	 * @param discoDescription
 	 */
-	public ShareDiscoModel(Record record, String discoDescription){
+	public ShareDiscoModel(String discoDescription){
 		super(DEFAULT_CREATOR, discoDescription);
-		if (record==null){
-			throw new IllegalArgumentException("Record cannot be null");
-		}
-		this.record = record;
 	}
+	
+
+	@Override
+	public void setRecord(Object record) {
+		this.record = (Record) record;
+	}
+	
 	
 	/**
 	 * Convert a single SHARE JSON Record object to an DiSCO.
 	 * @param record - in this case a JSON record using the SHARE data model.
 	 */
 	@Override
-	public Model getModel() throws Exception {		
+	public Model getModel() {		
 		if (record==null){
-			throw new IllegalArgumentException("Null or empty model");
+			throw new IllegalArgumentException("Must setRecord before retrieving model");
 		}		
 		
 		addDiscoHeader();
@@ -358,5 +357,6 @@ public class ShareDiscoModel extends DiscoModel  {
 			}	
 		}
 	}
+
 	
 }

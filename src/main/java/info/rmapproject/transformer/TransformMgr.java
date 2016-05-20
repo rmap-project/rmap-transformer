@@ -1,55 +1,101 @@
 package info.rmapproject.transformer;
 
-import info.rmapproject.cos.share.client.utils.Utils;
-
-import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.List;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.client.utils.URLEncodedUtils;
+import org.openrdf.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class TransformMgr {
+public class TransformMgr {
 
-    protected static final Logger log = LoggerFactory.getLogger(TransformMgr.class);
-        
+	private static final Logger log = LoggerFactory.getLogger(TransformMgr.class);
+
     /** For output DiSCO files, a simple naming convention embeds a counter number
      *  This is the starting value for this counter.     */
-    protected static final Integer COUNTER_START= 10000001;
-	
+    private static final Integer COUNTER_START= 10000001;
+    
 	/**
 	* Template for disco filename.  outputFileExt will be added to the end, 
-	* #### will be replaced with the current counter number.
+	* #### will be replaced with the record id.
 	*/
-	protected String discoFilenameTemplate = "DiSCO_####.rdf";
-    
-	/** maintains a list of records processed **/
-	protected File registry;
+    private String discoFilenameTemplate = "DiSCO_####.rdf";
+
+    /**
+	 * Iterator corresponding to the transform to be performed.
+	 */
+	private TransformIterator iterator;
+	
+	/**
+	 * Iterator corresponding to the transform to be performed.
+	 */
+	private DiscoModel discoModel;
 	
 	/**
 	 * Output path for new DiSCOs
 	 */
 	protected String outputPath=".";
-	protected String discoDescription="";
 			
 	/**
 	 * Initialize transformer with outputpath
 	 * @param outputPath
 	 */
-	protected TransformMgr(String outputPath, String discoDescription) {
+	protected TransformMgr(TransformIterator iterator, DiscoModel discoModel, String outputPath) {
+		if (iterator==null){
+			throw new IllegalArgumentException("iterator cannot be null");
+		}
+		if (discoModel==null){
+			throw new IllegalArgumentException("discoModel cannot be null");
+		}
 		if (outputPath==null){
 			throw new IllegalArgumentException("outputPath cannot be null");
 		}
+		this.iterator = iterator;
+		this.discoModel = discoModel;
 		this.outputPath = outputPath;
-		discoDescription = Utils.setEmptyToNull(discoDescription);
-		this.discoDescription = discoDescription;
 	}
 	
-	public abstract Integer transform(Integer numrecords) throws Exception;	
+	
+	public Integer transform(Integer numRecords) throws Exception {
+		if (numRecords==null){
+			throw new IllegalArgumentException("numRecords cannot be null");
+		}
+
+		//Reset counter
+		Integer counter = 0;
+        
+        Object record = null;
+		do {
+	        String id = null;
+    		try {
+    			record = iterator.next();
+    			if (record!=null){
+    				if (iterator.getCurrId()!=null) {
+    					id = iterator.getCurrId();
+    				} else {
+    					Integer i = COUNTER_START+counter;
+    					id = i.toString();
+    				}
+    				
+    				discoModel.setRecord(record);
+    				Model model = discoModel.getModel();
+					
+					String filename = getNewFilename(id);
+					DiscoFile disco = new DiscoFile(model, this.outputPath, filename);
+					disco.writeFile();
+		        	
+					counter = counter + 1;
+					log.info("DiSCO created: " + id + " -> " + filename);
+    			}
+    		} catch (Exception e) {
+    			String logMsg = "Could not complete export for record #" + counter + "\n Continuing to next record. Msg: " + e.getMessage();
+    			if (record!=null){
+    				logMsg = "Could not complete export for docId: " + id
+        					+ "\n Continuing to next record. Msg: " + e.getMessage();
+    			} 
+    			log.error(logMsg,e);
+    		}
+		} while(iterator.hasNext() && counter<numRecords);
+
+		return counter;		
+	}
 	
 	/**
 	* Set template for disco filename.  outputFileExt will be added to the end, 
@@ -90,30 +136,5 @@ public abstract class TransformMgr {
 		return getNewFilename(counter.toString());
 	}
 	
-
-	/**
-	 * Convert URL params to Map<String,String>
-	 * @param url 
-	 * @param charset
-	 * @return params
-	 * @exception URISyntaxException
-	 */
-	public static HashMap<String, String> readParamsIntoMap(String filters, String charset) throws URISyntaxException {
-		HashMap<String, String> params = new HashMap<>();
-		
-		String url = "http://fakeurl.fake";
-		if (!filters.startsWith("?")){
-			url = url + "?";
-		}
-		url = url + filters;
-		
-	    List<NameValuePair> result = URLEncodedUtils.parse(new URI(url), charset);
-
-	    for (NameValuePair nvp : result) {
-	        params.put(nvp.getName(), nvp.getValue());
-	    }
-
-	    return params;
-	}
 	
 }

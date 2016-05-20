@@ -1,13 +1,11 @@
 package info.rmapproject.transformer.osf;
 
-import info.rmapproject.transformer.DiscoFile;
-import info.rmapproject.transformer.DiscoModel;
-import info.rmapproject.transformer.TransformMgr;
+import info.rmapproject.transformer.TransformIterator;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.HashMap;
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +16,6 @@ import org.dataconservancy.cos.osf.client.model.Node;
 import org.dataconservancy.cos.osf.client.model.Registration;
 import org.dataconservancy.cos.osf.client.model.User;
 import org.dataconservancy.cos.osf.client.service.OsfService;
-import org.openrdf.model.Model;
 
 import retrofit.Call;
 import retrofit.Response;
@@ -30,73 +27,108 @@ import com.github.jasminb.jsonapi.retrofit.JSONAPIConverterFactory;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 
-public class OsfNodeApiTransformMgr extends TransformMgr {
+/**
+ * Retrieves and iterates over OSF Node data
+ * @author khanson
+ */
+public class OsfNodeApiTransformIterator extends TransformIterator {
 	
-    private String filters;
-           
-    public OsfNodeApiTransformMgr(String outputpath, String filters, String discoDescription){
-    	super(outputpath, discoDescription);
-    	this.filters = filters;
-    }
-    
-	/**
-	 * Collect OSF data from API and transform to DiSCOs
-	 * @param inputUrl - API url 
-	 * @param numRecords - number of records to retrieve. Will paginate if necessary.
-	 */
-	public Integer transform(Integer numRecords) throws Exception {
-		if (numRecords==null){
-			throw new IllegalArgumentException("numRecords cannot be null");
+	private int position = -1;
+    private List<Node> nodes = null;
+    private Node currNode = null;
+               
+    public OsfNodeApiTransformIterator(String filters) throws Exception{
+    	super(filters);
+		if (!params.containsKey("filter[public]")){
+			params.put("filter[public]", "true");
 		}
+		// this loads next record to be retrieved, each next() retrieves currReg and loads next one.
+		loadNext(); 
+    }    
 
-		//Reset counter
-		Integer counter = 0;
-		
-		// split out params
-		HashMap<String,String> params=null;
-		try{
-			params = readParamsIntoMap(this.filters, "UTF-8");
-			if (!params.containsKey("filter[public]")){
-				params.put("filter[public]", "true");
-			}
-		} catch(URISyntaxException e){
-			throw new IllegalArgumentException("URL invalid, parameters could not be parsed");
+	@Override
+	public Object next() {
+		Node node = null;
+		if (hasNext()){
+			node = currNode;
+			currId = node.getId();
+			loadNext();
+		} else {
+			throw new RuntimeException("No more Node records available in this batch");
 		}
-
-		List<Node> nodes = tempGetNodeList(params);
-        
-        for (Node node : nodes) {
-        	if (counter==numRecords) {
-        		break;
-        	}
-	        String nodeId = null;
-    		try {
-    			if (node!=null){
-    				nodeId = node.getId();
-		          	
-    				DiscoModel discoModel = new OsfNodeDiscoModel(node);
-					Model model = discoModel.getModel();
-					
-					String filename = getNewFilename(nodeId);
-					DiscoFile disco = new DiscoFile(model, this.outputPath, filename);
-					disco.writeFile();
-		        	
-					counter = counter + 1;
-					log.info("DiSCO created: " + nodeId + " -> " + filename);
-    			}
-    		} catch (Exception e) {
-    			String logMsg = "Could not complete export for node " + counter + "\n Continuing to next record. Msg: " + e.getMessage();
-    			if (node!=null){
-    				logMsg = "Could not complete export for nodeId: " + nodeId
-        					+ "\n Continuing to next record. Msg: " + e.getMessage();
-    			} 
-    			log.error(logMsg,e);
-    		}
-		} 
-
-		return counter;		
+		return node;
 	}
 
+
+	@Override
+	public boolean hasNext() {
+		return (currNode!=null);	
+	}
+
+	/**
+	 * Collect OSF data from API using parameters defined
+	 */
+	private void loadBatch() {
+		position = -1;
+    	try {
+    		nodes = tempGetNodeList(params);
+    	} catch(Exception e){
+    		log.error("Could not load list of records to iterate over, exiting.");
+    		throw new RuntimeException(e);
+    	}	
+	}
+	
+
+	private void loadNext(){
+		currNode = null;
+		if (nodes == null) {
+			loadBatch();
+		}
+		if (nodes.size()>0 && !isLastRow()){
+			Node node = null;
+			do {
+				//load next
+				position = position+1;
+				node = nodes.get(position);
+				if (!isTopAccessibleLevel(node)){
+					node = null;
+				}
+			} while ((node==null)&&!isLastRow());
+			currNode = node;			
+		}
+	}
+	
+	private boolean isLastRow(){
+		return (position==(nodes.size()-1));
+	}
+	
+
+	private boolean isTopAccessibleLevel(Node node){
+		//check if we are at top level
+		String root = node.getRoot();
+		String rootId = OsfUtils.extractLastSubFolder(root);
+		
+		if (!rootId.equals(node.getId())){
+			try {
+				URL url = new URL(root); 
+				HttpURLConnection connection = (HttpURLConnection)url.openConnection(); 
+				connection.setRequestMethod("GET"); connection.connect(); 
+				int code = connection.getResponseCode();
+				if (code==401){// process this
+					//need to go up parent paths.	
+					//TODO: code not easily available for this yet
+					return true;
+				} else {
+					return false;
+				}
+			} catch (Exception e){
+				throw new RuntimeException("Could not validate Node accessibility");
+			}
+		}
+		return true;
+	}	
+	
+	
 	/**
 	 * This method is temporary - just until the osf-client code is done.
 	 * @param params
@@ -141,6 +173,6 @@ public class OsfNodeApiTransformMgr extends TransformMgr {
         }
         return nodes;
 	}
-	
+
 	
 }

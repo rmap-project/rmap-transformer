@@ -1,9 +1,12 @@
 package info.rmapproject.transformer;
 
-import info.rmapproject.transformer.osf.OsfNodeApiTransformMgr;
-import info.rmapproject.transformer.osf.OsfRegApiTransformMgr;
-import info.rmapproject.transformer.share.ShareApiTransformMgr;
-import info.rmapproject.transformer.share.ShareLocalTransformMgr;
+import info.rmapproject.transformer.osf.OsfNodeApiTransformIterator;
+import info.rmapproject.transformer.osf.OsfNodeDiscoModel;
+import info.rmapproject.transformer.osf.OsfRegApiTransformIterator;
+import info.rmapproject.transformer.osf.OsfRegistrationDiscoModel;
+import info.rmapproject.transformer.share.ShareApiTransformIterator;
+import info.rmapproject.transformer.share.ShareDiscoModel;
+import info.rmapproject.transformer.share.ShareLocalTransformIterator;
 
 import java.io.File;
 
@@ -28,8 +31,8 @@ public class RMapTransformer {
 
 	private static final String TYPE_SHARE="SHARE";
 	private static final String TYPE_OSF_REGISTRATIONS="OSF_REGISTRATIONS";
-	private static final String TYPE_OSF_USERS="OSF_USERS";
 	private static final String TYPE_OSF_NODES="OSF_NODES";
+	private static final String TYPE_OSF_USERS="OSF_USERS";
 	
 	private static final String SOURCE_API = "api";
 	private static final String SOURCE_LOCAL = "local";
@@ -131,24 +134,26 @@ public class RMapTransformer {
 			outputFolder.mkdir();
 		}
 		Integer totalTransformed = 0;
+		TransformIterator iterator = null;
+		DiscoModel discoModel = null;
 		if (transformType.equals(TYPE_SHARE)){
+			discoModel = new ShareDiscoModel(discoDescription);
 			if (source.equals(SOURCE_API)){
-				TransformMgr datatransform = new ShareApiTransformMgr(outputpath, filters, discoDescription);
-				totalTransformed = datatransform.transform(numrecords);
+				iterator = new ShareApiTransformIterator(filters);
 			} else {
-				TransformMgr datatransform = new ShareLocalTransformMgr(outputpath, inputpath, inputFileExtension, discoDescription);
-				totalTransformed = datatransform.transform(numrecords);
+				iterator = new ShareLocalTransformIterator(inputpath, inputFileExtension);
 			}
 		} else if (transformType.equals(TYPE_OSF_REGISTRATIONS)){
-			TransformMgr datatransform = new OsfRegApiTransformMgr(outputpath, filters, discoDescription);
-			totalTransformed = datatransform.transform(numrecords);
+			discoModel = new OsfRegistrationDiscoModel(discoDescription);
+			iterator = new OsfRegApiTransformIterator(filters);
 		} else if (transformType.equals(TYPE_OSF_NODES)){
-			TransformMgr datatransform = new OsfNodeApiTransformMgr(outputpath, filters, discoDescription);
-			totalTransformed = datatransform.transform(numrecords);
+			discoModel = new OsfNodeDiscoModel(discoDescription);
+			iterator = new OsfNodeApiTransformIterator(filters);			
 		} else if (transformType.equals(TYPE_OSF_USERS)) {
-			TransformMgr datatransform = new OsfRegApiTransformMgr(outputpath, filters, discoDescription);
-			totalTransformed = datatransform.transform(numrecords);
+//			iterator = new OsfUserApiTransformIterator(filters);
 		}
+		TransformMgr datatransform = new TransformMgr(iterator, discoModel, outputpath);
+		totalTransformed = datatransform.transform(numrecords);
 		
 		log.info("Transform complete! " + totalTransformed.toString() + " records processed.");
 		

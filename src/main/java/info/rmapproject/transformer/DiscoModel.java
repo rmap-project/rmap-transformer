@@ -40,7 +40,7 @@ public abstract class DiscoModel {
 	 * @param discoCreator
 	 * @param discoDescription
 	 */
-	public DiscoModel(String discoCreator, String discoDescription){
+	protected DiscoModel(String discoCreator, String discoDescription){
 		this();
 		this.discoCreator = Utils.setEmptyToNull(discoCreator);	
 		this.discoDescription = Utils.setEmptyToNull(discoDescription);		
@@ -63,7 +63,8 @@ public abstract class DiscoModel {
 		this.discoDescription = Utils.setEmptyToNull(discoDescription);	
 	}
 
-	public abstract Model getModel() throws Exception;
+	public abstract Model getModel();
+	public abstract void setRecord(Object record);
 
 	/**
 	 * If all values are not null add a statement to the model 

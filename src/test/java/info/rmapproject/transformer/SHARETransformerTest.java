@@ -40,7 +40,7 @@ public class SHARETransformerTest {
 	@Test
 	public void testMain() {
 		String[] args = {"-i", inputPath, "-iex", "json", "-o", "testshare/"};
-		RMapTransformer.main(args);
+		RMapTransformCLI.main(args);
 		//check output files
 		Integer numfiles = new File("testshare").list().length;
 		assertTrue(numfiles.equals(30));
@@ -51,7 +51,7 @@ public class SHARETransformerTest {
 	@Test 
 	public void testShareApiTransform() throws Exception{
 		String[] args = {"-src", "api","-f", "?q=heart", "-n","32", "-o", "testshare/"};
-		RMapTransformer.main(args);
+		RMapTransformCLI.main(args);
 		//check output files
 		Integer numfiles = new File("testshare").list().length;
 		assertTrue(numfiles.equals(32));
@@ -60,7 +60,7 @@ public class SHARETransformerTest {
 	@Test 
 	public void testShareWithExactPaginationNum() throws Exception{
 		String[] args = {"-src", "api","-f", "?q=heart", "-n","30", "-o", "testshare/"};
-		RMapTransformer.main(args);
+		RMapTransformCLI.main(args);
 		//check output files
 		Integer numfiles = new File("testshare").list().length;
 		assertTrue(numfiles.equals(30));
@@ -69,7 +69,7 @@ public class SHARETransformerTest {
 	@Test 
 	public void testShareQueryWithNoMatches() throws Exception{
 		String[] args = {"-src", "api","-f", "?q=asdfda", "-n","5", "-o", "testshare/"};
-		RMapTransformer.main(args);
+		RMapTransformCLI.main(args);
 		//check output files
 		Integer numfiles = new File("testshare").list().length;
 		assertTrue(numfiles.equals(0));
@@ -78,7 +78,7 @@ public class SHARETransformerTest {
 	@Test 
 	public void testShareQueryWithOneMatch() throws Exception{
 		String[] args = {"-src", "api","-f", "?q=asdfd", "-n","5", "-o", "testshare/"};
-		RMapTransformer.main(args);
+		RMapTransformCLI.main(args);
 		//check output files
 		Integer numfiles = new File("testshare").list().length;
 		assertTrue(numfiles.equals(1));

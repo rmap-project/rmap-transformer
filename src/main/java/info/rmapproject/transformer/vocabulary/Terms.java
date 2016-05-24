@@ -26,6 +26,8 @@ public class Terms {
 	public static final String VCARD_NAMESPACE = "https://www.w3.org/2006/vcard/ns#";
 	public static final String VCARD_PREFIX = "vcard";
 	public static final String ADDITIONALNAME = "additional-name";
+	public static final String HONORIFICSUFFIX = "honorific-suffix";
+	
 	
 
 	/*PRO vocabulary constants*/
@@ -75,6 +77,8 @@ public class Terms {
 	public static final IRI ORE_AGGREGATES;
 	/** vcard:additional-name */
 	public static final IRI VCARD_ADDITIONALNAME;
+	/** vcard:honorific-suffix */
+	public static final IRI VCARD_HONORIFICSUFFIX;
 	/** pro:holdsRoleInTime */
 	public static final IRI PRO_HOLDSROLEINTIME;
 	/** pro:RoleInTime */
@@ -108,6 +112,7 @@ public class Terms {
 		RMAP_DISCO = f.createIRI(RMAP_NAMESPACE, DISCO);
 		ORE_AGGREGATES = f.createIRI(ORE_NAMESPACE, AGGREGATES);
 		VCARD_ADDITIONALNAME = f.createIRI(VCARD_NAMESPACE, ADDITIONALNAME);
+		VCARD_HONORIFICSUFFIX = f.createIRI(VCARD_NAMESPACE, HONORIFICSUFFIX);
 		PRO_HOLDSROLEINTIME = f.createIRI(PRO_NAMESPACE, HOLDSROLEINTIME);
 		PRO_ROLEINTIME = f.createIRI(PRO_NAMESPACE, ROLEINTIME);
 		PRO_WITHROLE = f.createIRI(PRO_NAMESPACE, WITHROLE);

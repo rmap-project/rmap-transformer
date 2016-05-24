@@ -1,6 +1,6 @@
 package info.rmapproject.transformer.osf;
 
-import info.rmapproject.transformer.DiscoModel;
+import info.rmapproject.transformer.DiscoBuilder;
 import info.rmapproject.transformer.vocabulary.Terms;
 
 import java.io.UnsupportedEncodingException;
@@ -15,6 +15,7 @@ import org.dataconservancy.cos.osf.client.model.NodeBase;
 import org.dataconservancy.cos.osf.client.model.Registration;
 import org.openrdf.model.IRI;
 import org.openrdf.model.Model;
+import org.openrdf.model.impl.LinkedHashModel;
 import org.openrdf.model.vocabulary.DCTERMS;
 import org.openrdf.model.vocabulary.FOAF;
 import org.openrdf.model.vocabulary.RDF;
@@ -29,7 +30,7 @@ import org.openrdf.model.vocabulary.SKOS;
  *
  */
 
-public class OsfNodeDiscoModel extends DiscoModel {
+public class OsfNodeDiscoBuilder extends DiscoBuilder {
 
 	private Node record;
 
@@ -47,7 +48,7 @@ public class OsfNodeDiscoModel extends DiscoModel {
 	 * @param discoCreator
 	 * @param discoDescription
 	 */
-	public OsfNodeDiscoModel(){
+	public OsfNodeDiscoBuilder(){
 		super(DEFAULT_CREATOR, DEFAULT_DESCRIPTION);
 	}
 	
@@ -56,7 +57,7 @@ public class OsfNodeDiscoModel extends DiscoModel {
 	 * Constructor for Node to pass params up to super()
 	 * @param discoDescription
 	 */
-	public OsfNodeDiscoModel(String discoDescription){
+	public OsfNodeDiscoBuilder(String discoDescription){
 		super(DEFAULT_CREATOR, discoDescription);
 	}
 		
@@ -66,7 +67,7 @@ public class OsfNodeDiscoModel extends DiscoModel {
 	 * @param discoCreator
 	 * @param discoDescription
 	 */
-	public OsfNodeDiscoModel(String discoCreator, String discoDescription){
+	public OsfNodeDiscoBuilder(String discoCreator, String discoDescription){
 		super(discoCreator, discoDescription);
 	}
 
@@ -75,11 +76,14 @@ public class OsfNodeDiscoModel extends DiscoModel {
 	@Override
 	public void setRecord(Object record) {
 		this.record = (Node) record;
+		discoId = null;
+		model = null;
 	}
 	
 	@Override
-	public Model getModel()	{		
-								
+	public Model getModel()	{
+		model = new LinkedHashModel();		
+		discoId = factory.createBNode(); 					
 		//disco header
 		addDiscoHeader();
 		addNode(record, null);
@@ -103,7 +107,7 @@ public class OsfNodeDiscoModel extends DiscoModel {
 		
 		addLiteralStmt(nodeId, DCTERMS.CREATED, node.getDate_created());
 		
-//		//TODO: add these - not yet part of API, but soon...
+//		TODO: add these - not yet part of API, but soon...
 //		addIriStmt(regId, DCTERMS.IDENTIFIER, registration.getArkId());
 //		addIriStmt(regId, DCTERMS.IDENTIFIER, registration.getDoi());
 		

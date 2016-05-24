@@ -1,5 +1,6 @@
 package info.rmapproject.transformer.osf;
 
+import info.rmapproject.transformer.Utils;
 import info.rmapproject.transformer.vocabulary.Terms;
 
 import java.util.List;
@@ -18,7 +19,7 @@ import org.openrdf.model.vocabulary.RDF;
  * @author khanson
  *
  */
-public class OsfRegistrationDiscoModel extends OsfNodeDiscoModel {
+public class OsfRegistrationDiscoBuilder extends OsfNodeDiscoBuilder {
 
 	private Registration record;
 		
@@ -26,7 +27,7 @@ public class OsfRegistrationDiscoModel extends OsfNodeDiscoModel {
 	 * Initiates converter - will assign default values to discoCreator and discoDescription
 	 * @param record
 	 */
-	public OsfRegistrationDiscoModel(){
+	public OsfRegistrationDiscoBuilder(){
 		super(DEFAULT_CREATOR, DEFAULT_DESCRIPTION);
 	}
 
@@ -34,7 +35,7 @@ public class OsfRegistrationDiscoModel extends OsfNodeDiscoModel {
 	 * Initiates converter - uses values provided for discoCreator and discoDescription
 	 * @param record
 	 */
-	public OsfRegistrationDiscoModel(String discoDescription){
+	public OsfRegistrationDiscoBuilder(String discoDescription){
 		super(DEFAULT_CREATOR, discoDescription);
 	}
 	
@@ -90,7 +91,7 @@ public class OsfRegistrationDiscoModel extends OsfNodeDiscoModel {
 		addChildRegistrations(registration.getChildren(), regId);
 		
 		String regFrom = registration.getRegistered_from();
-		String sOrigNodeId = OsfUtils.extractLastSubFolder(regFrom);							
+		String sOrigNodeId = Utils.extractLastSubFolder(regFrom);							
 		Resource origNodeId = factory.createIRI(OSF_PATH_PREFIX + sOrigNodeId);
 		addStmt(regId, DCTERMS.IS_VERSION_OF, origNodeId);
 		addIriStmt(origNodeId, RDF.TYPE, OSF_PROJECT);

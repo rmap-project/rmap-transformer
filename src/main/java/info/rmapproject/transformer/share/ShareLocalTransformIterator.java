@@ -1,8 +1,9 @@
 package info.rmapproject.transformer.share;
 
 import info.rmapproject.cos.share.client.model.Record;
-import info.rmapproject.transformer.TransformIterator;
 import info.rmapproject.transformer.fileiterator.JsonFileRecordIterator;
+import info.rmapproject.transformer.model.RecordDTO;
+import info.rmapproject.transformer.model.RecordType;
 
 import java.util.Iterator;
 
@@ -15,7 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author khanson
  *
  */
-public class ShareLocalTransformIterator extends TransformIterator {
+public class ShareLocalTransformIterator implements Iterator<RecordDTO> {
 
 	/** Root element for JSON record - will split on this field where there are multiple records **/
     protected static final String ROOT_ELEMENT = "results";
@@ -34,12 +35,7 @@ public class ShareLocalTransformIterator extends TransformIterator {
 	 * Iterates over file
 	 */
 	private Iterator<String> fileIterator;
-	
-	/**
-	 * ID for current JSON file - for this it will be ShareProperties.docId();
-	 */
-	private String currId = null;
-	
+		
 	public ShareLocalTransformIterator(String inputpath, String inputFileExt){
 		super();
 		if (inputpath==null){
@@ -58,25 +54,20 @@ public class ShareLocalTransformIterator extends TransformIterator {
 	
 
 	@Override
-	public Object next() {
-		Record sharerec = null;
+	public RecordDTO next() {
+		RecordDTO recordDTO = null;
 		try {
 			String record = fileIterator.next();
 			if (record!=null){
 				// Convert JSON string to Object
 				ObjectMapper mapper = new ObjectMapper();
-				sharerec = (Record) mapper.readValue(record, Record.class);
-	        	setCurrId(sharerec.getShareProperties().getDocID());
+				Record sharerec = (Record) mapper.readValue(record, Record.class);
+				recordDTO = new RecordDTO(sharerec,sharerec.getShareProperties().getDocID(), RecordType.SHARE);
 			}
 		} catch (Exception ex) {
 			throw new RuntimeException("Could not generate SHARE record", ex);
 		}
-		return sharerec;
-	}
-
-	@Override
-	public String getCurrId() {
-		return this.currId;
+		return recordDTO;
 	}
 
 	@Override

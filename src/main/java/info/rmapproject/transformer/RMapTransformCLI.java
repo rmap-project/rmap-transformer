@@ -1,14 +1,16 @@
 package info.rmapproject.transformer;
 
-import info.rmapproject.transformer.osf.OsfNodeApiTransformIterator;
-import info.rmapproject.transformer.osf.OsfNodeDiscoModel;
-import info.rmapproject.transformer.osf.OsfRegApiTransformIterator;
-import info.rmapproject.transformer.osf.OsfRegistrationDiscoModel;
+import info.rmapproject.transformer.model.RecordDTO;
+import info.rmapproject.transformer.model.RecordType;
+import info.rmapproject.transformer.model.TransformType;
+import info.rmapproject.transformer.osf.OsfClientService;
+import info.rmapproject.transformer.osf.OsfNodeApiIterator;
+import info.rmapproject.transformer.osf.OsfRegistrationApiIterator;
+import info.rmapproject.transformer.osf.OsfUserApiIterator;
 import info.rmapproject.transformer.share.ShareApiTransformIterator;
-import info.rmapproject.transformer.share.ShareDiscoModel;
 import info.rmapproject.transformer.share.ShareLocalTransformIterator;
 
-import java.io.File;
+import java.util.Iterator;
 
 import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.CmdLineException;
@@ -27,36 +29,28 @@ import org.slf4j.LoggerFactory;
  * @author khanson
  *
  */
-public class RMapTransformer {
+public class RMapTransformCLI {
 
-	private static final String TYPE_SHARE="SHARE";
-	private static final String TYPE_OSF_REGISTRATIONS="OSF_REGISTRATIONS";
-	private static final String TYPE_OSF_NODES="OSF_NODES";
-	private static final String TYPE_OSF_USERS="OSF_USERS";
-	
-	private static final String SOURCE_API = "api";
-	private static final String SOURCE_LOCAL = "local";
-	
-	private static final String DEFAULT_TYPE = TYPE_SHARE;
-	private static final String DEFAULT_SOURCE = SOURCE_LOCAL;
+	private static final String DEFAULT_TYPE = "SHARE";
+	private static final String DEFAULT_SOURCE = "api";
 	private static final String DEFAULT_INPUT_FILEEXT = "json";
-	private static final Integer DEFAULT_NUM_RECORDS = 100;
+	private static final Integer DEFAULT_NUM_RECORDS = 50;
 	
     /** Type of import e.g. SHARE, OSF_REGISTRATION, OSF_USER */
     @Argument(index = 0, metaVar = "Transform type", usage = "Type of transform. Options available: "
     														+ "SHARE, "
-    														+ "OSF_REGISTRATIONS, "
-    														+ "OSF_NODES, "
-    														+ "OSF_USERS "
+    														+ "OSF_REGISTRATION, "
+    														+ "OSF_NODE, "
+    														+ "OSF_USER "
     														+ "(default: SHARE)")
     private String transformType = DEFAULT_TYPE;
         
     /** Source of data - local or api **/
-    @Option(name="-src", aliases = {"-source"}, usage = "Source of the data - either api or local")
+    @Option(name="-src", aliases = {"-source"}, usage = "Source of the data - either api or local (default: api)")
     private String source = DEFAULT_SOURCE;
     
     /** API params **/
-    @Option(name="-f", aliases = {"-queryfilters"}, usage = "API request filters formatted in the style of a querystring e.g. q=osf&size=30&sort=providerUpdatedDateTime")
+    @Option(name="-f", aliases = {"-queryfilters"}, usage = "API request filters formatted in the style of a querystring e.g. q=osf&size=30&sort=providerUpdatedDateTime (default: no filters)")
     public String filters = "";
 	
     /** Path of file containing API data as JSON */
@@ -70,26 +64,30 @@ public class RMapTransformer {
     /** Path of file containing API data as JSON */
     @Option(name = "-o", aliases = {"-outputpath"}, usage = "Path of output files(s) for DiSCOs")
     public String outputpath = ".";
+    
+    /** Identifier of record to import */
+    @Option(name = "-id", aliases = {"-identifier"}, usage = "ID to import - supports import of a single record (valid for OSF requests only)")
+    public String identifier = "";
 
     /** DiSCO description */
     @Option(name = "-desc", aliases = {"-discodesc"}, usage = "Custom Description for DiSCO")
     public String discoDescription = "";
     
     /** File extension for DiSCO metadata file(s) */
-    @Option(name = "-n", aliases = {"-numrecords"}, usage = "Maximum number of records to be converted. (default: 100)")
+    @Option(name = "-n", aliases = {"-numrecords"}, usage = "Maximum number of records to be converted. (default: 50)")
     public Integer numrecords = DEFAULT_NUM_RECORDS;
 
     /** Request for help/usage documentation */
     @Option(name = "-h", aliases = {"-help", "--help"}, usage = "Print help message")
     public boolean help = false;
         
-    private static final Logger log = LoggerFactory.getLogger(RMapTransformer.class);
+    private static final Logger log = LoggerFactory.getLogger(RMapTransformCLI.class);
 	    
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-        final RMapTransformer application = new RMapTransformer();
+        final RMapTransformCLI application = new RMapTransformCLI();
 
         CmdLineParser parser =
                 new CmdLineParser(application, ParserProperties.defaults()
@@ -128,33 +126,66 @@ public class RMapTransformer {
     }	
 
 	public void run() throws Exception{
-		//if output folder isn't there, create it
-		File outputFolder = new File(outputpath);
-		if (!outputFolder.exists() || !outputFolder.isDirectory()) {
-			outputFolder.mkdir();
-		}
+
 		Integer totalTransformed = 0;
-		TransformIterator iterator = null;
-		DiscoModel discoModel = null;
-		if (transformType.equals(TYPE_SHARE)){
-			discoModel = new ShareDiscoModel(discoDescription);
-			if (source.equals(SOURCE_API)){
-				iterator = new ShareApiTransformIterator(filters);
-			} else {
-				iterator = new ShareLocalTransformIterator(inputpath, inputFileExtension);
-			}
-		} else if (transformType.equals(TYPE_OSF_REGISTRATIONS)){
-			discoModel = new OsfRegistrationDiscoModel(discoDescription);
-			iterator = new OsfRegApiTransformIterator(filters);
-		} else if (transformType.equals(TYPE_OSF_NODES)){
-			discoModel = new OsfNodeDiscoModel(discoDescription);
-			iterator = new OsfNodeApiTransformIterator(filters);			
-		} else if (transformType.equals(TYPE_OSF_USERS)) {
-//			iterator = new OsfUserApiTransformIterator(filters);
+		TransformType type = TransformType.getVal(transformType, source);
+		if (type==null){
+			log.error("The transform type " + transformType + " is not available from source " + source);
+			throw new RuntimeException("The transform type " + transformType + " is not available.");			
 		}
-		TransformMgr datatransform = new TransformMgr(iterator, discoModel, outputpath);
-		totalTransformed = datatransform.transform(numrecords);
+		RecordType recordType = type.recordType();
 		
+		if (identifier.length()>0){ //single identifier transform
+			OsfClientService osf = new OsfClientService();
+			Object record = null;
+			
+			switch (recordType) {
+			case OSF_NODE:
+				record = osf.getNode(identifier);
+				break;
+			case OSF_REGISTRATION:
+				record = osf.getRegistration(identifier);
+				break;
+			case OSF_USER:
+				record = osf.getUser(identifier);
+				break;
+			default:
+				break;
+			}
+			
+			if (record!=null){
+				RecordDTO dto = new RecordDTO(record, identifier, recordType);
+				Transformer transformer = new Transformer(outputpath, discoDescription);
+				transformer.transform(dto);	
+				totalTransformed = 1;
+			} else {
+				throw new RuntimeException("Single record transform is not available for this type of data");
+			}
+		} else {
+			Iterator<RecordDTO> iterator = null;
+				
+			switch (type) {
+			case SHARE_API:
+				iterator = new ShareApiTransformIterator(filters);
+				break;
+			case SHARE_LOCAL:
+				iterator = new ShareLocalTransformIterator(inputpath, inputFileExtension);
+				break;
+			case OSF_NODES_API:
+				iterator = new OsfNodeApiIterator(filters);			
+				break;            
+			case OSF_USERS_API:
+				iterator = new OsfUserApiIterator(filters);
+				break;
+			case OSF_REGISTRATIONS_API:
+				iterator = new OsfRegistrationApiIterator(filters);
+				break;
+			}
+
+			Transformer transformer = new Transformer(outputpath, discoDescription);
+			totalTransformed = transformer.transform(iterator, numrecords);	
+		}
+
 		log.info("Transform complete! " + totalTransformed.toString() + " records processed.");
 		
 	}

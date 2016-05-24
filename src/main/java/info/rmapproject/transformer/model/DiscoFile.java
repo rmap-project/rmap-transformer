@@ -1,4 +1,4 @@
-package info.rmapproject.transformer;
+package info.rmapproject.transformer.model;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
@@ -31,11 +31,11 @@ public class DiscoFile {
 			throw new IllegalArgumentException("filename cannot be null");
 		}
 		this.model = model;
-		//add forward slash to end of filepath to make sure folder name parsed correctly
-		//unless the filepath is blank, in which case it will write to classpath folder.
 		if (filepath=="."){
 			filepath="";
 		}
+		//add forward slash to end of filepath to make sure folder name parsed correctly
+		//unless the filepath is blank, in which case it will write to classpath folder.
 		if (filepath.length()>0 && (!filepath.endsWith("\\") && !filepath.endsWith("/"))){
 			filepath = filepath + "/";
 		}
@@ -47,6 +47,13 @@ public class DiscoFile {
 	 * Write new DiSCO file
 	 */
 	public void writeFile() {
+		
+		//if output folder isn't there, create it now
+		File outputFolder = new File(this.filepath);
+		if (!outputFolder.exists() || !outputFolder.isDirectory()) {
+			outputFolder.mkdir();
+		}		
+		
 		String writePath = null;
 		writePath = this.filepath + this.filename;
 

@@ -19,7 +19,7 @@ import org.openrdf.model.impl.SimpleValueFactory;
 import org.openrdf.model.vocabulary.DCTERMS;
 import org.openrdf.model.vocabulary.RDF;
 
-public abstract class DiscoModel {
+public abstract class DiscoBuilder {
 
 	protected Model model;	
 	protected BNode discoId;
@@ -29,7 +29,7 @@ public abstract class DiscoModel {
 	
 	protected static ValueFactory factory = SimpleValueFactory.getInstance();
 
-	protected DiscoModel() {
+	protected DiscoBuilder() {
 		super();
 		this.model = new LinkedHashModel();		
 		discoId = factory.createBNode(); 
@@ -40,7 +40,7 @@ public abstract class DiscoModel {
 	 * @param discoCreator
 	 * @param discoDescription
 	 */
-	protected DiscoModel(String discoCreator, String discoDescription){
+	protected DiscoBuilder(String discoCreator, String discoDescription){
 		this();
 		this.discoCreator = Utils.setEmptyToNull(discoCreator);	
 		this.discoDescription = Utils.setEmptyToNull(discoDescription);		
@@ -51,7 +51,7 @@ public abstract class DiscoModel {
 	 * @param discoCreator
 	 * @param discoDescription
 	 */
-	public DiscoModel(URI discoCreator, String discoDescription){
+	public DiscoBuilder(URI discoCreator, String discoDescription){
 		this();
 		if (discoCreator!=null) {
 			this.discoCreator = discoCreator.toString();

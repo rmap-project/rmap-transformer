@@ -1,43 +1,49 @@
 package info.rmapproject.transformer.osf;
 
-import info.rmapproject.transformer.TransformIterator;
+import info.rmapproject.transformer.Utils;
+import info.rmapproject.transformer.model.RecordDTO;
 
 import java.net.HttpURLConnection;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.dataconservancy.cos.osf.client.model.NodeBase;
+import org.dataconservancy.cos.osf.client.model.NodeBaseId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public abstract class OsfBaseApiTransformIterator extends TransformIterator {
+public abstract class OsfNodeBaseApiIterator implements Iterator<RecordDTO>{
 
-	List<? extends NodeBase> records = null;
-    NodeBase currRecord = null;
+    protected static final Logger log = LoggerFactory.getLogger(OsfNodeBaseApiIterator.class);  
+    
+    protected Map<String, String> params = null;
+	protected List<? extends NodeBaseId> ids = null;
+    protected NodeBase currRecord = null;
 	protected int position = -1;
+	protected OsfClientService osfClient = null;
+		
+	protected OsfNodeBaseApiIterator() {}
 
-	public OsfBaseApiTransformIterator() {
-		super();
-	}
-
-	public OsfBaseApiTransformIterator(String filters) {
-		super(filters);
+	protected OsfNodeBaseApiIterator(String filters) {
+		HashMap<String,String> params=null;
+		try{
+			params = Utils.readParamsIntoMap(filters, "UTF-8");
+		} catch(URISyntaxException e){
+			throw new IllegalArgumentException("URL invalid, parameters could not be parsed");
+		} catch (Exception e){
+			throw new RuntimeException("could not initiate OSF Api Iterator", e);    		
+		}
 		if (!params.containsKey("filter[public]")){
 			params.put("filter[public]", "true");
 		}
+		this.params = params;
+		this.osfClient = new OsfClientService();
 		// this loads next record to be retrieved, each next() retrieves currReg and loads next one.
 		loadNext(); 
-	}
-
-	@Override
-	public Object next() {
-		NodeBase node = null;
-		if (hasNext()){
-			node = currRecord;
-			currId = node.getId();
-			loadNext();
-		} else {
-			throw new RuntimeException("No more Node records available in this batch");
-		}
-		return node;
 	}
 
 	@Override
@@ -49,29 +55,18 @@ public abstract class OsfBaseApiTransformIterator extends TransformIterator {
 	 * Collect OSF data from API using parameters defined
 	 */
 	protected abstract void loadBatch();
-	
 
-	protected void loadNext(){
-		currRecord = null;
-		if (records == null) {
-			loadBatch();
-		}
-		if (records.size()>0 && !isLastRow()){
-			NodeBase nodebase = null;
-			do {
-				//load next
-				position = position+1;
-				nodebase = records.get(position);
-				if (hasAccessibleParent(nodebase)){
-					nodebase = null;
-				}
-			} while ((nodebase==null)&&!isLastRow());
-			currRecord = nodebase;			
-		}
-	}
+	/**
+	 * load next record
+	 */
+	protected abstract void loadNext();
 
+	/**
+	 * Returns true if this is the last row in the current id list
+	 * @return
+	 */
 	protected boolean isLastRow() {
-		return (position==(records.size()-1));
+		return (position==(ids.size()-1));
 	}
 
     
@@ -92,16 +87,16 @@ public abstract class OsfBaseApiTransformIterator extends TransformIterator {
 	 * Determines whether there is a parent node and if so whether it is 
 	 * accessible through the API. If it is, we can skip over this child node,
 	 * if not we can use this node.
-	 * @param node
+	 * @param nodebase
 	 * @return
 	 */
-	protected boolean hasAccessibleParent(NodeBase node) {
+	protected boolean hasAccessibleParent(NodeBase nodebase) {
 		//check if we are at top level
-		String parent = node.getParent();
+		String parent = nodebase.getParent();
 		if (parent!=null){
-			String parentId = OsfUtils.extractLastSubFolder(parent);
+			String parentId = Utils.extractLastSubFolder(parent);
 			
-			if (!parentId.equals(node.getId())){
+			if (!parentId.equals(nodebase.getId())){
 				try {
 					URL url = new URL(parent); 
 					HttpURLConnection connection = (HttpURLConnection)url.openConnection(); 

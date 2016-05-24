@@ -7,7 +7,7 @@ import info.rmapproject.cos.share.client.model.OtherPropertyType;
 import info.rmapproject.cos.share.client.model.OtherPropertyValue;
 import info.rmapproject.cos.share.client.model.Record;
 import info.rmapproject.cos.share.client.model.Sponsorship;
-import info.rmapproject.transformer.DiscoModel;
+import info.rmapproject.transformer.DiscoBuilder;
 import info.rmapproject.transformer.vocabulary.RdfType;
 import info.rmapproject.transformer.vocabulary.Terms;
 
@@ -30,7 +30,7 @@ import org.openrdf.model.vocabulary.RDFS;
  * @author khanson
  *
  */
-public class ShareDiscoModel extends DiscoModel  {
+public class ShareDiscoBuilder extends DiscoBuilder  {
 	
 	private Record record;
 	private static final String DEFAULT_CREATOR = Terms.RMAPAGENT_NAMESPACE + "RMap-OSF-Harvester-0.1";
@@ -40,7 +40,7 @@ public class ShareDiscoModel extends DiscoModel  {
 	 * Initiates converter - will assign default values to discoCreator and discoDescription
 	 * @param record
 	 */
-	public ShareDiscoModel(){
+	public ShareDiscoBuilder(){
 		super(DEFAULT_CREATOR, DEFAULT_DESCRIPTION);
 	}
 
@@ -48,16 +48,14 @@ public class ShareDiscoModel extends DiscoModel  {
 	 * Initiates converter - will assign new values to discoCreator and discoDescription
 	 * even if they are null
 	 * @param record
-	 * @param discoCreator
 	 * @param discoDescription
 	 */
-	public ShareDiscoModel(String discoDescription){
+	public ShareDiscoBuilder(String discoDescription){
 		super(DEFAULT_CREATOR, discoDescription);
-	}
-	
+	}	
 
 	@Override
-	public void setRecord(Object record) {
+	public void setRecord(Object record){
 		this.record = (Record) record;
 	}
 	

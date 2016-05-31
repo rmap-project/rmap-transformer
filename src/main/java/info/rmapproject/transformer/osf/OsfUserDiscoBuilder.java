@@ -32,6 +32,18 @@ public class OsfUserDiscoBuilder extends DiscoBuilder {
 	protected static final String DEFAULT_DESCRIPTION = "User record harvested from OSF API v2";
 	protected static final String OSF_PATH_PREFIX = "http://osf.io/";
 	
+	protected static final String ORCID_PREFIX = "http://orcid.org/";
+	protected static final String RESEARCHERID_PREFIX = "http://researcherid.com/rid/";
+	protected static final String TWITTER_PREFIX = "https://twitter.com/";
+	protected static final String GITHUB_PREFIX = "https://github.com/";
+	protected static final String GOOGLESCHOLAR_PREFIX = "http://scholar.google.com/citations?user=";
+	protected static final String LINKEDIN_PREFIX = "https://www.linkedin.com/";
+	protected static final String IMPACTSTORY_PREFIX = "https://impactstory.org/";
+	protected static final String RESEARCHGATE_PREFIX = "https://researchgate.net/profile/";
+	protected static final String BAIDUSCHOLAR_PREFIX = "http://xueshu.baidu.com/scholarID/";
+	protected static final String ACADEMIA_PREFIX = ".academia.edu/";
+	
+	
 	
 	/**
 	 * Constructor for Node to pass default params up to super()
@@ -96,17 +108,47 @@ public class OsfUserDiscoBuilder extends DiscoBuilder {
 		addLiteralStmt(userId, Terms.VCARD_HONORIFICSUFFIX, record.getSuffix());
 		
 		// now for all of the possible accounts...
-		addIriStmt(userId, RDFS.SEEALSO, record.getAcademiaProfileId());
-		addIriStmt(userId, RDFS.SEEALSO, record.getBaiduScholar());
-		addIriStmt(userId, RDFS.SEEALSO, record.getGitHub());
-		addIriStmt(userId, RDFS.SEEALSO, record.getImpactStory());
-		addIriStmt(userId, RDFS.SEEALSO, record.getLinkedIn());
-		addIriStmt(userId, RDFS.SEEALSO, record.getOrcid());
-		addIriStmt(userId, RDFS.SEEALSO, record.getPersonal_website());
-		addIriStmt(userId, RDFS.SEEALSO, record.getResearcherId());
-		addIriStmt(userId, RDFS.SEEALSO, record.getResearchGate());
-		addIriStmt(userId, RDFS.SEEALSO, record.getScholar());
-		addIriStmt(userId, RDFS.SEEALSO, record.getTwitter());
+		//TODO: this not working at teh moment so commenting out.
+//		List<String> websites = record.getPersonal_websites();
+//		if (websites!=null){
+//			for (String website : websites){
+//				addIriStmt(userId, RDFS.SEEALSO, website);				
+//			}
+//		}
+
+		if (record.getAcademiaProfileID()!=null && record.getAcademiaInstitution()!=null){
+			String academiaUrl = "https://" + record.getAcademiaInstitution() 
+								+ ACADEMIA_PREFIX + record.getAcademiaProfileID();
+			addIriStmt(userId, RDFS.SEEALSO, academiaUrl);
+		}
+		
+		if (record.getBaiduScholar()!=null){
+			addIriStmt(userId, RDFS.SEEALSO, BAIDUSCHOLAR_PREFIX + record.getBaiduScholar());
+		}
+		if (record.getGitHub()!=null){
+			addIriStmt(userId, RDFS.SEEALSO, GITHUB_PREFIX + record.getGitHub());
+		}
+		if (record.getImpactStory()!=null){		
+			addIriStmt(userId, RDFS.SEEALSO, IMPACTSTORY_PREFIX + record.getImpactStory());
+		}
+		if (record.getLinkedIn()!=null){		
+			addIriStmt(userId, RDFS.SEEALSO, LINKEDIN_PREFIX + record.getLinkedIn());
+		}
+		if (record.getOrcid()!=null){		
+			addIriStmt(userId, RDFS.SEEALSO, ORCID_PREFIX + record.getOrcid());
+		}
+		if (record.getResearcherId()!=null){		
+			addIriStmt(userId, RDFS.SEEALSO, RESEARCHERID_PREFIX + record.getResearcherId());
+		}
+		if (record.getResearchGate()!=null){		
+			addIriStmt(userId, RDFS.SEEALSO, RESEARCHGATE_PREFIX + record.getResearchGate());
+		}
+		if (record.getScholar()!=null){		
+			addIriStmt(userId, RDFS.SEEALSO, GOOGLESCHOLAR_PREFIX + record.getScholar());
+		}
+		if (record.getTwitter()!=null){		
+			addIriStmt(userId, RDFS.SEEALSO, TWITTER_PREFIX + record.getTwitter());
+		}
 
 		addInstitutions();
 	}
@@ -119,7 +161,7 @@ public class OsfUserDiscoBuilder extends DiscoBuilder {
 				Resource roleNode = factory.createBNode();
 				IRI instIri = factory.createIRI(OSF_PATH_PREFIX + inst.getId());
 				addStmt(userId, Terms.PRO_HOLDSROLEINTIME, roleNode);
-				addStmt(userId, Terms.PRO_WITHROLE, Terms.SCORO_AFFILIATE);
+				addStmt(roleNode, Terms.PRO_WITHROLE, Terms.SCORO_AFFILIATE);
 				addStmt(roleNode, Terms.PRO_RELATESTOORGANIZATION, instIri);
 				addStmt(roleNode, RDF.TYPE, FOAF.ORGANIZATION);
 				addLiteralStmt(instIri, FOAF.NAME, inst.getName());

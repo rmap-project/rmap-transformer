@@ -3,9 +3,16 @@ package info.rmapproject.transformer.osf;
 import info.rmapproject.transformer.Utils;
 import info.rmapproject.transformer.vocabulary.Terms;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.dataconservancy.cos.osf.client.model.Registration;
+import org.json.JSONObject;
 import org.openrdf.model.IRI;
 import org.openrdf.model.Model;
 import org.openrdf.model.Resource;
@@ -74,6 +81,9 @@ public class OsfRegistrationDiscoBuilder extends OsfNodeDiscoBuilder {
 //		//TODO: add these - not yet part of API, but soon...
 //		addIriStmt(regId, DCTERMS.IDENTIFIER, registration.getArkId());
 //		addIriStmt(regId, DCTERMS.IDENTIFIER, registration.getDoi());
+		//temporary measure that goes to api v1:
+		addIdentifiers(regId, registration.getId());
+		
 		
 		IRI category = mapCategoryToIri(registration.getCategory());
 		addStmt(regId, DCTERMS.TYPE, category);
@@ -114,5 +124,67 @@ public class OsfRegistrationDiscoBuilder extends OsfNodeDiscoBuilder {
 		}
 		
 	}
+	
+	/**
+	 * 
+	 */
+	private void addIdentifiers(IRI regIdIri, String regId){
+		List<String> identifiers = getIdentifiers(regId);
+		if (identifiers!=null){
+			for (String identifier : identifiers) {
+				addIriStmt(regIdIri, DCTERMS.IDENTIFIER, identifier);
+			}
+		}
+		
+	}
+	
+	/**
+	 * temporary measure until identifiers (doi, ark) are included in version 2 api.
+	 * @param identifier
+	 * @return
+	 */
+	public static List<String> getIdentifiers(String identifier){
+		if (identifier==null || identifier.length()==0){
+			throw new IllegalArgumentException("identifier cannot be null or empty");
+		}
+		
+		List<String> identifiers = new ArrayList<String>();
+		String surl = "https://osf.io/api/v1/project/" + identifier + "/";
+		URL url;
+		try {
+			StringBuffer text = new StringBuffer();
+			url = new URL(surl);
+			HttpURLConnection connection = (HttpURLConnection)url.openConnection(); 
+			connection.setRequestMethod("GET"); 
+			connection.connect(); 
+		    InputStreamReader in = new InputStreamReader((InputStream) connection.getContent());
+		    BufferedReader buff = new BufferedReader(in);
+		    String line;
+		    do {
+		      line = buff.readLine();
+		      text.append(line + "\n");
+		    } while (line != null);
+						
+			String jsonString = text.toString();
+			JSONObject root = new JSONObject(jsonString);
+			JSONObject node = root.getJSONObject("node");
+			JSONObject jsonIds = node.getJSONObject("identifiers");
+			if (jsonIds!=null){
+				if (jsonIds.has("doi")){
+					identifiers.add(jsonIds.getString("doi"));
+				}
+				if (jsonIds.has("ark")){
+					identifiers.add(jsonIds.getString("ark"));
+				}
+			}
+
+		} catch (Exception e) {
+			throw new RuntimeException("Could not retrieve other identifiers for Registration");
+		} 
+				
+		return identifiers;
+	}
+	
+	
 		
 }

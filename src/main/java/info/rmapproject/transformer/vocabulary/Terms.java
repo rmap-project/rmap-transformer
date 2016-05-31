@@ -28,7 +28,11 @@ public class Terms {
 	public static final String ADDITIONALNAME = "additional-name";
 	public static final String HONORIFICSUFFIX = "honorific-suffix";
 	
-	
+
+	/*PROV vocabulary constants*/
+	public static final String PROV_NAMESPACE = "http://www.w3.org/ns/prov#";
+	public static final String PROV_PREFIX = "prov";
+	public static final String WASDERIVEDFROM = "wasDerivedFrom";
 
 	/*PRO vocabulary constants*/
 	public static final String PRO_NAMESPACE = "http://purl.org/spar/pro/";
@@ -79,6 +83,8 @@ public class Terms {
 	public static final IRI VCARD_ADDITIONALNAME;
 	/** vcard:honorific-suffix */
 	public static final IRI VCARD_HONORIFICSUFFIX;
+	/** prov:wasDerivedFrom */
+	public static final IRI PROV_WASDERIVEDFROM;
 	/** pro:holdsRoleInTime */
 	public static final IRI PRO_HOLDSROLEINTIME;
 	/** pro:RoleInTime */
@@ -113,6 +119,7 @@ public class Terms {
 		ORE_AGGREGATES = f.createIRI(ORE_NAMESPACE, AGGREGATES);
 		VCARD_ADDITIONALNAME = f.createIRI(VCARD_NAMESPACE, ADDITIONALNAME);
 		VCARD_HONORIFICSUFFIX = f.createIRI(VCARD_NAMESPACE, HONORIFICSUFFIX);
+		PROV_WASDERIVEDFROM = f.createIRI(PROV_NAMESPACE,WASDERIVEDFROM);
 		PRO_HOLDSROLEINTIME = f.createIRI(PRO_NAMESPACE, HOLDSROLEINTIME);
 		PRO_ROLEINTIME = f.createIRI(PRO_NAMESPACE, ROLEINTIME);
 		PRO_WITHROLE = f.createIRI(PRO_NAMESPACE, WITHROLE);

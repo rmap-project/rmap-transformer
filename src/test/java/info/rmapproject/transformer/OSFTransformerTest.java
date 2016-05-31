@@ -1,13 +1,11 @@
 package info.rmapproject.transformer;
 
 import static org.junit.Assert.assertTrue;
-import info.rmapproject.transformer.model.RecordDTO;
-import info.rmapproject.transformer.model.RecordType;
-import info.rmapproject.transformer.osf.OsfClientService;
+import info.rmapproject.transformer.osf.OsfRegistrationDiscoBuilder;
 
 import java.io.File;
+import java.util.List;
 
-import org.dataconservancy.cos.osf.client.model.Node;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -60,12 +58,24 @@ public class OSFTransformerTest {
 	}
 	
 	@Test 
-	public void testSingleRecordTransform() throws Exception {
-		String id = "cgur9";
+	public void testSingleNodeTransform() throws Exception {
+		String id = "ndry9";
 		String[] args = {"OSF_NODE","-id",id, "-o", "testOneNode/"};
 		RMapTransformCLI.main(args);
 		//check output files
 		Integer numfiles = new File("testOneNode").list().length;
+		assertTrue(numfiles.equals(1)); //one root Public Project, one partial
+	}	
+	
+	
+	@Test 
+	public void testSingleUserTransform() throws Exception {
+		//String id = "km4wh";
+		String id = "cdi38";
+		String[] args = {"OSF_USER","-id",id, "-o", "testOneUser/"};
+		RMapTransformCLI.main(args);
+		//check output files
+		Integer numfiles = new File("testOneUser").list().length;
 		assertTrue(numfiles.equals(1)); //one root Public Project, one partial
 	}	
 
@@ -77,5 +87,14 @@ public class OSFTransformerTest {
 		Integer numfiles = new File("testuserosf").list().length;
 		assertTrue(numfiles>0);
 	}	
+	
+	@Test
+	public void testTempIdentifierRetrieval() throws Exception{
+		String regid= "rxgmb";
+		List<String> identifiers = OsfRegistrationDiscoBuilder.getIdentifiers(regid);
+		assertTrue(identifiers.size()==2);
+		assertTrue(identifiers.get(0).equals("10.17605/OSF.IO/RXGMB"));
+		assertTrue(identifiers.get(1).equals("c7605/osf.io/rxgmb"));
+	}
 	
 }

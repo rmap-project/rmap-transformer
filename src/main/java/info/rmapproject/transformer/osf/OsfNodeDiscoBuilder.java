@@ -1,10 +1,9 @@
 package info.rmapproject.transformer.osf;
 
 import info.rmapproject.transformer.DiscoBuilder;
+import info.rmapproject.transformer.Utils;
 import info.rmapproject.transformer.vocabulary.Terms;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.List;
 
 import org.dataconservancy.cos.osf.client.model.Category;
@@ -38,9 +37,9 @@ public class OsfNodeDiscoBuilder extends DiscoBuilder {
 	protected static final String DEFAULT_DESCRIPTION = "Record harvested from OSF API";
 	protected static final String OSF_PATH_PREFIX = "http://osf.io/";
 	//TODO: replace these with proper ontology term!
-	protected static final String OSF_REGISTRATION = "http://osf.io/terms/Registration";
-	protected static final String OSF_PROJECT = "http://osf.io/terms/Project";
-	protected static final String OSF_CATEGORY = "http://osf.io/terms/category/";
+	protected static final String OSF_TERMS_PREFIX = OSF_PATH_PREFIX + "terms/";
+	protected static final String OSF_REGISTRATION = OSF_TERMS_PREFIX + "Registration";
+	protected static final String OSF_PROJECT = OSF_TERMS_PREFIX + "Project";
 	
 	
 	/**
@@ -104,13 +103,10 @@ public class OsfNodeDiscoBuilder extends DiscoBuilder {
 
 		IRI category = mapCategoryToIri(node.getCategory());
 		addStmt(nodeId, RDF.TYPE, category);
+
+		addForkedFrom(node.getForked_from(), nodeId);
 		
 		addLiteralStmt(nodeId, DCTERMS.CREATED, node.getDate_created());
-		
-//		TODO: add these - not yet part of API, but soon...
-//		addIriStmt(regId, DCTERMS.IDENTIFIER, registration.getArkId());
-//		addIriStmt(regId, DCTERMS.IDENTIFIER, registration.getDoi());
-		
 
 		addLiteralStmt(nodeId, DCTERMS.TITLE, node.getTitle());
 		addLiteralStmt(nodeId, DCTERMS.DESCRIPTION, node.getDescription());
@@ -139,19 +135,28 @@ public class OsfNodeDiscoBuilder extends DiscoBuilder {
 	/**
 	 * Add contributor metadata to Model
 	 * @param contributors
-	 * @param regId
+	 * @param nodeId
 	 */
-	protected void addContributors(List<Contributor> contributors, IRI regId){
+	protected void addContributors(List<Contributor> contributors, IRI nodeId){
 		if (contributors!=null){
 			for (Contributor contributor : contributors) {
 				//TODO... does this have /user/ in the path?
 				IRI userId = factory.createIRI(OSF_PATH_PREFIX + contributor.getId());
-				addStmt(regId, DCTERMS.CONTRIBUTOR, userId);
+				addStmt(nodeId, DCTERMS.CONTRIBUTOR, userId);
 				addStmt(userId, RDF.TYPE, FOAF.PERSON);
 			}
 		}	
 	}
 
+	protected void addForkedFrom(String forkRef, IRI nodeId){
+		if (forkRef!=null && forkRef.length()>0){
+			String forkedFromNodeId = Utils.extractLastSubFolder(forkRef);
+			IRI forkId = factory.createIRI(OSF_PATH_PREFIX + forkedFromNodeId);
+			addStmt(nodeId, Terms.PROV_WASDERIVEDFROM, forkId);			
+		}
+	}
+	
+	
 	
 	/**
 	 * Add file metadata to Model
@@ -210,13 +215,12 @@ public class OsfNodeDiscoBuilder extends DiscoBuilder {
 	 */
 	protected IRI mapCategoryToIri(Category category) {
 		if (category!=null){
-			try {
-				String cat = URLEncoder.encode(category.value(), "UTF-8");
-				return factory.createIRI(OSF_CATEGORY + cat);			
-			}
-			catch (UnsupportedEncodingException e){
-				throw new RuntimeException("could not convert category to IRI", e);
-			}
+			String cat = category.value();
+			cat = cat.replace(" ", "-");
+			String firstletter = cat.substring(0,1);
+			firstletter = firstletter.toUpperCase();
+			cat = firstletter + cat.substring(1);
+			return factory.createIRI(OSF_TERMS_PREFIX + cat);			
 		} else {
 			return null;
 		}

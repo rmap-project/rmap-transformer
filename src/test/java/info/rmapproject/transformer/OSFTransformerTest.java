@@ -39,11 +39,11 @@ public class OSFTransformerTest {
 
 	@Test 
 	public void testOSFRegApiTransform() throws Exception{
-		String[] args = {"osf_registration","-src", "api","-n","10", "-o", "testregosf/"};
+		String[] args = {"osf_registration","-src", "api","-n","12", "-o", "testregosf/"};
 		RMapTransformerCLI.main(args);
 		//check output files
 		Integer numfiles = new File("testregosf").list().length;
-		//assertTrue(numfiles.equals(2)); //only 2 are roots of Registrations
+		assertTrue(numfiles.equals(12)); //only 2 are roots of Registrations
 		assertTrue(numfiles>0);
 	}
 
@@ -57,6 +57,15 @@ public class OSFTransformerTest {
 		assertTrue(numfiles>0);
 	}
 
+	@Test 
+	public void testOSFNodeApiTransformWithPagination() throws Exception{
+		String[] args = {"osf_node","-src", "api","-n","12", "-o", "testnodepagedosf/"};
+		RMapTransformerCLI.main(args);
+		//check output files
+		Integer numfiles = new File("testnodepagedosf").list().length;
+		//assertTrue(numfiles.equals(2)); //one root Public Project, one partial
+		assertTrue(numfiles>0);
+	}
 	
 	@Test 
 	public void testSingleRegTransform() throws Exception {

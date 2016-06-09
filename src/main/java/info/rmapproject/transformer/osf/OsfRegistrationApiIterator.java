@@ -5,7 +5,6 @@ import info.rmapproject.transformer.model.RecordType;
 
 import org.dataconservancy.cos.osf.client.model.NodeBase;
 import org.dataconservancy.cos.osf.client.model.Registration;
-import org.dataconservancy.cos.osf.client.model.RegistrationId;
 
 /**
  * Retrieves and iterates over OSF Registration data
@@ -23,47 +22,49 @@ public class OsfRegistrationApiIterator extends OsfNodeBaseApiIterator {
     @Override
 	protected void loadBatch() {
 		position = -1;
-    	try {
+		nextId = null;
+		try {
+			Integer page = 0;
+			String pageval = params.get("page");
+			if (pageval!=null && !pageval.isEmpty()){
+				page = Integer.parseInt(pageval);
+			}
+			page=page+1;
+			params.put("page", page.toString());
     		ids = osfClient.getRegIdList(params);
-    	} catch(Exception e){
-    		log.error("Could not load list of records to iterate over, exiting.");
-    		throw new RuntimeException(e);
-    	}	
-	}
-
+			nextId = ids.get(0).getId();
+		} catch(Exception e){
+			log.error("Could not load list of records to iterate over.");
+			throw new RuntimeException("Could not load list of records to iterate over.", e);
+		}	
+    }
+    
 	@Override
 	public RecordDTO next() {
-		RecordDTO nodeDTO = null;
-		if (hasNext()){
-			nodeDTO = new RecordDTO(currRecord, currRecord.getId(), RecordType.OSF_REGISTRATION);
-			loadNext();
-		} else {
-			throw new RuntimeException("No more Registration records available in this batch");
-		}
-		return nodeDTO;
-	}
-	
-
-	@Override
-	protected void loadNext() {
-		currRecord = null;
-		if (ids == null) {
-			loadBatch();
-		}
-		if (ids.size()>0 && !isLastRow()){
-			RegistrationId id = null;
-			Registration registration = null;
-			do {
+		RecordDTO registrationDTO = null;
+		Registration registration = null;
+		
+		try {			
+			while(registration==null && hasNext()) {
 				//load next
-				position = position+1;
-				id = (RegistrationId) ids.get(position);
-				registration = osfClient.getRegistration(id.getId());
+				registration = osfClient.getRegistration(nextId);
 				if (hasAccessibleParent(registration)){
 					registration = null;
 				}
-			} while ((registration==null)&&!isLastRow());
-			currRecord = registration;			
+				loadNextId();
+			} 
+		} catch (Exception e){
+			//load failed... though there may be another record... so let's load it for the next iteration
+			loadNextId();
+			throw new RuntimeException("Iterator failed to load Record for import",e);
 		}
+
+		if (registration!=null){
+			registrationDTO = new RecordDTO(registration, registration.getId(), RecordType.OSF_REGISTRATION);
+		} else {
+			throw new RuntimeException("No more Registration records available in this batch");
+		}
+		return registrationDTO;
 	}
 	
     

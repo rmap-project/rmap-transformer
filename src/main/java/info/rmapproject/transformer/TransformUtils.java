@@ -8,6 +8,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
@@ -17,7 +20,28 @@ import org.openrdf.rio.Rio;
 
 
 public class TransformUtils {
-
+	
+	private static final String PROP_FILE = "rmap-transform";
+	
+	/**
+	 * Convenience method for extracting a single property name/value pair from a property file
+	 * @param propFileName base name for property file
+	 * @param propKey propery name
+	 * @return String containing proerty value, or null if not found
+	 * @throws MissingResourceException
+	 */
+	public static String getPropertyValue(String propKey) throws NullPointerException, MissingResourceException {
+		String propValue = null;
+		ResourceBundle resources = ResourceBundle.getBundle(PROP_FILE, Locale.getDefault());
+		for (String key:resources.keySet()){
+			if (key.equals(propKey)){
+				propValue = resources.getString(key);
+				break;
+			}
+		}			
+		return propValue;
+	}
+	
 	/**
 	 * Extract the last subfolder name from a path.
 	 * e.g. for https://api.osf.io/v2/registrations/sdfkj/ sdfkj will be extracted
@@ -35,9 +59,6 @@ public class TransformUtils {
 			return null;
 		}		
 	}
-	
-	
-
 	/**
 	 * Convert URL params to Map<String,String>
 	 * @param url 

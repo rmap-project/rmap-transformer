@@ -4,7 +4,6 @@ import info.rmapproject.transformer.model.RecordDTO;
 import info.rmapproject.transformer.model.RecordType;
 
 import org.dataconservancy.cos.osf.client.model.Node;
-import org.dataconservancy.cos.osf.client.model.NodeId;
 
 /**
  * Retrieves and iterates over OSF Node data
@@ -19,8 +18,17 @@ public class OsfNodeApiIterator extends OsfNodeBaseApiIterator {
     @Override
 	protected void loadBatch() {
 		position = -1;
+		nextId = null;
 		try {
+			Integer page = 0;
+			String pageval = params.get("page");
+			if (pageval!=null && !pageval.isEmpty()){
+				page = Integer.parseInt(pageval);
+			}
+			page=page+1;
+			params.put("page", page.toString());
 			ids = osfClient.getNodeIdList(params);
+			nextId = ids.get(0).getId();
 		} catch(Exception e){
 			log.error("Could not load list of records to iterate over.");
 			throw new RuntimeException(e);
@@ -30,34 +38,30 @@ public class OsfNodeApiIterator extends OsfNodeBaseApiIterator {
 	@Override
 	public RecordDTO next() {
 		RecordDTO nodeDTO = null;
-		if (hasNext()){
-			nodeDTO = new RecordDTO(currRecord, currRecord.getId(), RecordType.OSF_NODE);
-			loadNext();
+		Node node = null;
+		
+		try {			
+			while(node==null && hasNext()) {
+				//load next
+				node = osfClient.getNode(nextId);
+				if (hasAccessibleParent(node)){
+					node = null;
+				}
+				loadNextId();
+			} 
+		} catch (Exception e){
+			//load failed... though there may be another record... so let's load it for the next iteration
+			loadNextId();
+			throw new RuntimeException("Iterator failed to load Record for import",e);
+		}
+
+		if (node!=null){
+			nodeDTO = new RecordDTO(node, node.getId(), RecordType.OSF_NODE);
 		} else {
 			throw new RuntimeException("No more Node records available in this batch");
 		}
 		return nodeDTO;
 	}
+
     	
-	@Override
-	protected void loadNext() {
-		currRecord = null;
-		if (ids == null) {
-			loadBatch();
-		}
-		if (ids.size()>0 && !isLastRow()){
-			NodeId id = null;
-			Node node = null;
-			do {
-				//load next
-				position = position+1;
-				id = (NodeId) ids.get(position);
-				node = osfClient.getNode(id.getId());
-				if (hasAccessibleParent(node)){
-					node = null;
-				}
-			} while ((node==null)&&!isLastRow());
-			currRecord = node;			
-		}
-	}
 }

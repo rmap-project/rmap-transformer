@@ -21,7 +21,7 @@ public class OsfUserApiIterator implements Iterator<RecordDTO>{
     
     private Map<String, String> params = null;
     private List<UserId> ids = null;
-    private User currRecord = null;
+	protected String nextId = null;
     private int position = -1;
     private OsfClientService osfClient = null;
 		
@@ -39,60 +39,72 @@ public class OsfUserApiIterator implements Iterator<RecordDTO>{
 		this.params = params;
 		this.osfClient = new OsfClientService();
 		// this loads next record to be retrieved, each next() retrieves currReg and loads next one.
-		loadNext(); 
+		loadNextId(); 
 	}
 
 	@Override
 	public boolean hasNext() {
-		return (currRecord!=null);	
+		return (nextId!=null);	
 	}
+
 
 	@Override
 	public RecordDTO next() {
 		RecordDTO userDTO = null;
-		if (hasNext()){
-			userDTO = new RecordDTO(currRecord, currRecord.getId(), RecordType.OSF_USER);
-			loadNext();
+		User user = null;
+		
+		try {			
+			while(user==null && hasNext()) {
+				//load next
+				user = osfClient.getUser(nextId);
+				loadNextId();
+			} 
+		} catch (Exception e){
+			//load failed... though there may be another record... so let's load it for the next iteration
+			loadNextId();
+			throw new RuntimeException("Iterator failed to load Record for import",e);
+		}
+
+		if (user!=null){
+			userDTO = new RecordDTO(user, user.getId(), RecordType.OSF_USER);
 		} else {
 			throw new RuntimeException("No more User records available in this batch");
 		}
 		return userDTO;
-	}	
+	}
 
 	
 	/**
 	 * Load batch of OSF data from API using parameters defined
 	 */
-	private void loadBatch() {
+	protected void loadBatch() {
 		position = -1;
-    	try {
+		nextId = null;
+		try {
+			Integer page = 0;
+			String pageval = params.get("page");
+			if (pageval!=null && !pageval.isEmpty()){
+				page = Integer.parseInt(pageval);
+			}
+			page=page+1;
+			params.put("page", page.toString());
     		ids = osfClient.getUserIdList(params);
-    	} catch(Exception e){
-    		log.error("Could not load list of records to iterate over, exiting.");
-    		throw new RuntimeException(e);
-    	}	
-	}
-
-
+			nextId = ids.get(0).getId();
+		} catch(Exception e){
+			log.error("Could not load list of records to iterate over.");
+			throw new RuntimeException(e);
+		}	
+    }
+	
 	/**
-	 * Load next record into memory
+	 * load next Id to check using hasNext
 	 */
-	protected void loadNext() {
-		currRecord = null;
-		if (ids == null) {
+	protected void loadNextId(){
+		if (ids==null || isLastRow()){
 			loadBatch();
 		}
-		if (ids.size()>0 && !isLastRow()){
-			UserId id = null;
-			User user = null;
-			do {
-				//load next
-				position = position+1;
-				id = (UserId) ids.get(position);
-				user = osfClient.getUser(id.getId());
-			} while ((user==null)&&!isLastRow());
-			currRecord = user;			
-		}
+		position = position+1;
+		nextId = ids.get(position).getId();
 	}
 
 	/**

@@ -1,13 +1,15 @@
 package info.rmapproject.transformer.osf;
 
+import info.rmapproject.transformer.TransformUtils;
+
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
 
 import org.dataconservancy.cos.osf.client.model.Contributor;
 import org.dataconservancy.cos.osf.client.model.File;
-import org.dataconservancy.cos.osf.client.model.FileVersion;
 import org.dataconservancy.cos.osf.client.model.Institution;
 import org.dataconservancy.cos.osf.client.model.Node;
 import org.dataconservancy.cos.osf.client.model.NodeId;
@@ -28,29 +30,26 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 
 /**
- * This class interacts with the OSF client - eventually direct calls should be possible, so this is likely temporary.
+ * This class interacts with the OSF client
  * @author khanson
  *
  */
 public class OsfClientService {
-
-	private static final String BASE_URL = "https://api.osf.io/v2/";
-	//private static final String BASE_URL = "http://192.168.99.100:8000/v2/";
-	
-	
-	private URI baseUrl = null;
 	private OsfService osfService = null;
+	private static final String OSF_BASEURL_PROPNAME = "rmaptransformer.osfApiBaseUrl";
+	
 	
 	public OsfClientService(){
 		try {
-			baseUrl = new URI(BASE_URL);
+			String sBaseUrl = TransformUtils.getPropertyValue(OSF_BASEURL_PROPNAME);
+			URI baseUrl = new URI(sBaseUrl);
 
 	    	// Create object mapper
 	        ObjectMapper objectMapper = new ObjectMapper();
 	        OkHttpClient client = new OkHttpClient();
 
 	        ResourceConverter converter = new ResourceConverter(objectMapper, NodeId.class, RegistrationId.class, Registration.class, File.class, 
-	        													FileVersion.class, Contributor.class, User.class, UserId.class, Institution.class, Node.class);
+	        													Contributor.class, User.class, UserId.class, Institution.class, Node.class);//taking out this for now... FileVersion.class, 
 	        converter.setGlobalResolver(relUrl -> {
 	            System.err.println("Resolving " + relUrl);
 	            com.squareup.okhttp.Call req = client.newCall(new Request.Builder().url(relUrl).build());
@@ -70,10 +69,10 @@ public class OsfClientService {
 	                .build();
 
 	        osfService = retrofit.create(OsfService.class);
-					
-			
+		} catch (URISyntaxException e){
+			throw new RuntimeException("Could not define base URL for OSF service", e);			
 		} catch (Exception e){
-			throw new RuntimeException("could not define base URL for OSF service");
+			throw new RuntimeException("Could not start OSF Service", e);
 		}
 	}
 	

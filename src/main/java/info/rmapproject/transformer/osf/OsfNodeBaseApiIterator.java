@@ -17,12 +17,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class OsfNodeBaseApiIterator implements Iterator<RecordDTO>{
-
+	
     protected static final Logger log = LoggerFactory.getLogger(OsfNodeBaseApiIterator.class);  
     
     protected Map<String, String> params = null;
 	protected List<? extends NodeBaseId> ids = null;
-    protected NodeBase currRecord = null;
+	protected String nextId = null;
 	protected int position = -1;
 	protected OsfClientService osfClient = null;
 		
@@ -42,13 +42,13 @@ public abstract class OsfNodeBaseApiIterator implements Iterator<RecordDTO>{
 		}
 		this.params = params;
 		this.osfClient = new OsfClientService();
-		// this loads next record to be retrieved, each next() retrieves currReg and loads next one.
-		loadNext(); 
+		// this loads a batch of records to be retrieved, each next() retrieves current record and loads next id to see if there is a next
+		loadNextId(); 
 	}
 
 	@Override
 	public boolean hasNext() {
-		return (currRecord!=null);	
+		return (nextId!=null);	
 	}
 
 	/**
@@ -56,10 +56,6 @@ public abstract class OsfNodeBaseApiIterator implements Iterator<RecordDTO>{
 	 */
 	protected abstract void loadBatch();
 
-	/**
-	 * load next record
-	 */
-	protected abstract void loadNext();
 
 	/**
 	 * Returns true if this is the last row in the current id list
@@ -69,7 +65,17 @@ public abstract class OsfNodeBaseApiIterator implements Iterator<RecordDTO>{
 		return (position==(ids.size()-1));
 	}
 
-    
+	/**
+	 * load next Id to check using hasNext
+	 */
+	protected void loadNextId(){
+		if (ids==null || isLastRow()){
+			loadBatch();
+		}
+		position = position+1;
+		nextId = ids.get(position).getId();
+	}
+	
     /**
      * Checks for any criteria that would exclude this record
      * @param reg
@@ -116,4 +122,6 @@ public abstract class OsfNodeBaseApiIterator implements Iterator<RecordDTO>{
 		return false; //this node is the parent node
 	}
 
+	
+	
 }

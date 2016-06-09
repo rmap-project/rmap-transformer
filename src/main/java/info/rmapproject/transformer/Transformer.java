@@ -86,12 +86,13 @@ public class Transformer {
     			id = transform(recordDTO);
     			counter = counter + 1;
     		} catch (Exception e) {
-    			String logMsg = "Could not complete export for record #" + counter + "\n Continuing to next record. Msg: " + e.getMessage();
-    			if (recordDTO!=null){
+    			String logMsg = "Could not complete export for record #" + (counter+1) + "\n Continuing to next record. Msg: " + e.getMessage();
+    			if (id!=null){
     				logMsg = "Could not complete export for docId: " + id
         					+ "\n Continuing to next record. Msg: " + e.getMessage();
     			} 
     			log.error(logMsg,e);
+    			//iterator.next();
     		}
 		} while(iterator.hasNext() && counter<maxNumberRecords);
 

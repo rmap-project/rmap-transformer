@@ -74,14 +74,14 @@ public class JsonRecordList {
     	JSONArray jsonArray = null;
 	    String jsonFileContents = null;
 	    try {
-	    	jsonFileContents = Files.toString(file, Charset.defaultCharset());
+	    	jsonFileContents = Files.toString(file, Charset.forName("UTF-8"));
 	    	JSONObject jsonRecords = new JSONObject(jsonFileContents);
 	    	jsonArray = jsonRecords.getJSONArray(recordRoot);
 	    	this.size = jsonArray.length();
 	    	this.currRecordIndex = -1;
 	    }
 	    catch (Exception e) {
-	    	throw new RuntimeException("Error while retrieving contents from file " + file.getPath());
+	    	throw new RuntimeException("Error while retrieving contents from file " + file.getPath(), e);
 	    }
 		this.records = jsonArray;
       }

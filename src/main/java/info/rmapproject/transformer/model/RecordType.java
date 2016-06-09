@@ -2,10 +2,10 @@ package info.rmapproject.transformer.model;
 
 
 public enum RecordType {
-	SHARE ("SHARE"), 
-	OSF_REGISTRATION ("OSF_REGISTRATION"),
-	OSF_USER ("OSF_USER"),
-	OSF_NODE ("OSF_NODE");
+	SHARE ("share"), 
+	OSF_REGISTRATION ("osf_registration"),
+	OSF_USER ("osf_user"),
+	OSF_NODE ("osf_node");
 	
 	private String value;
 	
@@ -19,6 +19,7 @@ public enum RecordType {
 	
 	public static RecordType forValue(String value) {
         if (value != null) {
+        	value = value.toLowerCase();
             for (RecordType type : RecordType.values()) {
                 if (value.equals(type.value())) {                	
                     return type;

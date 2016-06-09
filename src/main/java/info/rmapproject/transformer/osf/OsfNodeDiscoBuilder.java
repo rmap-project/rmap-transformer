@@ -1,7 +1,7 @@
 package info.rmapproject.transformer.osf;
 
 import info.rmapproject.transformer.DiscoBuilder;
-import info.rmapproject.transformer.Utils;
+import info.rmapproject.transformer.TransformUtils;
 import info.rmapproject.transformer.vocabulary.Terms;
 
 import java.util.List;
@@ -150,7 +150,7 @@ public class OsfNodeDiscoBuilder extends DiscoBuilder {
 
 	protected void addForkedFrom(String forkRef, IRI nodeId){
 		if (forkRef!=null && forkRef.length()>0){
-			String forkedFromNodeId = Utils.extractLastSubFolder(forkRef);
+			String forkedFromNodeId = TransformUtils.extractLastSubFolder(forkRef);
 			IRI forkId = factory.createIRI(OSF_PATH_PREFIX + forkedFromNodeId);
 			addStmt(nodeId, Terms.PROV_WASDERIVEDFROM, forkId);			
 		}

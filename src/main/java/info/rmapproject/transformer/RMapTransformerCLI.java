@@ -29,20 +29,20 @@ import org.slf4j.LoggerFactory;
  * @author khanson
  *
  */
-public class RMapTransformCLI {
+public class RMapTransformerCLI {
 
-	private static final String DEFAULT_TYPE = "SHARE";
+	private static final String DEFAULT_TYPE = "share";
 	private static final String DEFAULT_SOURCE = "api";
 	private static final String DEFAULT_INPUT_FILEEXT = "json";
 	private static final Integer DEFAULT_NUM_RECORDS = 50;
 	
     /** Type of import e.g. SHARE, OSF_REGISTRATION, OSF_USER */
     @Argument(index = 0, metaVar = "Transform type", usage = "Type of transform. Options available: "
-    														+ "SHARE, "
-    														+ "OSF_REGISTRATION, "
-    														+ "OSF_NODE, "
-    														+ "OSF_USER "
-    														+ "(default: SHARE)")
+    														+ "share, "
+    														+ "osf_registration, "
+    														+ "osf_node, "
+    														+ "osf_user "
+    														+ "(default: share)")
     private String transformType = DEFAULT_TYPE;
         
     /** Source of data - local or api **/
@@ -81,13 +81,13 @@ public class RMapTransformCLI {
     @Option(name = "-h", aliases = {"-help", "--help"}, usage = "Print help message")
     public boolean help = false;
         
-    private static final Logger log = LoggerFactory.getLogger(RMapTransformCLI.class);
+    private static final Logger log = LoggerFactory.getLogger(RMapTransformerCLI.class);
 	    
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-        final RMapTransformCLI application = new RMapTransformCLI();
+        final RMapTransformerCLI application = new RMapTransformerCLI();
 
         CmdLineParser parser =
                 new CmdLineParser(application, ParserProperties.defaults()

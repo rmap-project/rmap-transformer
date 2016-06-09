@@ -2,7 +2,7 @@ package info.rmapproject.transformer.share;
 
 import info.rmapproject.cos.share.client.model.Record;
 import info.rmapproject.cos.share.client.service.ShareApiIterator;
-import info.rmapproject.transformer.Utils;
+import info.rmapproject.transformer.TransformUtils;
 import info.rmapproject.transformer.model.RecordDTO;
 import info.rmapproject.transformer.model.RecordType;
 
@@ -27,7 +27,7 @@ public class ShareApiTransformIterator implements Iterator<RecordDTO>{
 	public ShareApiTransformIterator(String filters){
 		HashMap<String,String> params=null;
 		try{
-			params = Utils.readParamsIntoMap(filters, "UTF-8");
+			params = TransformUtils.readParamsIntoMap(filters, "UTF-8");
     		shareApiIterator = new ShareApiIterator(params);
 		} catch(URISyntaxException e){
 			throw new IllegalArgumentException("URL invalid, parameters could not be parsed");
@@ -41,7 +41,12 @@ public class ShareApiTransformIterator implements Iterator<RecordDTO>{
 		RecordDTO shareDTO = null;
 		try {
 			Record sharerec = shareApiIterator.next();
-			shareDTO = new RecordDTO(sharerec, sharerec.getShareProperties().getDocID(), RecordType.SHARE);
+			String id = sharerec.getShareProperties().getDocID();
+			String source = sharerec.getShareProperties().getSource();
+			if (source!=null && source.length()>0){
+				id = source + "_" + id;
+			}
+			shareDTO = new RecordDTO(sharerec, id, RecordType.SHARE);
 		} catch (Exception ex) {
 			throw new RuntimeException("Could not generate SHARE record", ex);
 		}

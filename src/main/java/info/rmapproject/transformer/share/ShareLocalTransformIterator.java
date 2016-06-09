@@ -62,7 +62,12 @@ public class ShareLocalTransformIterator implements Iterator<RecordDTO> {
 				// Convert JSON string to Object
 				ObjectMapper mapper = new ObjectMapper();
 				Record sharerec = (Record) mapper.readValue(record, Record.class);
-				recordDTO = new RecordDTO(sharerec,sharerec.getShareProperties().getDocID(), RecordType.SHARE);
+				String id = sharerec.getShareProperties().getDocID();
+				String source = sharerec.getShareProperties().getSource();
+				if (source!=null && source.length()>0){
+					id = source + "_" + id;
+				}
+				recordDTO = new RecordDTO(sharerec,id, RecordType.SHARE);
 			}
 		} catch (Exception ex) {
 			throw new RuntimeException("Could not generate SHARE record", ex);

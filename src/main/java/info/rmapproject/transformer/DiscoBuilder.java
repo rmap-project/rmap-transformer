@@ -97,9 +97,13 @@ public abstract class DiscoBuilder {
 	 * @param predicate
 	 * @param object
 	 */
-	protected void addLiteralStmt(Resource subject, IRI predicate, String object){
+	protected void addLiteralStmt(Resource subject, IRI predicate, String object) {
 		if (object!=null && object.length()>0){
-			addStmt(subject, predicate, factory.createLiteral(object));
+			try {
+				addStmt(subject, predicate, factory.createLiteral(object));
+			} catch (Exception e){
+				throw new RuntimeException("Could not generate Literal statement", e);
+			}
 		}		
 	}
 

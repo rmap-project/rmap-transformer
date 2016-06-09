@@ -39,8 +39,8 @@ public class OSFTransformerTest {
 
 	@Test 
 	public void testOSFRegApiTransform() throws Exception{
-		String[] args = {"OSF_REGISTRATION","-src", "api","-n","10", "-o", "testregosf/"};
-		RMapTransformCLI.main(args);
+		String[] args = {"osf_registration","-src", "api","-n","10", "-o", "testregosf/"};
+		RMapTransformerCLI.main(args);
 		//check output files
 		Integer numfiles = new File("testregosf").list().length;
 		//assertTrue(numfiles.equals(2)); //only 2 are roots of Registrations
@@ -49,31 +49,42 @@ public class OSFTransformerTest {
 
 	@Test 
 	public void testOSFNodeApiTransform() throws Exception{
-		String[] args = {"OSF_NODE","-src", "api","-n","10", "-o", "testnodeosf/", "-f", "?page=4"};
-		RMapTransformCLI.main(args);
+		String[] args = {"osf_node","-src", "api","-n","10", "-o", "testnodeosf/", "-f", "?page=4"};
+		RMapTransformerCLI.main(args);
 		//check output files
 		Integer numfiles = new File("testnodeosf").list().length;
 		//assertTrue(numfiles.equals(2)); //one root Public Project, one partial
 		assertTrue(numfiles>0);
 	}
+
+	
+	@Test 
+	public void testSingleRegTransform() throws Exception {
+		String id = "2ce7w";
+		String[] args = {"osf_registration","-id",id, "-o", "testOneReg/"};
+		RMapTransformerCLI.main(args);
+		//check output files
+		Integer numfiles = new File("testOneReg").list().length;
+		assertTrue(numfiles.equals(1)); //one root Public Project, one partial
+	}	
 	
 	@Test 
 	public void testSingleNodeTransform() throws Exception {
 		String id = "ndry9";
-		String[] args = {"OSF_NODE","-id",id, "-o", "testOneNode/"};
-		RMapTransformCLI.main(args);
+		String[] args = {"osf_node","-id",id, "-o", "testOneNode/"};
+		RMapTransformerCLI.main(args);
 		//check output files
 		Integer numfiles = new File("testOneNode").list().length;
 		assertTrue(numfiles.equals(1)); //one root Public Project, one partial
 	}	
 	
-	
 	@Test 
 	public void testSingleUserTransform() throws Exception {
 		//String id = "km4wh";
-		String id = "cdi38";
-		String[] args = {"OSF_USER","-id",id, "-o", "testOneUser/"};
-		RMapTransformCLI.main(args);
+		//String id = "cdi38";
+		String id = "cgmdn";
+		String[] args = {"osf_user","-id",id, "-o", "testOneUser/"};
+		RMapTransformerCLI.main(args);
 		//check output files
 		Integer numfiles = new File("testOneUser").list().length;
 		assertTrue(numfiles.equals(1)); //one root Public Project, one partial
@@ -81,15 +92,15 @@ public class OSFTransformerTest {
 
 	@Test 
 	public void testUsersTransform() throws Exception {
-		String[] args = {"OSF_USER","-src", "api","-n","10", "-o", "testuserosf/", "-f", "?page=4"};
-		RMapTransformCLI.main(args);
+		String[] args = {"osf_user","-src", "api","-n","10", "-o", "testuserosf/", "-f", "?page=4"};
+		RMapTransformerCLI.main(args);
 		//check output files
 		Integer numfiles = new File("testuserosf").list().length;
 		assertTrue(numfiles>0);
 	}	
 	
 	@Test
-	public void testTempIdentifierRetrieval() throws Exception{
+	public void testTempAltIdentifierRetrieval() throws Exception{
 		String regid= "rxgmb";
 		List<String> identifiers = OsfRegistrationDiscoBuilder.getIdentifiers(regid);
 		assertTrue(identifiers.size()==2);

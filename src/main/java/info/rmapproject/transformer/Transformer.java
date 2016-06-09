@@ -3,6 +3,7 @@ package info.rmapproject.transformer;
 import info.rmapproject.transformer.model.DiscoFile;
 import info.rmapproject.transformer.model.RecordDTO;
 
+import java.io.OutputStream;
 import java.util.Iterator;
 
 import org.openrdf.model.Model;
@@ -113,7 +114,8 @@ public class Transformer {
 			discoModel.setRecord(recordDTO.getRecord());
 			Model model = discoModel.getModel();
 			String filename = getNewFilename(id);
-			DiscoFile disco = new DiscoFile(model, this.outputPath, filename);
+			OutputStream rdf = TransformUtils.generateTurtleRdf(model);
+			DiscoFile disco = new DiscoFile(rdf, this.outputPath, filename);
 			disco.writeFile();
 			log.info("File written: id " + id + " -> " + filename);
 		}

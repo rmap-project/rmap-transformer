@@ -1,6 +1,6 @@
 package info.rmapproject.transformer.osf;
 
-import info.rmapproject.transformer.Utils;
+import info.rmapproject.transformer.TransformUtils;
 import info.rmapproject.transformer.vocabulary.Terms;
 
 import java.io.BufferedReader;
@@ -101,7 +101,7 @@ public class OsfRegistrationDiscoBuilder extends OsfNodeDiscoBuilder {
 		addChildRegistrations(registration.getChildren(), regId);
 		
 		String regFrom = registration.getRegistered_from();
-		String sOrigNodeId = Utils.extractLastSubFolder(regFrom);							
+		String sOrigNodeId = TransformUtils.extractLastSubFolder(regFrom);							
 		Resource origNodeId = factory.createIRI(OSF_PATH_PREFIX + sOrigNodeId);
 		addStmt(regId, DCTERMS.IS_VERSION_OF, origNodeId);
 		addIriStmt(origNodeId, RDF.TYPE, OSF_PROJECT);
@@ -170,10 +170,12 @@ public class OsfRegistrationDiscoBuilder extends OsfNodeDiscoBuilder {
 			JSONObject node = root.getJSONObject("node");
 			JSONObject jsonIds = node.getJSONObject("identifiers");
 			if (jsonIds!=null){
-				if (jsonIds.has("doi")){
+				String doi = jsonIds.get("doi").toString();
+				if (jsonIds.has("doi") && !doi.equals("null")){
 					identifiers.add(jsonIds.getString("doi"));
 				}
-				if (jsonIds.has("ark")){
+				String ark = jsonIds.get("ark").toString();
+				if (jsonIds.has("ark") && !ark.equals("null")){
 					identifiers.add(jsonIds.getString("ark"));
 				}
 			}

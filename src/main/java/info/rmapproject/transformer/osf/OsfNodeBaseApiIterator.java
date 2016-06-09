@@ -1,6 +1,6 @@
 package info.rmapproject.transformer.osf;
 
-import info.rmapproject.transformer.Utils;
+import info.rmapproject.transformer.TransformUtils;
 import info.rmapproject.transformer.model.RecordDTO;
 
 import java.net.HttpURLConnection;
@@ -31,7 +31,7 @@ public abstract class OsfNodeBaseApiIterator implements Iterator<RecordDTO>{
 	protected OsfNodeBaseApiIterator(String filters) {
 		HashMap<String,String> params=null;
 		try{
-			params = Utils.readParamsIntoMap(filters, "UTF-8");
+			params = TransformUtils.readParamsIntoMap(filters, "UTF-8");
 		} catch(URISyntaxException e){
 			throw new IllegalArgumentException("URL invalid, parameters could not be parsed");
 		} catch (Exception e){
@@ -94,7 +94,7 @@ public abstract class OsfNodeBaseApiIterator implements Iterator<RecordDTO>{
 		//check if we are at top level
 		String parent = nodebase.getParent();
 		if (parent!=null){
-			String parentId = Utils.extractLastSubFolder(parent);
+			String parentId = TransformUtils.extractLastSubFolder(parent);
 			
 			if (!parentId.equals(nodebase.getId())){
 				try {

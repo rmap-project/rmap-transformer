@@ -31,4 +31,30 @@ public class DiscoBuilderFactory {
 			
 			return model;
 	}
+	
+	public static DiscoBuilder createDiscoBuilder(RecordType type) {
+		
+		DiscoBuilder model = null;
+					
+		switch(type){
+		case SHARE:
+			model = new ShareDiscoBuilder();
+			break;
+		case OSF_REGISTRATION:
+			model = new OsfRegistrationDiscoBuilder();
+			break;
+		case OSF_USER:
+			model = new OsfUserDiscoBuilder();
+			break;
+		case OSF_NODE:
+			model = new OsfNodeDiscoBuilder();
+			break;
+		default:
+			model = new ShareDiscoBuilder();
+			break;		
+		}
+		
+		return model;
+	}
+	
 }

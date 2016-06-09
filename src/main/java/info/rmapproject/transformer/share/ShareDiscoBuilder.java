@@ -8,6 +8,7 @@ import info.rmapproject.cos.share.client.model.OtherPropertyValue;
 import info.rmapproject.cos.share.client.model.Record;
 import info.rmapproject.cos.share.client.model.Sponsorship;
 import info.rmapproject.transformer.DiscoBuilder;
+import info.rmapproject.transformer.TransformUtils;
 import info.rmapproject.transformer.vocabulary.RdfType;
 import info.rmapproject.transformer.vocabulary.Terms;
 
@@ -33,7 +34,7 @@ import org.openrdf.model.vocabulary.RDFS;
 public class ShareDiscoBuilder extends DiscoBuilder  {
 	
 	private Record record;
-	private static final String DEFAULT_CREATOR = Terms.RMAPAGENT_NAMESPACE + "RMap-OSF-Harvester-0.1";
+	private static final String DEFAULT_CREATOR = Terms.RMAPAGENT_NAMESPACE + "RMap-SHARE-Harvester-0.1";
 	private static final String DEFAULT_DESCRIPTION = "Record harvested from SHARE API";
 	
 	/**
@@ -85,12 +86,22 @@ public class ShareDiscoBuilder extends DiscoBuilder  {
 			}			
 		}
 		
-		//other URIs
+		//provider URIs
 		List<URI> providerUris = record.getUris().getProviderUris();
 		if (providerUris!=null && providerUris.size()>0){
 			for (URI providerUri:providerUris){
 				if (!providerUri.toString().equals(canonicalUri.toString())){
 					addIriStmt(canonicalUri, OWL.SAMEAS, providerUri.toString());	
+				}
+			}				
+		}
+		
+		//object URIs
+		List<URI> objectUris = record.getUris().getObjectUris();
+		if (objectUris!=null && objectUris.size()>0){
+			for (URI objectUri:objectUris){
+				if (!objectUri.toString().equals(canonicalUri.toString())){
+					addIriStmt(canonicalUri, OWL.SAMEAS, objectUri.toString());	
 				}
 			}				
 		}
@@ -101,7 +112,7 @@ public class ShareDiscoBuilder extends DiscoBuilder  {
 		//was a proper rdf:type defined? if not let's make it a generic fabio:Expression.
 		if (!model.contains(canonicalUri, RDF.TYPE, null)){
 			//generic type
-			addStmt(canonicalUri, DCTERMS.TYPE, Terms.FABIO_EXPRESSION);
+			addStmt(canonicalUri, RDF.TYPE, Terms.FABIO_EXPRESSION);
 		}
 		
 		//title
@@ -123,7 +134,7 @@ public class ShareDiscoBuilder extends DiscoBuilder  {
 		//language
 		if (record.getLanguages()!=null && record.getLanguages().size()>0){
 			for (URI lang : record.getLanguages()){
-				addLiteralStmt(canonicalUri, DCTERMS.LANGUAGE, lang.toString());
+				addIRIorLiteralStmt(canonicalUri, DCTERMS.LANGUAGE, lang.toString());
 			}
 		}
 
@@ -163,7 +174,7 @@ public class ShareDiscoBuilder extends DiscoBuilder  {
 						addTypes(propVal.getTypes(), subjectIri);
 						break;
 			        case DOI:
-						addIriStmt(subjectIri, DCTERMS.IDENTIFIER, propVal.getDoi().toString());		            	
+			        	addIRIorLiteralStmt(subjectIri, DCTERMS.IDENTIFIER, propVal.getDoi().toString());		            	
 			        	break;
 			        case FORMATS:
 						for (String format:propVal.getFormats()){
@@ -177,21 +188,25 @@ public class ShareDiscoBuilder extends DiscoBuilder  {
 						break;
 			        case ISSN:
 						for (String issn:propVal.getIssns()){
+							issn = TransformUtils.issnFormatter(issn);
 							addIRIorLiteralStmt(subjectIri, DCTERMS.IS_PART_OF, issn);
 						}
 						break;
 			        case EISSN:
 						for (String eissn:propVal.getEissns()){
+							eissn = TransformUtils.issnFormatter(eissn);
 							addIRIorLiteralStmt(subjectIri, DCTERMS.IS_PART_OF, eissn);
 						}
 						break;
 			        case ISBN:
 						for (String isbn:propVal.getIsbns()){
+							isbn = TransformUtils.isbnFormatter(isbn);
 							addIRIorLiteralStmt(subjectIri, DCTERMS.IS_PART_OF, isbn);
 						}
 						break;
 			        case EISBN:
 						for (String eisbn:propVal.getEisbn()){
+							eisbn = TransformUtils.isbnFormatter(eisbn);
 							addIRIorLiteralStmt(subjectIri, DCTERMS.IS_PART_OF, eisbn);
 						}
 						break;
@@ -213,6 +228,8 @@ public class ShareDiscoBuilder extends DiscoBuilder  {
 		}
 	}
 	
+	
+	
 	/**
 	 * Pass in a SHARE Agent, the canonicalUri and the predicate that will connect the agent to the canonicalUri, and this will
 	 * build the RDF statements for an Agent.
@@ -223,40 +240,18 @@ public class ShareDiscoBuilder extends DiscoBuilder  {
 	 */
 	private void addAgent(Agent agent, Resource subjectIri, IRI predicateIri){
 		Resource primaryiri = null;
-		
+		Integer stmtsInModelBeforeAgent = model.size();
 		if (agent!=null){
 			
 			List<URI> agentUris = agent.getSameAs();
 			primaryiri = getFirstIriOrBNode(agentUris);
 			if (agentUris!=null && agentUris.size()>0){
-				addStmt(subjectIri, predicateIri, primaryiri);
 				for (URI agentUri : agentUris){
 					if (!agentUri.toString().equals(primaryiri.toString())){
 						addIriStmt(primaryiri, RDFS.SEEALSO, agentUri.toString());
 					}					
 				}
 			}
-			else{
-				addStmt(subjectIri, predicateIri, primaryiri);
-			}
-
-			//agent type
-			AgentType agentType = agent.getType();
-			if (agentType!=null){
-				switch (agentType) {
-	            case ORGANIZATION:  
-	            	addStmt(primaryiri, RDF.TYPE, FOAF.ORGANIZATION);
-	                break;
-	            case PERSON: 
-	            	addStmt(primaryiri, RDF.TYPE, FOAF.PERSON);
-	                break;
-	            default:
-	            	addStmt(primaryiri, RDF.TYPE, FOAF.AGENT);
-	                break;
-				}    
-			} else {
-				addStmt(primaryiri, RDF.TYPE, FOAF.AGENT);				
-			}			
 			
 			addLiteralStmt(primaryiri, FOAF.NAME, agent.getName());
 
@@ -271,8 +266,7 @@ public class ShareDiscoBuilder extends DiscoBuilder  {
 			addLiteralStmt(primaryiri, FOAF.GIVEN_NAME, agent.getGivenName());
 			addLiteralStmt(primaryiri, FOAF.FAMILY_NAME, agent.getFamilyName());
 			addLiteralStmt(primaryiri, Terms.VCARD_ADDITIONALNAME , agent.getAdditionalName());
-
-			
+		
 			if (agent.getAffiliations()!=null && agent.getAffiliations().size()>0){
 				List<Agent> affiliations = agent.getAffiliations();
 				for (Agent affiliation:affiliations) {
@@ -284,7 +278,36 @@ public class ShareDiscoBuilder extends DiscoBuilder  {
 					addAgent(affiliation, orgRoleNode, Terms.PRO_RELATESTOORGANIZATION);
 				}
 			}
+						
+			//if the model has grown, that means there is new data! Link the Agent to the rest of the graph
+			//if it has stayed the same but an actual IRI was provided, rather than just a blank node
+			//this should be in the graph too
+			if(model.size()>stmtsInModelBeforeAgent || primaryiri instanceof IRI){ 
+				//add stmt to connect agent back to graph
+				addStmt(subjectIri, predicateIri, primaryiri);
+			}
 			
+			//Type stmt is always added regardless... but before this is done we want to make sure new data was generated
+			//otherwise this will be a typed blank node and nothing else.
+			if (model.size()>stmtsInModelBeforeAgent) {
+				//add agent type
+				AgentType agentType = agent.getType();
+				if (agentType!=null){
+					switch (agentType) {
+		            case ORGANIZATION:  
+		            	addStmt(primaryiri, RDF.TYPE, FOAF.ORGANIZATION);
+		                break;
+		            case PERSON: 
+		            	addStmt(primaryiri, RDF.TYPE, FOAF.PERSON);
+		                break;
+		            default:
+		            	addStmt(primaryiri, RDF.TYPE, FOAF.AGENT);
+		                break;
+					}    
+				} else {
+					addStmt(primaryiri, RDF.TYPE, FOAF.AGENT);				
+				}	
+			}	
 		}
 	}
 

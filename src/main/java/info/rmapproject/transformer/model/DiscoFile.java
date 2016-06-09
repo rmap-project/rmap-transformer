@@ -1,14 +1,10 @@
 package info.rmapproject.transformer.model;
 
 import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.OutputStream;
 
-import org.openrdf.model.Model;
-import org.openrdf.rio.RDFFormat;
-import org.openrdf.rio.Rio;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,10 +14,10 @@ public class DiscoFile {
     
 	private String filename;
 	private String filepath;
-	private Model model;
+	private OutputStream rdf;
 		
-	public DiscoFile(Model model, String filepath, String filename){
-		if (model==null){
+	public DiscoFile(OutputStream rdf, String filepath, String filename){
+		if (rdf==null){
 			throw new IllegalArgumentException("rdf cannot be null");
 		}
 		if (filepath==null){
@@ -30,7 +26,7 @@ public class DiscoFile {
 		if (filename==null){
 			throw new IllegalArgumentException("filename cannot be null");
 		}
-		this.model = model;
+		this.rdf = rdf;
 		if (filepath=="."){
 			filepath="";
 		}
@@ -56,11 +52,15 @@ public class DiscoFile {
 		
 		String writePath = null;
 		writePath = this.filepath + this.filename;
-
-		OutputStream rdf = generateRdf(model);
 		
 		File outputFile = new File(writePath);
 		try {
+			if (outputFile.exists()) { // we will accept one duplicate
+				log.error("File already exists. Creating file with '_duplicate' appended.  Please review to confirm whether to include this");
+				writePath = this.filepath + this.filename + "_duplicate";
+				outputFile = new File(writePath);
+			}
+			
 			if  (outputFile.createNewFile()) {
 				FileWriter fw = new FileWriter(outputFile.getAbsoluteFile());
 				BufferedWriter bw = new BufferedWriter(fw);
@@ -77,17 +77,7 @@ public class DiscoFile {
 			System.exit(0);		
 		}
 	}
-	
-	
-	protected static OutputStream generateRdf(Model model) {
-		OutputStream bOut = new ByteArrayOutputStream();
-		try {
-			Rio.write(model, bOut, RDFFormat.TURTLE);
-		} catch (Exception e) {
-			throw new RuntimeException("Exception thrown creating RDF from statement list", e);
-		}
-		return bOut;	
-	}
+
 	
 	
 	

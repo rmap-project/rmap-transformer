@@ -19,7 +19,6 @@ import org.openrdf.model.vocabulary.DCTERMS;
 import org.openrdf.model.vocabulary.FOAF;
 import org.openrdf.model.vocabulary.RDF;
 import org.openrdf.model.vocabulary.RDFS;
-import org.openrdf.model.vocabulary.SKOS;
 
 
 /** 
@@ -195,11 +194,19 @@ public class OsfNodeDiscoBuilder extends DiscoBuilder {
 			addStmt(parentRegId, DCTERMS.HAS_PART, fileId);
 			addStmt(fileId, RDF.TYPE, Terms.FABIO_COMPUTERFILE);		
 			//TODO:giving these temp predicates... need to find terms for these
-			addLiteralStmt(fileId, RDFS.LABEL, file.getName());
-			addLiteralStmt(fileId, SKOS.ALT_LABEL, file.getMaterialized_path());
+			//addLiteralStmt(fileId, RDFS.LABEL, file.getName());
+			//addLiteralStmt(fileId, SKOS.ALT_LABEL, file.getMaterialized_path());
+			//just using one path for now... was doing two but they tend to be repetitive
+			addLiteralStmt(fileId, RDFS.LABEL, file.getMaterialized_path());
+						
+			String created = file.getDate_created();
+			String modified = file.getDate_modified();
+			addLiteralStmt(fileId, DCTERMS.CREATED, created);
+			//only show modified if it is different from created
+			if (created!=null && modified !=null && !created.equals(modified)){
+				addLiteralStmt(fileId, DCTERMS.MODIFIED, modified);				
+			}
 			
-			addLiteralStmt(fileId, DCTERMS.CREATED, file.getDate_created());
-			addLiteralStmt(fileId, DCTERMS.MODIFIED, file.getDate_modified());
 		} else {
 			addFiles(file, parentRegId);
 		}

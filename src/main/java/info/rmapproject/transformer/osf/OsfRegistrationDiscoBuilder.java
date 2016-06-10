@@ -172,11 +172,17 @@ public class OsfRegistrationDiscoBuilder extends OsfNodeDiscoBuilder {
 			if (jsonIds!=null){
 				String doi = jsonIds.get("doi").toString();
 				if (jsonIds.has("doi") && !doi.equals("null")){
-					identifiers.add(jsonIds.getString("doi"));
+					if (!doi.startsWith("doi:") && !doi.startsWith("http")){
+						doi = "doi:" + doi;
+					}
+					identifiers.add(doi);
 				}
 				String ark = jsonIds.get("ark").toString();
 				if (jsonIds.has("ark") && !ark.equals("null")){
-					identifiers.add(jsonIds.getString("ark"));
+					if (!ark.startsWith("ark:/") && !ark.startsWith("http")){
+						ark = "ark:/" + ark;
+					}
+					identifiers.add(ark);
 				}
 			}
 

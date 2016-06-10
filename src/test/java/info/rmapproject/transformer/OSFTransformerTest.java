@@ -101,7 +101,7 @@ public class OSFTransformerTest {
 
 	@Test 
 	public void testUsersTransform() throws Exception {
-		String[] args = {"osf_user","-src", "api","-n","10", "-o", "testuserosf/", "-f", "?page=4"};
+		String[] args = {"osf_user","-src", "api","-n","20", "-o", "testuserosf/"};
 		RMapTransformerCLI.main(args);
 		//check output files
 		Integer numfiles = new File("testuserosf").list().length;
@@ -113,8 +113,8 @@ public class OSFTransformerTest {
 		String regid= "rxgmb";
 		List<String> identifiers = OsfRegistrationDiscoBuilder.getIdentifiers(regid);
 		assertTrue(identifiers.size()==2);
-		assertTrue(identifiers.get(0).equals("10.17605/OSF.IO/RXGMB"));
-		assertTrue(identifiers.get(1).equals("c7605/osf.io/rxgmb"));
+		assertTrue(identifiers.get(0).equals("doi:10.17605/OSF.IO/RXGMB"));
+		assertTrue(identifiers.get(1).equals("ark:/c7605/osf.io/rxgmb"));
 	}
 	
 }

@@ -99,7 +99,7 @@
 		      <configuration>
 		        <archive>
 		          <manifest>
-		            <mainClass>info.rmapproject.transformer.RMapTransformer</mainClass>
+		            <mainClass>info.rmapproject.transformer.RMapTransformerCLI</mainClass>
 		          </manifest>
 		        </archive>
 		        <descriptorRefs>

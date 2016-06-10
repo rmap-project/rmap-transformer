@@ -31,6 +31,7 @@ public class OsfRegistrationApiIterator extends OsfNodeBaseApiIterator {
 			}
 			page=page+1;
 			params.put("page", page.toString());
+			log.info("Loading page " + page);
     		ids = osfClient.getRegIdList(params);
 			nextId = ids.get(0).getId();
 		} catch(Exception e){

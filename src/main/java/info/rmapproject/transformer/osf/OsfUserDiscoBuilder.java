@@ -163,7 +163,7 @@ public class OsfUserDiscoBuilder extends DiscoBuilder {
 				addStmt(userId, Terms.PRO_HOLDSROLEINTIME, roleNode);
 				addStmt(roleNode, Terms.PRO_WITHROLE, Terms.SCORO_AFFILIATE);
 				addStmt(roleNode, Terms.PRO_RELATESTOORGANIZATION, instIri);
-				addStmt(roleNode, RDF.TYPE, FOAF.ORGANIZATION);
+				addStmt(instIri, RDF.TYPE, FOAF.ORGANIZATION);
 				addLiteralStmt(instIri, FOAF.NAME, inst.getName());
 			}
 		}

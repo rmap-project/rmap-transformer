@@ -58,6 +58,10 @@ public class OsfUserApiIterator implements Iterator<RecordDTO>{
 				//load next
 				user = osfClient.getUser(nextId);
 				loadNextId();
+				//we only want users that have nodes assigned when doing an iteration.
+				if (user.getNodes()==null || user.getNodes().size()==0){
+					user=null;
+				}
 			} 
 		} catch (Exception e){
 			//load failed... though there may be another record... so let's load it for the next iteration
@@ -88,6 +92,7 @@ public class OsfUserApiIterator implements Iterator<RecordDTO>{
 			}
 			page=page+1;
 			params.put("page", page.toString());
+			log.info("Loading page " + page);
     		ids = osfClient.getUserIdList(params);
 			nextId = ids.get(0).getId();
 		} catch(Exception e){

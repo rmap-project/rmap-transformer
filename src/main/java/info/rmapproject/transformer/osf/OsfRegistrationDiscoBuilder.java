@@ -29,6 +29,14 @@ import org.openrdf.model.vocabulary.RDF;
 public class OsfRegistrationDiscoBuilder extends OsfNodeDiscoBuilder {
 
 	private Registration record;
+	
+	private static final String DOI_COLON_PREFIX = "doi:";
+	private static final String DOI_HTTP_PREFIX = "http://dx.doi.org/";
+	private static final String ARK_PREFIX = "ark:/";
+	
+	private static final String OSF_APIV1_BASEURL_PROPNAME = "rmaptransformer.osfApiBaseUrlV1";
+	
+	private String apiBaseUrlV1 = null;	
 		
 	/**
 	 * Initiates converter - will assign default values to discoCreator and discoDescription
@@ -51,6 +59,10 @@ public class OsfRegistrationDiscoBuilder extends OsfNodeDiscoBuilder {
 		this.record = (Registration) record;
 	}
 	
+	public void setV1ApiBaseUrl(String apiBaseUrlV1) {
+		this.apiBaseUrlV1=apiBaseUrlV1;
+	}
+	
 	@Override
 	public Model getModel() {		
 								
@@ -65,7 +77,7 @@ public class OsfRegistrationDiscoBuilder extends OsfNodeDiscoBuilder {
 
 	private void addRegistration(Registration registration, IRI parentId){
 				
-		IRI regId = factory.createIRI(OSF_PATH_PREFIX + registration.getId());
+		IRI regId = factory.createIRI(OSF_PATH_PREFIX + registration.getId() + "/");
 		addStmt(discoId, Terms.ORE_AGGREGATES, regId);
 		
 
@@ -84,9 +96,8 @@ public class OsfRegistrationDiscoBuilder extends OsfNodeDiscoBuilder {
 		//temporary measure that goes to api v1:
 		addIdentifiers(regId, registration.getId());
 		
-		
 		IRI category = mapCategoryToIri(registration.getCategory());
-		addStmt(regId, DCTERMS.TYPE, category);
+		addStmt(regId, RDF.TYPE, category);
 
 		addLiteralStmt(regId, DCTERMS.TITLE, registration.getTitle());
 		addLiteralStmt(regId, DCTERMS.DESCRIPTION, registration.getDescription());
@@ -102,7 +113,7 @@ public class OsfRegistrationDiscoBuilder extends OsfNodeDiscoBuilder {
 		
 		String regFrom = registration.getRegistered_from();
 		String sOrigNodeId = TransformUtils.extractLastSubFolder(regFrom);							
-		Resource origNodeId = factory.createIRI(OSF_PATH_PREFIX + sOrigNodeId);
+		Resource origNodeId = factory.createIRI(OSF_PATH_PREFIX + sOrigNodeId + "/");
 		addStmt(regId, DCTERMS.IS_VERSION_OF, origNodeId);
 		addIriStmt(origNodeId, RDF.TYPE, OSF_PROJECT);
 		
@@ -129,7 +140,7 @@ public class OsfRegistrationDiscoBuilder extends OsfNodeDiscoBuilder {
 	 * 
 	 */
 	private void addIdentifiers(IRI regIdIri, String regId){
-		List<String> identifiers = getIdentifiers(regId);
+		List<String> identifiers = getIdentifiers(regId, this.apiBaseUrlV1);
 		if (identifiers!=null){
 			for (String identifier : identifiers) {
 				addIriStmt(regIdIri, DCTERMS.IDENTIFIER, identifier);
@@ -143,13 +154,17 @@ public class OsfRegistrationDiscoBuilder extends OsfNodeDiscoBuilder {
 	 * @param identifier
 	 * @return
 	 */
-	public static List<String> getIdentifiers(String identifier){
+	public static List<String> getIdentifiers(String identifier, String baseUrl){
 		if (identifier==null || identifier.length()==0){
 			throw new IllegalArgumentException("identifier cannot be null or empty");
 		}
+
+		if (baseUrl==null||baseUrl.length()==0){
+			baseUrl = TransformUtils.getPropertyValue(OSF_APIV1_BASEURL_PROPNAME);
+		}
 		
 		List<String> identifiers = new ArrayList<String>();
-		String surl = "https://osf.io/api/v1/project/" + identifier + "/";
+		String surl = baseUrl + "project/" + identifier + "/";
 		URL url;
 		try {
 			StringBuffer text = new StringBuffer();
@@ -171,16 +186,23 @@ public class OsfRegistrationDiscoBuilder extends OsfNodeDiscoBuilder {
 			JSONObject jsonIds = node.getJSONObject("identifiers");
 			if (jsonIds!=null){
 				String doi = jsonIds.get("doi").toString();
-				if (jsonIds.has("doi") && !doi.equals("null")){
-					if (!doi.startsWith("doi:") && !doi.startsWith("http")){
-						doi = "doi:" + doi;
+
+				if (jsonIds.has("doi") && !doi.equals("null") && TransformUtils.isDoi(doi)){
+					doi=TransformUtils.normalizeDoi(doi);
+					if (!doi.startsWith(DOI_HTTP_PREFIX)){
+						doi = DOI_HTTP_PREFIX + doi;	
+					} 
+					if (doi.startsWith(DOI_HTTP_PREFIX + "10.")){
+						//going to include the doi: and http://dx.doi.org/ prefixes to improve interconnectedness
+						identifiers.add(doi);
+						identifiers.add(doi.replace(DOI_HTTP_PREFIX, DOI_COLON_PREFIX));						
 					}
-					identifiers.add(doi);
+					
 				}
 				String ark = jsonIds.get("ark").toString();
 				if (jsonIds.has("ark") && !ark.equals("null")){
-					if (!ark.startsWith("ark:/") && !ark.startsWith("http")){
-						ark = "ark:/" + ark;
+					if (!ark.startsWith(ARK_PREFIX) && !ark.startsWith("http")){
+						ark = ARK_PREFIX + ark;
 					}
 					identifiers.add(ark);
 				}

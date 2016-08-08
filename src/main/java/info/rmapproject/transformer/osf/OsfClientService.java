@@ -36,8 +36,7 @@ import com.squareup.okhttp.Request;
  */
 public class OsfClientService {
 	private OsfService osfService = null;
-	private static final String OSF_BASEURL_PROPNAME = "rmaptransformer.osfApiBaseUrl";
-	
+	private static final String OSF_BASEURL_PROPNAME = "rmaptransformer.osfApiBaseUrlV2";
 	
 	public OsfClientService(){
 		try {

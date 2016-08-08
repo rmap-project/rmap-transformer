@@ -23,7 +23,7 @@ public class Terms {
 	public static final String AGGREGATES = "aggregates";
 
 	/*VCARD vocabulary constants*/
-	public static final String VCARD_NAMESPACE = "https://www.w3.org/2006/vcard/ns#";
+	public static final String VCARD_NAMESPACE = "http://www.w3.org/2006/vcard/ns#";
 	public static final String VCARD_PREFIX = "vcard";
 	public static final String ADDITIONALNAME = "additional-name";
 	public static final String HONORIFICSUFFIX = "honorific-suffix";

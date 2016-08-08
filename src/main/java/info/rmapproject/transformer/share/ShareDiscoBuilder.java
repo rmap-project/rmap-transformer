@@ -75,13 +75,23 @@ public class ShareDiscoBuilder extends DiscoBuilder  {
 		
 		//Handle canonical URIs
 		List<URI> canonicalUris = record.getUris().getCanonicalUris();
-		IRI canonicalUri = factory.createIRI(canonicalUris.get(0).toString());		
-		addStmt(discoId, Terms.ORE_AGGREGATES, canonicalUri);		
+		
+		String sCanonicalUri = canonicalUris.get(0).toString();
+		if (TransformUtils.isDoi(sCanonicalUri)){
+			sCanonicalUri = TransformUtils.normalizeDoi(sCanonicalUri);
+		}		
+		IRI canonicalUri = factory.createIRI(sCanonicalUri);		
+		addStmt(discoId, Terms.ORE_AGGREGATES, canonicalUri);	
+		
 		if (canonicalUris.size()>1){
-			canonicalUris.remove(0);
+			canonicalUris.remove(0); //removing the primary identifier, as this will be the subject of other stmts
 			for (URI uri:canonicalUris){
-				if (!uri.toString().equals(canonicalUri.toString())){
-					addIriStmt(canonicalUri, OWL.SAMEAS, uri.toString());
+				String sUri = uri.toString();
+				if (TransformUtils.isDoi(sUri)){
+					sUri = TransformUtils.normalizeDoi(sUri);
+				}	
+				if (!sUri.equals(sCanonicalUri)){
+					addIriStmt(canonicalUri, OWL.SAMEAS, sUri);
 				}
 			}			
 		}
@@ -90,8 +100,12 @@ public class ShareDiscoBuilder extends DiscoBuilder  {
 		List<URI> providerUris = record.getUris().getProviderUris();
 		if (providerUris!=null && providerUris.size()>0){
 			for (URI providerUri:providerUris){
-				if (!providerUri.toString().equals(canonicalUri.toString())){
-					addIriStmt(canonicalUri, OWL.SAMEAS, providerUri.toString());	
+				String sProviderUri = providerUri.toString();
+				if (TransformUtils.isDoi(sProviderUri)){
+					sProviderUri = TransformUtils.normalizeDoi(sProviderUri);
+				}	
+				if (!sProviderUri.equals(sCanonicalUri)){
+					addIriStmt(canonicalUri, RDFS.SEEALSO, sProviderUri);	
 				}
 			}				
 		}
@@ -100,8 +114,12 @@ public class ShareDiscoBuilder extends DiscoBuilder  {
 		List<URI> objectUris = record.getUris().getObjectUris();
 		if (objectUris!=null && objectUris.size()>0){
 			for (URI objectUri:objectUris){
-				if (!objectUri.toString().equals(canonicalUri.toString())){
-					addIriStmt(canonicalUri, OWL.SAMEAS, objectUri.toString());	
+				String sObjectUri = objectUri.toString();
+				if (TransformUtils.isDoi(sObjectUri)){
+					sObjectUri = TransformUtils.normalizeDoi(sObjectUri);
+				}	
+				if (!sObjectUri.equals(sCanonicalUri)){
+					addIriStmt(canonicalUri, RDFS.SEEALSO, sObjectUri);	
 				}
 			}				
 		}
@@ -110,10 +128,11 @@ public class ShareDiscoBuilder extends DiscoBuilder  {
 		addOtherProperties(record.getOtherProperties(), canonicalUri);
 
 		//was a proper rdf:type defined? if not let's make it a generic fabio:Expression.
-		if (!model.contains(canonicalUri, RDF.TYPE, null)){
+		//removed because some items in SHARE are not expressions e.g. Clinical Trials
+		//if (!model.contains(canonicalUri, RDF.TYPE, null)){
 			//generic type
-			addStmt(canonicalUri, RDF.TYPE, Terms.FABIO_EXPRESSION);
-		}
+		//	addStmt(canonicalUri, RDF.TYPE, Terms.FABIO_EXPRESSION);
+		//}
 		
 		//title
 		addLiteralStmt(canonicalUri, DCTERMS.TITLE, record.getTitle());
@@ -124,7 +143,7 @@ public class ShareDiscoBuilder extends DiscoBuilder  {
 		//contributors		
 		List<Agent> contributors = record.getContributors();
 		for (Agent contributor:contributors){
-			addAgent(contributor, canonicalUri, DCTERMS.CREATOR);
+			addAgent(contributor, canonicalUri, DCTERMS.CONTRIBUTOR);
 		}
 		
 		//publisher
@@ -174,6 +193,10 @@ public class ShareDiscoBuilder extends DiscoBuilder  {
 						addTypes(propVal.getTypes(), subjectIri);
 						break;
 			        case DOI:
+			        	String doi = propVal.getDoi().toString();
+			        	if (TransformUtils.isDoi(doi))	{
+			        		doi = TransformUtils.normalizeDoi(doi);
+			        	}
 			        	addIRIorLiteralStmt(subjectIri, DCTERMS.IDENTIFIER, propVal.getDoi().toString());		            	
 			        	break;
 			        case FORMATS:
@@ -183,6 +206,9 @@ public class ShareDiscoBuilder extends DiscoBuilder  {
 						break;
 			        case IDENTIFIERS:
 						for (String identifier:propVal.getIdentifiers()){
+				        	if (TransformUtils.isDoi(identifier))	{
+				        		identifier = TransformUtils.normalizeDoi(identifier);
+				        	}
 							addIRIorLiteralStmt(subjectIri, DCTERMS.IDENTIFIER, identifier);
 						}	
 						break;
@@ -212,11 +238,17 @@ public class ShareDiscoBuilder extends DiscoBuilder  {
 						break;
 			        case LINKS:
 						for (String link : propVal.getLinks()){
+				        	if (TransformUtils.isDoi(link))	{
+				        		link = TransformUtils.normalizeDoi(link);
+				        	}
 							addIRIorLiteralStmt(subjectIri, RDFS.SEEALSO, link);
 						}		
 						break;
 			        case RELATIONS:
 						for (String relation : propVal.getRelations()){
+				        	if (TransformUtils.isDoi(relation))	{
+				        		relation = TransformUtils.normalizeDoi(relation);
+				        	}
 							addIRIorLiteralStmt(subjectIri, DCTERMS.RELATION, relation);
 						}		
 						break;
@@ -321,10 +353,13 @@ public class ShareDiscoBuilder extends DiscoBuilder  {
 
 		if (sponsorship!=null && canonicalIri!=null){
 			BNode projectNode = factory.createBNode();
-			addStmt(canonicalIri, Terms.FRAPO_ISOUTPUTOF, projectNode);
 			
 			Resource awardId = null;
 			Resource sponsorId = null;
+			
+			if (sponsorship.hasAwardInfo()||sponsorship.hasSponsorInfo()){
+				addStmt(canonicalIri, Terms.FRAPO_ISOUTPUTOF, projectNode);
+			}
 			
 			if (sponsorship.hasAwardInfo()){
 				awardId = getIriOrBNode(sponsorship.getAward().getAwardIdentifier());

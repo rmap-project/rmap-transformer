@@ -60,7 +60,8 @@ public class SHARETransformerTest {
 	}
 	@Test 
 	public void testShareApiTransform() throws Exception{
-		String[] args = {"-src", "api","-f", "?q=boutot", "-n","32", "-o", "testshare/"};
+		//String[] args = {"-src", "api","-f", "?q=boutot", "-n","32", "-o", "testshare/"};
+		String[] args = {"-src", "api","-f", "?q=pt2d7&sort=providerUpdatedDateTime", "-n","2", "-o", "prezz/"};
 		RMapTransformerCLI.main(args);
 		//check output files
 		Integer numfiles = new File("testshare").list().length;

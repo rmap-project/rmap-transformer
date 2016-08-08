@@ -23,6 +23,11 @@ public class TransformUtils {
 	
 	private static final String PROP_FILE = "rmap-transform";
 	
+	private static final String DOI_HTTP_PREFIX = "http://dx.doi.org/";
+	private static final String DOI_COLON_PREFIX = "doi:"; //going to normalize to http://dx.doi.org/ address
+	private static final String DOI_HTTPS_PREFIX = "https://dx.doi.org/"; //incorrect! Need to replace https with http
+	private static final String DOI_HTTP_NODX_PREFIX = "http://doi.org/"; //going to normalize to http://dx.doi.org/ address
+	private static final String DOI_VALID_FIRST_CHARS = "10.";
 	/**
 	 * Convenience method for extracting a single property name/value pair from a property file
 	 * @param propFileName base name for property file
@@ -156,6 +161,58 @@ public class TransformUtils {
 			throw new RuntimeException("Exception thrown creating RDF from statement list", e);
 		}
 		return bOut;	
+	}
+	
+	/**
+	 * Very basic validation to check if a string looks like a doi. 
+	 * @param doi
+	 * @return
+	 */
+	public static boolean isDoi(String doi) {
+		//TODO: make this better, add regex validation?
+		doi = doi.toLowerCase(); 
+		if (doi!=null 
+				&& doi.contains(DOI_VALID_FIRST_CHARS)
+				&& !doi.contains(" ") 
+				&& !doi.equals(DOI_HTTPS_PREFIX) 
+				&& !doi.equals(DOI_HTTP_PREFIX)
+				&& !doi.equals(DOI_HTTP_NODX_PREFIX)
+				&& !doi.equals(DOI_COLON_PREFIX)
+				&& (doi.startsWith(DOI_COLON_PREFIX) || doi.startsWith(DOI_HTTP_PREFIX) || doi.startsWith(DOI_HTTPS_PREFIX)  
+						|| doi.startsWith(DOI_VALID_FIRST_CHARS) || doi.startsWith(DOI_HTTP_NODX_PREFIX) )){
+			return true;
+		} 
+		
+		return false;
+	}
+	
+	
+	/** 
+	 * Normalizes doi:10.xxx and https://dx.doi.org/10.xxx to http://dx.doi.org/10.xxx
+	 * Will throw runtime exception if invalid doi provided
+	 * @param doi
+	 */
+	public static String normalizeDoi(String doi){
+		String normalizedDoi = "";
+		if (doi == null){
+			return normalizedDoi;
+		}
+		doi = doi.trim();
+
+		if (!isDoi(doi)) {
+			throw new RuntimeException("Invalid DOI provided: " + doi);
+		}		
+		
+		if (doi.startsWith(DOI_VALID_FIRST_CHARS)) {
+			doi = DOI_HTTP_PREFIX + doi;
+		} else if (doi.startsWith(DOI_HTTPS_PREFIX)){
+			doi = doi.replace(DOI_HTTPS_PREFIX, DOI_HTTP_PREFIX);
+		} else if (doi.startsWith(DOI_COLON_PREFIX)){
+			doi = doi.replace(DOI_COLON_PREFIX, DOI_HTTP_PREFIX);
+		} else if (doi.startsWith(DOI_HTTP_NODX_PREFIX)){
+			doi = doi.replace(DOI_HTTP_NODX_PREFIX, DOI_HTTP_PREFIX);
+		}
+		return doi;
 	}
 	
 	

@@ -30,7 +30,7 @@ public class OsfUserDiscoBuilder extends DiscoBuilder {
 
 	protected static final String DEFAULT_CREATOR = Terms.RMAPAGENT_NAMESPACE + "RMap-OSF-Harvester-0.1";
 	protected static final String DEFAULT_DESCRIPTION = "User record harvested from OSF API v2";
-	protected static final String OSF_PATH_PREFIX = "http://osf.io/";
+	protected static final String OSF_PATH_PREFIX = "https://osf.io/";
 	
 	protected static final String ORCID_PREFIX = "http://orcid.org/";
 	protected static final String RESEARCHERID_PREFIX = "http://researcherid.com/rid/";
@@ -85,7 +85,7 @@ public class OsfUserDiscoBuilder extends DiscoBuilder {
 	public Model getModel()	{
 		model = new LinkedHashModel();		
 		discoId = factory.createBNode(); 	
-		userId = factory.createIRI(OSF_PATH_PREFIX + record.getId());				
+		userId = factory.createIRI(OSF_PATH_PREFIX + record.getId() + "/");				
 
 		//disco header
 		addDiscoHeader();
@@ -116,37 +116,40 @@ public class OsfUserDiscoBuilder extends DiscoBuilder {
 //			}
 //		}
 
-		if (record.getAcademiaProfileID()!=null && record.getAcademiaInstitution()!=null){
+		if (record.getAcademiaProfileID()!=null 
+				&& record.getAcademiaInstitution()!=null
+				&& record.getAcademiaProfileID().length()>0 
+				&& record.getAcademiaInstitution().length()>0){
 			String academiaUrl = "https://" + record.getAcademiaInstitution() 
 								+ ACADEMIA_PREFIX + record.getAcademiaProfileID();
 			addIriStmt(userId, RDFS.SEEALSO, academiaUrl);
 		}
 		
-		if (record.getBaiduScholar()!=null){
+		if (record.getBaiduScholar()!=null && record.getBaiduScholar().length()>0){
 			addIriStmt(userId, RDFS.SEEALSO, BAIDUSCHOLAR_PREFIX + record.getBaiduScholar());
 		}
-		if (record.getGitHub()!=null){
+		if (record.getGitHub()!=null && record.getGitHub().length()>0){
 			addIriStmt(userId, RDFS.SEEALSO, GITHUB_PREFIX + record.getGitHub());
 		}
-		if (record.getImpactStory()!=null){		
+		if (record.getImpactStory()!=null && record.getImpactStory().length()>0){		
 			addIriStmt(userId, RDFS.SEEALSO, IMPACTSTORY_PREFIX + record.getImpactStory());
 		}
-		if (record.getLinkedIn()!=null){		
+		if (record.getLinkedIn()!=null && record.getLinkedIn().length()>0){		
 			addIriStmt(userId, RDFS.SEEALSO, LINKEDIN_PREFIX + record.getLinkedIn());
 		}
-		if (record.getOrcid()!=null){		
+		if (record.getOrcid()!=null && record.getOrcid().length()>0){		
 			addIriStmt(userId, RDFS.SEEALSO, ORCID_PREFIX + record.getOrcid());
 		}
-		if (record.getResearcherId()!=null){		
+		if (record.getResearcherId()!=null && record.getResearcherId().length()>0){		
 			addIriStmt(userId, RDFS.SEEALSO, RESEARCHERID_PREFIX + record.getResearcherId());
 		}
-		if (record.getResearchGate()!=null){		
+		if (record.getResearchGate()!=null && record.getResearchGate().length()>0){		
 			addIriStmt(userId, RDFS.SEEALSO, RESEARCHGATE_PREFIX + record.getResearchGate());
 		}
-		if (record.getScholar()!=null){		
+		if (record.getScholar()!=null && record.getScholar().length()>0){		
 			addIriStmt(userId, RDFS.SEEALSO, GOOGLESCHOLAR_PREFIX + record.getScholar());
 		}
-		if (record.getTwitter()!=null){		
+		if (record.getTwitter()!=null && record.getTwitter().length()>0){		
 			addIriStmt(userId, RDFS.SEEALSO, TWITTER_PREFIX + record.getTwitter());
 		}
 

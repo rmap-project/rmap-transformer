@@ -69,8 +69,8 @@ public class OSFTransformerTest {
 	
 	@Test 
 	public void testSingleRegTransform() throws Exception {
-		String id = "2ce7w";
-		String[] args = {"osf_registration","-id",id, "-o", "testOneReg/"};
+		String id = "pt2d7";
+		String[] args = {"osf_registration","-id",id, "-o", "prezz/"};
 		RMapTransformerCLI.main(args);
 		//check output files
 		Integer numfiles = new File("testOneReg").list().length;
@@ -79,7 +79,7 @@ public class OSFTransformerTest {
 	
 	@Test 
 	public void testSingleNodeTransform() throws Exception {
-		String id = "ndry9";
+		String id = "pu6sd";
 		String[] args = {"osf_node","-id",id, "-o", "testOneNode/"};
 		RMapTransformerCLI.main(args);
 		//check output files
@@ -91,8 +91,8 @@ public class OSFTransformerTest {
 	public void testSingleUserTransform() throws Exception {
 		//String id = "km4wh";
 		//String id = "cdi38";
-		String id = "cgmdn";
-		String[] args = {"osf_user","-id",id, "-o", "testOneUser/"};
+		String id = "6suwb";
+		String[] args = {"osf_user","-id",id, "-o", "prezz/"};
 		RMapTransformerCLI.main(args);
 		//check output files
 		Integer numfiles = new File("testOneUser").list().length;
@@ -111,7 +111,7 @@ public class OSFTransformerTest {
 	@Test
 	public void testTempAltIdentifierRetrieval() throws Exception{
 		String regid= "rxgmb";
-		List<String> identifiers = OsfRegistrationDiscoBuilder.getIdentifiers(regid);
+		List<String> identifiers = OsfRegistrationDiscoBuilder.getIdentifiers(regid, null);
 		assertTrue(identifiers.size()==2);
 		assertTrue(identifiers.get(0).equals("doi:10.17605/OSF.IO/RXGMB"));
 		assertTrue(identifiers.get(1).equals("ark:/c7605/osf.io/rxgmb"));

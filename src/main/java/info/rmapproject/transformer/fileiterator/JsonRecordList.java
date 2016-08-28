@@ -1,3 +1,22 @@
+/*******************************************************************************
+ * Copyright 2016 Johns Hopkins University
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * This software was produced as part of the RMap Project (http://rmap-project.info),
+ * The RMap Project was funded by the Alfred P. Sloan Foundation and is a 
+ * collaboration between Data Conservancy, Portico, and IEEE.
+ *******************************************************************************/
 package info.rmapproject.transformer.fileiterator;
 
 import java.io.File;
@@ -9,25 +28,19 @@ import org.json.JSONObject;
 import com.google.common.io.Files;
 
 /**
- * Extracts the text from a File object and breaks it into a list of records
- * @author khanson
+ * Extracts the text from a File object and breaks it into a list of records.
  *
+ * @author khanson
  */
 public class JsonRecordList {
 
-	/**
-	 * JSONArray of records extracted from file
-	 */
+	/** JSONArray of records extracted from file. */
 	private JSONArray records;
 	
-	/**
-	 * Size of the JSON Records Array
-	 */
+	/** Size of the JSON Records Array. */
 	private Integer size;
 		
-	/**
-	 * Stores current position in file list
-	 */
+	/** Stores current position in file list. */
 	protected Integer currRecordIndex = -1;
 	
     //private static final Logger log = LoggerFactory.getLogger(JsonRecordList.class);
@@ -35,8 +48,9 @@ public class JsonRecordList {
     /**
      * Initiates file path based on path defined and filtered by file extension.
      * Note: does not currently iterate through sub-folders.
-     * @param inputfilepath
-     * @param inputfileext
+     *
+     * @param file the file
+     * @param recordRoot the record root element
      */
 	public JsonRecordList(File file, String recordRoot){
 		if (file==null){
@@ -54,18 +68,29 @@ public class JsonRecordList {
     	}
 	}	
 
+	/**
+	 * Gets the list size.
+	 *
+	 * @return the size
+	 */
 	public Integer getSize() {
 		return this.size;
 	}
 
+	/**
+	 * Gets the current record index.
+	 *
+	 * @return the current record index
+	 */
 	public Integer getCurrRecordIndex() {
 		return this.currRecordIndex;
 	}
 
 	/**
-	 * Loads JSON array of records to be processed
-	 * @param inputPath
-	 * @param inputFileExt
+	 * Loads JSON array of records to be processed.
+	 *
+	 * @param file the file
+	 * @param recordRoot the record root
 	 */
 	protected void loadJsonRecordList(File file, String recordRoot) {
     	if (file == null){
@@ -88,7 +113,8 @@ public class JsonRecordList {
 	
 	/**
 	 * retrieve the next record in the list and update the current recordIndex.
-	 * @return
+	 *
+	 * @return the next JSON record as a String
 	 */
 	public String next(){
 		if (!this.hasNext()){
@@ -99,8 +125,9 @@ public class JsonRecordList {
 	}
 		
 	/**
-	 * Determines whether current file is last file
-	 * @return
+	 * Determines whether current file is last file.
+	 *
+	 * @return true, if successful
 	 */
     public boolean hasNext() {
     	//do we have another file?

@@ -1,3 +1,22 @@
+/*******************************************************************************
+ * Copyright 2016 Johns Hopkins University
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * This software was produced as part of the RMap Project (http://rmap-project.info),
+ * The RMap Project was funded by the Alfred P. Sloan Foundation and is a 
+ * collaboration between Data Conservancy, Portico, and IEEE.
+ *******************************************************************************/
 package info.rmapproject.transformer;
 
 import info.rmapproject.cos.share.client.utils.Utils;
@@ -19,16 +38,31 @@ import org.openrdf.model.impl.SimpleValueFactory;
 import org.openrdf.model.vocabulary.DCTERMS;
 import org.openrdf.model.vocabulary.RDF;
 
+/**
+ * Abstract class for DiSCO Builders. Each data source will implement a custom DiSCO builder
+ * for that specific data source.
+ * @author khanson
+ */
 public abstract class DiscoBuilder {
 
+	/** The model  (list of triples that form the DiSCO Graph). */
 	protected Model model;	
+	
+	/** The temporary DiSCO ID. */
 	protected BNode discoId;
 	
+	/** The DiSCO creator. */
 	protected String discoCreator=null;
+	
+	/** The DiSCO description. */
 	protected String discoDescription=null;
 	
+	/** The value factory for generating triplestore objects. */
 	protected static ValueFactory factory = SimpleValueFactory.getInstance();
 
+	/**
+	 * Instantiates a new DiSCO builder.
+	 */
 	protected DiscoBuilder() {
 		super();
 		this.model = new LinkedHashModel();		
@@ -36,9 +70,10 @@ public abstract class DiscoBuilder {
 	}
 
 	/**
-	 * Initiates converter
-	 * @param discoCreator
-	 * @param discoDescription
+	 * Initiates DiSCO builder.
+	 *
+	 * @param discoCreator the DiSCO creator
+	 * @param discoDescription the DiSCO description
 	 */
 	protected DiscoBuilder(String discoCreator, String discoDescription){
 		this();
@@ -47,9 +82,10 @@ public abstract class DiscoBuilder {
 	}
 		
 	/**
-	 * Initiates converter
-	 * @param discoCreator
-	 * @param discoDescription
+	 * Initiates DiSCO builder.
+	 *
+	 * @param discoCreator the DiSCO creator
+	 * @param discoDescription the DiSCO description
 	 */
 	public DiscoBuilder(URI discoCreator, String discoDescription){
 		this();
@@ -63,14 +99,26 @@ public abstract class DiscoBuilder {
 		this.discoDescription = Utils.setEmptyToNull(discoDescription);	
 	}
 
+	/**
+	 * Gets the DiSCO model (list of triples that form the DiSCO Graph)
+	 *
+	 * @return the model
+	 */
 	public abstract Model getModel();
+	
+	/**
+	 * Sets the record.
+	 *
+	 * @param record the new record
+	 */
 	public abstract void setRecord(Object record);
 
 	/**
-	 * If all values are not null add a statement to the model 
-	 * @param subject
-	 * @param predicate
-	 * @param object
+	 * If all values are not null add a statement to the model .
+	 *
+	 * @param subject the subject
+	 * @param predicate the predicate
+	 * @param object the object
 	 */
 	protected void addStmt(Resource subject, IRI predicate, Value object){
 		if (subject!=null && predicate!=null && object!=null){
@@ -80,10 +128,11 @@ public abstract class DiscoBuilder {
 	}	
 	
 	/**
-	 * If all values are not null add a statement to the model with an IRI as the object
-	 * @param subject
-	 * @param predicate
-	 * @param object
+	 * If all values are not null add a statement to the model with an IRI as the object.
+	 *
+	 * @param subject the subject
+	 * @param predicate the predicate
+	 * @param object the object
 	 */
 	protected void addIriStmt(Resource subject, IRI predicate, String object){
 		if (object!=null && object.length()>0){
@@ -92,10 +141,11 @@ public abstract class DiscoBuilder {
 	}
 	
 	/**
-	 * If all values are not null add a statement to the model with a Literal as the object
-	 * @param subject
-	 * @param predicate
-	 * @param object
+	 * If all values are not null add a statement to the model with a Literal as the object.
+	 *
+	 * @param subject the subject
+	 * @param predicate the predicate
+	 * @param object the object
 	 */
 	protected void addLiteralStmt(Resource subject, IRI predicate, String object) {
 		if (object!=null && object.length()>0){
@@ -108,10 +158,11 @@ public abstract class DiscoBuilder {
 	}
 
 	/**
-	 * If all values are not null add a statement to the model with a Date Literal as the object
-	 * @param subject
-	 * @param predicate
-	 * @param object
+	 * If all values are not null add a statement to the model with a Date Literal as the object.
+	 *
+	 * @param subject the subject
+	 * @param predicate the predicate
+	 * @param object the object
 	 */
 	protected void addLiteralStmt(Resource subject, IRI predicate, Date object){
 		if (object!=null){
@@ -120,10 +171,11 @@ public abstract class DiscoBuilder {
 	}
 
 	/**
-	 * If all values are not null add a statement to the model with an Integer Literal as the object
-	 * @param subject
-	 * @param predicate
-	 * @param object
+	 * If all values are not null add a statement to the model with an Integer Literal as the object.
+	 *
+	 * @param subject the subject
+	 * @param predicate the predicate
+	 * @param object the object
 	 */
 	protected void addLiteralStmt(Resource subject, IRI predicate, Integer object){
 		if (object!=null){
@@ -134,10 +186,11 @@ public abstract class DiscoBuilder {
 	/**
 	 * Creates a statement using an object that is either a URI or a Literal - tries to create as URI first, if it fails
 	 * it create it as a Literal. Returns null if subject and object have same value.
-	 * @param subject
-	 * @param predicate
-	 * @param object
-	 * @return
+	 *
+	 * @param subject the subject
+	 * @param predicate the predicate
+	 * @param object the object
+	 * @return the statement
 	 */
 	protected Statement addIRIorLiteralStmt(IRI subject, IRI predicate, String object) {
 		Statement stmt = null;
@@ -156,8 +209,9 @@ public abstract class DiscoBuilder {
 	/**
 	 * Looks at list of identifiers. If there are values in the list, it takes the first one and
 	 * generates an IRI to use as the primary identifier in the RDF. Otherwise returns a blank node.
-	 * @param sameAsList
-	 * @return
+	 *
+	 * @param uriList the URI list
+	 * @return the first IRI or a BNode
 	 */
 	protected static Resource getFirstIriOrBNode(List<URI> uriList) {
 		Resource val = null;
@@ -172,11 +226,13 @@ public abstract class DiscoBuilder {
 	}
 		
 
-	/** 
+	/**
+	 *  
 	 * Looks at URI value provided. If it's null it passes back a blank node, 
 	 * if it has a value it passes it back as IRI
-	 * @param iriVal
-	 * @return
+	 *
+	 * @param uriVal the URI
+	 * @return the IRI or BNode
 	 */
 	protected static Resource getIriOrBNode(URI uriVal) {
 		Resource val = null;

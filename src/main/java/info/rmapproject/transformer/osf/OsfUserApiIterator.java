@@ -1,3 +1,22 @@
+/*******************************************************************************
+ * Copyright 2016 Johns Hopkins University
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * This software was produced as part of the RMap Project (http://rmap-project.info),
+ * The RMap Project was funded by the Alfred P. Sloan Foundation and is a 
+ * collaboration between Data Conservancy, Portico, and IEEE.
+ *******************************************************************************/
 package info.rmapproject.transformer.osf;
 
 import info.rmapproject.transformer.TransformUtils;
@@ -15,18 +34,39 @@ import org.dataconservancy.cos.osf.client.model.UserId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * OSF User Iterator class
+ */
 public class OsfUserApiIterator implements Iterator<RecordDTO>{
 
+    /** The log. */
     private static final Logger log = LoggerFactory.getLogger(OsfUserApiIterator.class);  
     
+    /** The params. */
     private Map<String, String> params = null;
+    
+    /** The list of User IDs. */
     private List<UserId> ids = null;
+	
+	/** The next id. */
 	protected String nextId = null;
+    
+    /** The current iterator position. */
     private int position = -1;
+    
+    /** The OSF client. */
     private OsfClientService osfClient = null;
 		
+	/**
+	 * Instantiates a new OSF User API iterator.
+	 */
 	public OsfUserApiIterator() {}
 
+	/**
+	 * Instantiates a new OSF User API iterator.
+	 *
+	 * @param filters the API filters
+	 */
 	public OsfUserApiIterator(String filters) {
 		HashMap<String,String> params=null;
 		try{
@@ -42,12 +82,18 @@ public class OsfUserApiIterator implements Iterator<RecordDTO>{
 		loadNextId(); 
 	}
 
+	/* (non-Javadoc)
+	 * @see java.util.Iterator#hasNext()
+	 */
 	@Override
 	public boolean hasNext() {
 		return (nextId!=null);	
 	}
 
 
+	/* (non-Javadoc)
+	 * @see java.util.Iterator#next()
+	 */
 	@Override
 	public RecordDTO next() {
 		RecordDTO userDTO = null;
@@ -79,7 +125,7 @@ public class OsfUserApiIterator implements Iterator<RecordDTO>{
 
 	
 	/**
-	 * Load batch of OSF data from API using parameters defined
+	 * Load batch of OSF data from API using parameters defined.
 	 */
 	protected void loadBatch() {
 		position = -1;
@@ -102,7 +148,7 @@ public class OsfUserApiIterator implements Iterator<RecordDTO>{
     }
 	
 	/**
-	 * load next Id to check using hasNext
+	 * load next Id to check using hasNext.
 	 */
 	protected void loadNextId(){
 		if (ids==null || isLastRow()){
@@ -113,8 +159,9 @@ public class OsfUserApiIterator implements Iterator<RecordDTO>{
 	}
 
 	/**
-	 * Returns true if this is the last row in the current id list
-	 * @return
+	 * Returns true if this is the last row in the current id list.
+	 *
+	 * @return true, if is last row
 	 */
 	protected boolean isLastRow() {
 		return (position==(ids.size()-1));

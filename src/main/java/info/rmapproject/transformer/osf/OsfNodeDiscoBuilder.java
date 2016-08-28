@@ -1,3 +1,22 @@
+/*******************************************************************************
+ * Copyright 2016 Johns Hopkins University
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * This software was produced as part of the RMap Project (http://rmap-project.info),
+ * The RMap Project was funded by the Alfred P. Sloan Foundation and is a 
+ * collaboration between Data Conservancy, Portico, and IEEE.
+ *******************************************************************************/
 package info.rmapproject.transformer.osf;
 
 import info.rmapproject.transformer.DiscoBuilder;
@@ -21,7 +40,6 @@ import org.openrdf.model.vocabulary.FOAF;
 import org.openrdf.model.vocabulary.RDF;
 import org.openrdf.model.vocabulary.RDFS;
 
-
 /** 
  * Performs mapping from OSF Registration Java model to RDF DiSCO model.  
  * (Java Model -> RDF).
@@ -31,21 +49,31 @@ import org.openrdf.model.vocabulary.RDFS;
 
 public class OsfNodeDiscoBuilder extends DiscoBuilder {
 
+	/** The Node record. */
 	private Node record;
 
+	/** Default DiSCO creator. */
 	protected static final String DEFAULT_CREATOR = Terms.RMAPAGENT_NAMESPACE + "RMap-OSF-Harvester-0.1";
+	
+	/** Default DiSCO description. */
 	protected static final String DEFAULT_DESCRIPTION = "Record harvested from OSF API";
+	
+	/** OSF path prefix. */
 	protected static final String OSF_PATH_PREFIX = "https://osf.io/";
+	
+	/** OSF ontology prefix. */
 	//TODO: replace these with proper ontology term!
 	protected static final String OSF_TERMS_PREFIX = "http://osf.io/terms/";
+	
+	/** OSF Registration ontology term. */
 	protected static final String OSF_REGISTRATION = OSF_TERMS_PREFIX + "Registration";
+	
+	/** OSF Project ontology term. */
 	protected static final String OSF_PROJECT = OSF_TERMS_PREFIX + "Project";
 	
 	
 	/**
-	 * Constructor for Node to pass default params up to super()
-	 * @param discoCreator
-	 * @param discoDescription
+	 * Constructor for Node to pass default params up to super().
 	 */
 	public OsfNodeDiscoBuilder(){
 		super(DEFAULT_CREATOR, DEFAULT_DESCRIPTION);
@@ -53,8 +81,9 @@ public class OsfNodeDiscoBuilder extends DiscoBuilder {
 	
 	
 	/**
-	 * Constructor for Node to pass params up to super()
-	 * @param discoDescription
+	 * Constructor for Node to pass params up to super().
+	 *
+	 * @param discoDescription the DiSCO description
 	 */
 	public OsfNodeDiscoBuilder(String discoDescription){
 		super(DEFAULT_CREATOR, discoDescription);
@@ -62,9 +91,10 @@ public class OsfNodeDiscoBuilder extends DiscoBuilder {
 		
 	
 	/**
-	 * Constructor for Node to pass params up to super()
-	 * @param discoCreator
-	 * @param discoDescription
+	 * Constructor for Node to pass params up to super().
+	 *
+	 * @param discoCreator the DiSCO creator
+	 * @param discoDescription the DiSCO description
 	 */
 	public OsfNodeDiscoBuilder(String discoCreator, String discoDescription){
 		super(discoCreator, discoDescription);
@@ -72,6 +102,9 @@ public class OsfNodeDiscoBuilder extends DiscoBuilder {
 
 
 	
+	/* (non-Javadoc)
+	 * @see info.rmapproject.transformer.DiscoBuilder#setRecord(java.lang.Object)
+	 */
 	@Override
 	public void setRecord(Object record) {
 		this.record = (Node) record;
@@ -79,6 +112,9 @@ public class OsfNodeDiscoBuilder extends DiscoBuilder {
 		model = null;
 	}
 	
+	/* (non-Javadoc)
+	 * @see info.rmapproject.transformer.DiscoBuilder#getModel()
+	 */
 	@Override
 	public Model getModel()	{
 		model = new LinkedHashModel();		
@@ -92,6 +128,12 @@ public class OsfNodeDiscoBuilder extends DiscoBuilder {
 		return model;		
 	}
 
+	/**
+	 * Adds the node to DiSCO graph
+	 *
+	 * @param node the Node
+	 * @param parentId the parent node ID
+	 */
 	private void addNode(Node node, IRI parentId){
 				
 		IRI nodeId = factory.createIRI(OSF_PATH_PREFIX + node.getId() + "/");
@@ -118,9 +160,10 @@ public class OsfNodeDiscoBuilder extends DiscoBuilder {
 	
 	
 	/**
-	 * Add child node metadata to model
-	 * @param child
-	 * @param regId
+	 * Add child node metadata to DiSCO graph.
+	 *
+	 * @param children the children
+	 * @param parentId the parent id
 	 */
 	private void addChildNodes(List<Node> children, IRI parentId){
 		if (children!=null){
@@ -133,9 +176,10 @@ public class OsfNodeDiscoBuilder extends DiscoBuilder {
 	
 	
 	/**
-	 * Add contributor metadata to Model
-	 * @param contributors
-	 * @param nodeId
+	 * Add contributor metadata to DiSCO model.
+	 *
+	 * @param contributors the contributors
+	 * @param nodeId the node id
 	 */
 	protected void addContributors(List<Contributor> contributors, IRI nodeId){
 		if (contributors!=null){
@@ -151,6 +195,12 @@ public class OsfNodeDiscoBuilder extends DiscoBuilder {
 		}	
 	}
 
+	/**
+	 * Adds the forked from metadata to the DiSCO graph.
+	 *
+	 * @param forkRef the fork reference
+	 * @param nodeId the Node ID
+	 */
 	protected void addForkedFrom(String forkRef, IRI nodeId){
 		if (forkRef!=null && forkRef.length()>0){
 			String forkedFromNodeId = TransformUtils.extractLastSubFolder(forkRef);
@@ -162,10 +212,10 @@ public class OsfNodeDiscoBuilder extends DiscoBuilder {
 	
 	
 	/**
-	 * Add file metadata to Model
-	 * @param file
-	 * @param discoNode
-	 * @param regId
+	 * Add file metadata to Model.
+	 *
+	 * @param root the root
+	 * @param regId the reg id
 	 */
 	protected void addFiles(Object root, IRI regId) {
 		List<File> files = null;
@@ -188,9 +238,10 @@ public class OsfNodeDiscoBuilder extends DiscoBuilder {
 	}
 
 	/**
-	 * Add OSF file metadata to map
-	 * @param file
-	 * @param parentRegId
+	 * Add OSF file metadata to model.
+	 *
+	 * @param file the file
+	 * @param parentRegId the parent reg id
 	 */
 	protected void addFile(File file, IRI parentRegId){
 		if (file.getKind().equals("file")){
@@ -219,10 +270,10 @@ public class OsfNodeDiscoBuilder extends DiscoBuilder {
 	
 	
 	/**
-	 * Map category to an IRI
-	 * @param category
-	 * @return
-	 * @throws Exception
+	 * Map category to an IRI.
+	 *
+	 * @param category the category
+	 * @return the iri
 	 */
 	protected IRI mapCategoryToIri(Category category) {
 		if (category!=null){

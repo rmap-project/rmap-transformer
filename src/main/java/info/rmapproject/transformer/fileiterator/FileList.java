@@ -1,3 +1,22 @@
+/*******************************************************************************
+ * Copyright 2016 Johns Hopkins University
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * This software was produced as part of the RMap Project (http://rmap-project.info),
+ * The RMap Project was funded by the Alfred P. Sloan Foundation and is a 
+ * collaboration between Data Conservancy, Portico, and IEEE.
+ *******************************************************************************/
 package info.rmapproject.transformer.fileiterator;
 
 import java.io.File;
@@ -30,15 +49,14 @@ public class FileList {
 	 */
 	protected Integer currFileIndex = -1;
 	
-	
-    private static final Logger log = LoggerFactory
-            .getLogger(FileList.class);
+	/**The log**/
+    private static final Logger log = LoggerFactory.getLogger(FileList.class);
 	
     /**
      * Initiates file path based on path defined and filtered by file extension.
      * Note: does not currently iterate through sub-folders.
-     * @param inputfilepath
-     * @param inputfileext
+     * @param inputfilepath the input file path
+     * @param inputfileext the input file extension
      */
 	public FileList(String inputfilepath, String inputfileext){
 		if (inputfilepath==null){
@@ -61,8 +79,8 @@ public class FileList {
 
 	/**
 	 * Loads list of files to be processed
-	 * @param inputPath
-	 * @param inputFileExt
+	 * @param inputPath the input file path
+	 * @param inputFileExt the input file extension
 	 */
 	protected void loadInputFileList(String inputPath, String inputFileExt) {
 		log.info("Generating file list using input path '" + inputPath + "' and filtering by file extension '" + inputFileExt + "'");
@@ -88,7 +106,7 @@ public class FileList {
 	
 	/**
 	 * retrieve the next file in the list and update the current fileIndex.
-	 * @return
+	 * @return the next file in the sequence
 	 */
 	public File next(){
 		if (!this.hasNext()){
@@ -100,7 +118,7 @@ public class FileList {
 		
 	/**
 	 * Determines whether current file is last file
-	 * @return
+	 * @return true, if there is another file available; otherwise false.
 	 */
     public boolean hasNext() {
     	//are we on last record of last file?

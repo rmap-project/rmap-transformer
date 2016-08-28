@@ -1,3 +1,22 @@
+/*******************************************************************************
+ * Copyright 2016 Johns Hopkins University
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * This software was produced as part of the RMap Project (http://rmap-project.info),
+ * The RMap Project was funded by the Alfred P. Sloan Foundation and is a 
+ * collaboration between Data Conservancy, Portico, and IEEE.
+ *******************************************************************************/
 package info.rmapproject.transformer.osf;
 
 import info.rmapproject.transformer.TransformUtils;
@@ -30,14 +49,21 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 
 /**
- * This class interacts with the OSF client
- * @author khanson
+ * This class interacts with the OSF client.
  *
+ * @author khanson
  */
 public class OsfClientService {
+	
+	/** The osf service. */
 	private OsfService osfService = null;
+	
+	/** Property key for OSF API V2 Base URL . */
 	private static final String OSF_BASEURL_PROPNAME = "rmaptransformer.osfApiBaseUrlV2";
 	
+	/**
+	 * Instantiates a new osf client service.
+	 */
 	public OsfClientService(){
 		try {
 			String sBaseUrl = TransformUtils.getPropertyValue(OSF_BASEURL_PROPNAME);
@@ -77,10 +103,10 @@ public class OsfClientService {
 	
 
 	/**
-	 * Get list of nodes - this will walk down the branches of relationships
-	 * @param params
-	 * @return
-	 * @throws Exception
+	 * Get list of nodes - this will walk down the branches of relationships.
+	 *
+	 * @param params the params to be applied to the API
+	 * @return a list of Node objects
 	 */
 	public List<Node> getNodeList(Map<String,String> params){	
 		
@@ -102,9 +128,9 @@ public class OsfClientService {
 
 	/**
 	 * Get list of registrations from OSF API. This will walk down the relationship branches
-	 * @param params
-	 * @return
-	 * @throws Exception
+	 *
+	 * @param params the params to be applied the API
+	 * @return a list of Registration objects
 	 */
 	public List<Registration> getRegList(Map<String,String> params){	
 
@@ -125,8 +151,9 @@ public class OsfClientService {
 
 	/**
 	 * Get single OSF registration by passing in single ID e.g. "cgur9"
-	 * @param id
-	 * @return
+	 *
+	 * @param id the id of the registration
+	 * @return the registration
 	 */
 	public Registration getRegistration(String id){	
 
@@ -146,9 +173,10 @@ public class OsfClientService {
 	}
 	
 	/**
-	 * Get list of registration Ids filtered by parameters provided
-	 * @param params
-	 * @return
+	 * Get list of registration Ids filtered by parameters provided.
+	 *
+	 * @param params the params for the API
+	 * @return a list of Registration IDs list
 	 */
 	public List<RegistrationId> getRegIdList(Map<String,String> params){	
 
@@ -168,6 +196,12 @@ public class OsfClientService {
 	}
 	
 
+	/**
+	 * Gets a single Node using an ID.
+	 *
+	 * @param id the Node id
+	 * @return the Node
+	 */
 	public Node getNode(String id){	
 		
         Call<Node> listCall = osfService.node(id);
@@ -186,6 +220,12 @@ public class OsfClientService {
 	}
 	
 
+	/**
+	 * Gets the Node ID list.
+	 *
+	 * @param params the params to filter the node list by
+	 * @return the Node ID list
+	 */
 	public List<NodeId> getNodeIdList(Map<String,String> params){	
 
         Call<List<NodeId>> listCall = osfService.nodeIdList(params);
@@ -205,6 +245,12 @@ public class OsfClientService {
 
 	
 
+	/**
+	 * Gets a OSF user based on the ID.
+	 *
+	 * @param id the User ID
+	 * @return the OSF User
+	 */
 	public User getUser(String id){	
 		
         Call<User> listCall = osfService.user(id);
@@ -223,6 +269,12 @@ public class OsfClientService {
 	}
 	
 
+	/**
+	 * Gets a User ID list filter by params provided
+	 *
+	 * @param params the params to filter ID list
+	 * @return the user ID list
+	 */
 	public List<UserId> getUserIdList(Map<String,String> params){	
 
         Call<List<UserId>> listCall = osfService.userIdList(params);

@@ -1,3 +1,22 @@
+/*******************************************************************************
+ * Copyright 2016 Johns Hopkins University
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * This software was produced as part of the RMap Project (http://rmap-project.info),
+ * The RMap Project was funded by the Alfred P. Sloan Foundation and is a 
+ * collaboration between Data Conservancy, Portico, and IEEE.
+ *******************************************************************************/
 package info.rmapproject.transformer.osf;
 
 import info.rmapproject.transformer.TransformUtils;
@@ -19,7 +38,6 @@ import org.openrdf.model.Resource;
 import org.openrdf.model.vocabulary.DCTERMS;
 import org.openrdf.model.vocabulary.RDF;
 
-
 /** 
  * Performs mapping from OSF Registration Java model to RDF DiSCO model.  
  * (Java Model -> RDF).
@@ -28,41 +46,60 @@ import org.openrdf.model.vocabulary.RDF;
  */
 public class OsfRegistrationDiscoBuilder extends OsfNodeDiscoBuilder {
 
+	/** The registration record. */
 	private Registration record;
 	
+	/** DOI prefix (non-http). */
 	private static final String DOI_COLON_PREFIX = "doi:";
+	
+	/** DOI prefix (http). */
 	private static final String DOI_HTTP_PREFIX = "http://dx.doi.org/";
+	
+	/** ARK prefix. */
 	private static final String ARK_PREFIX = "ark:/";
 	
+	/** Prop key for OSF API V1 Base URL. */
 	private static final String OSF_APIV1_BASEURL_PROPNAME = "rmaptransformer.osfApiBaseUrlV1";
 	
+	/** OSF API V1 Base URL. */
 	private String apiBaseUrlV1 = null;	
 		
 	/**
-	 * Initiates converter - will assign default values to discoCreator and discoDescription
-	 * @param record
+	 * Initiates converter - will assign default values to discoCreator and discoDescription.
 	 */
 	public OsfRegistrationDiscoBuilder(){
 		super(DEFAULT_CREATOR, DEFAULT_DESCRIPTION);
 	}
 
 	/**
-	 * Initiates converter - uses values provided for discoCreator and discoDescription
-	 * @param record
+	 * Initiates converter - uses values provided for discoCreator and discoDescription.
+	 *
+	 * @param discoDescription the disco description
 	 */
 	public OsfRegistrationDiscoBuilder(String discoDescription){
 		super(DEFAULT_CREATOR, discoDescription);
 	}
 	
+	/* (non-Javadoc)
+	 * @see info.rmapproject.transformer.osf.OsfNodeDiscoBuilder#setRecord(java.lang.Object)
+	 */
 	@Override
 	public void setRecord(Object record){
 		this.record = (Registration) record;
 	}
 	
+	/**
+	 * Sets the v1 API base url.
+	 *
+	 * @param apiBaseUrlV1 the new V1 API base url
+	 */
 	public void setV1ApiBaseUrl(String apiBaseUrlV1) {
 		this.apiBaseUrlV1=apiBaseUrlV1;
 	}
 	
+	/* (non-Javadoc)
+	 * @see info.rmapproject.transformer.osf.OsfNodeDiscoBuilder#getModel()
+	 */
 	@Override
 	public Model getModel() {		
 								
@@ -75,6 +112,12 @@ public class OsfRegistrationDiscoBuilder extends OsfNodeDiscoBuilder {
 		return model;		
 	}
 
+	/**
+	 * Adds the registration.
+	 *
+	 * @param registration the registration
+	 * @param parentId the parent id
+	 */
 	private void addRegistration(Registration registration, IRI parentId){
 				
 		IRI regId = factory.createIRI(OSF_PATH_PREFIX + registration.getId() + "/");
@@ -122,10 +165,10 @@ public class OsfRegistrationDiscoBuilder extends OsfNodeDiscoBuilder {
 	
 	
 	/**
-	 * Add child registration metadata to model
-	 * @param child
-	 * @param discoNode
-	 * @param regId
+	 * Add child registration metadata to model.
+	 *
+	 * @param children the children
+	 * @param parentId the parent id
 	 */
 	private void addChildRegistrations(List<Registration> children, IRI parentId){
 		if (children!=null){
@@ -137,7 +180,10 @@ public class OsfRegistrationDiscoBuilder extends OsfNodeDiscoBuilder {
 	}
 	
 	/**
-	 * 
+	 * Adds the identifiers to the model.
+	 *
+	 * @param regIdIri the reg id iri
+	 * @param regId the reg id
 	 */
 	private void addIdentifiers(IRI regIdIri, String regId){
 		List<String> identifiers = getIdentifiers(regId, this.apiBaseUrlV1);
@@ -151,8 +197,10 @@ public class OsfRegistrationDiscoBuilder extends OsfNodeDiscoBuilder {
 	
 	/**
 	 * temporary measure until identifiers (doi, ark) are included in version 2 api.
-	 * @param identifier
-	 * @return
+	 *
+	 * @param identifier the identifier
+	 * @param baseUrl the base url
+	 * @return the identifiers
 	 */
 	public static List<String> getIdentifiers(String identifier, String baseUrl){
 		if (identifier==null || identifier.length()==0){

@@ -1,3 +1,22 @@
+/*******************************************************************************
+ * Copyright 2016 Johns Hopkins University
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * This software was produced as part of the RMap Project (http://rmap-project.info),
+ * The RMap Project was funded by the Alfred P. Sloan Foundation and is a 
+ * collaboration between Data Conservancy, Portico, and IEEE.
+ *******************************************************************************/
 package info.rmapproject.transformer.osf;
 
 import info.rmapproject.transformer.TransformUtils;
@@ -16,18 +35,40 @@ import org.dataconservancy.cos.osf.client.model.NodeBaseId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * An abstract iterator class to iterate over a list of OSF Nodes. 
+ * This can be used with both OSF Nodes and OSF Registrations which share a lot of fields
+ */
 public abstract class OsfNodeBaseApiIterator implements Iterator<RecordDTO>{
 	
+    /** The log. */
     protected static final Logger log = LoggerFactory.getLogger(OsfNodeBaseApiIterator.class);  
     
+    /** The params. */
     protected Map<String, String> params = null;
+	
+	/** The list of IDs to iterate over. */
 	protected List<? extends NodeBaseId> ids = null;
+	
+	/** The next id. */
 	protected String nextId = null;
+	
+	/** The position of the iterator. */
 	protected int position = -1;
+	
+	/** The OSF client, used to retrieve data from API. */
 	protected OsfClientService osfClient = null;
 		
+	/**
+	 * Instantiates a new OSF Node base API iterator.
+	 */
 	protected OsfNodeBaseApiIterator() {}
 
+	/**
+	 * Instantiates a new OSF Node base API iterator.
+	 *
+	 * @param filters the filters for the iterator
+	 */
 	protected OsfNodeBaseApiIterator(String filters) {
 		HashMap<String,String> params=null;
 		try{
@@ -46,27 +87,31 @@ public abstract class OsfNodeBaseApiIterator implements Iterator<RecordDTO>{
 		loadNextId(); 
 	}
 
+	/* (non-Javadoc)
+	 * @see java.util.Iterator#hasNext()
+	 */
 	@Override
 	public boolean hasNext() {
 		return (nextId!=null);	
 	}
 
 	/**
-	 * Collect OSF data from API using parameters defined
+	 * Collect OSF data from API using parameters defined.
 	 */
 	protected abstract void loadBatch();
 
 
 	/**
-	 * Returns true if this is the last row in the current id list
-	 * @return
+	 * Returns true if this is the last row in the current id list.
+	 *
+	 * @return true, if is last row
 	 */
 	protected boolean isLastRow() {
 		return (position==(ids.size()-1));
 	}
 
 	/**
-	 * load next Id to check using hasNext
+	 * load next Id to check using hasNext.
 	 */
 	protected void loadNextId(){
 		if (ids==null || isLastRow()){
@@ -77,9 +122,10 @@ public abstract class OsfNodeBaseApiIterator implements Iterator<RecordDTO>{
 	}
 	
     /**
-     * Checks for any criteria that would exclude this record
-     * @param reg
-     * @return
+     * Checks for any criteria that would exclude this record.
+     *
+     * @param nodebase the nodebase
+     * @return true, if successful
      */
 	protected boolean hasExclusionCriteria(NodeBase nodebase){
 		if (hasAccessibleParent(nodebase)){ //only one in this instance
@@ -93,8 +139,9 @@ public abstract class OsfNodeBaseApiIterator implements Iterator<RecordDTO>{
 	 * Determines whether there is a parent node and if so whether it is 
 	 * accessible through the API. If it is, we can skip over this child node,
 	 * if not we can use this node.
-	 * @param nodebase
-	 * @return
+	 *
+	 * @param nodebase the nodebase
+	 * @return true, if successful
 	 */
 	protected boolean hasAccessibleParent(NodeBase nodebase) {
 		//check if we are at top level

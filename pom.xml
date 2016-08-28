@@ -2,10 +2,11 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>info.rmapproject</groupId>
   <artifactId>rmap-transformer</artifactId>
-  <version>0.1</version>
+  <version>1.0.0-beta</version>
   <name>RMap Transformer</name>
     <properties>
         <jackson.version>2.7.1</jackson.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
   <dependencies>		
     <dependency>
@@ -88,6 +89,12 @@
            <version>${jackson.version}</version>
        </dependency>
       
+        <!-- logging -->
+	    <dependency>
+	      <groupId>ch.qos.logback</groupId>
+	      <artifactId>logback-classic</artifactId>
+	      <version>1.1.7</version>
+	    </dependency>
       
       
   </dependencies>
@@ -116,13 +123,15 @@
 		        </execution>
 		      </executions>
 		    </plugin>
-		<plugin>
-			<artifactId>maven-compiler-plugin</artifactId>
-			<configuration>
-				<source>1.8</source>
-				<target>1.8</target>
-			</configuration>
-		</plugin>
+		    <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-compiler-plugin</artifactId>
+		        <version>2.4</version>
+		        <configuration>
+		            <source>1.8</source>
+		            <target>1.8</target>
+		        </configuration>
+		    </plugin>
 		<!--  temp -->
 		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>

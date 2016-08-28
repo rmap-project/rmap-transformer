@@ -1,3 +1,22 @@
+/*******************************************************************************
+ * Copyright 2016 Johns Hopkins University
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * This software was produced as part of the RMap Project (http://rmap-project.info),
+ * The RMap Project was funded by the Alfred P. Sloan Foundation and is a 
+ * collaboration between Data Conservancy, Portico, and IEEE.
+ *******************************************************************************/
 package info.rmapproject.transformer.share;
 
 import info.rmapproject.cos.share.client.model.Agent;
@@ -33,13 +52,17 @@ import org.openrdf.model.vocabulary.RDFS;
  */
 public class ShareDiscoBuilder extends DiscoBuilder  {
 	
+	/** The SHARE record to be converted. */
 	private Record record;
+	
+	/** Default DiSCO creator. */
 	private static final String DEFAULT_CREATOR = Terms.RMAPAGENT_NAMESPACE + "RMap-SHARE-Harvester-0.1";
+	
+	/** Default DiSCO description. */
 	private static final String DEFAULT_DESCRIPTION = "Record harvested from SHARE API";
 	
 	/**
-	 * Initiates converter - will assign default values to discoCreator and discoDescription
-	 * @param record
+	 * Initiates converter - will assign default values to discoCreator and discoDescription.
 	 */
 	public ShareDiscoBuilder(){
 		super(DEFAULT_CREATOR, DEFAULT_DESCRIPTION);
@@ -47,14 +70,17 @@ public class ShareDiscoBuilder extends DiscoBuilder  {
 
 	/**
 	 * Initiates converter - will assign new values to discoCreator and discoDescription
-	 * even if they are null
-	 * @param record
-	 * @param discoDescription
+	 * even if they are null.
+	 *
+	 * @param discoDescription the DiSCO description
 	 */
 	public ShareDiscoBuilder(String discoDescription){
 		super(DEFAULT_CREATOR, discoDescription);
 	}	
 
+	/* (non-Javadoc)
+	 * @see info.rmapproject.transformer.DiscoBuilder#setRecord(java.lang.Object)
+	 */
 	@Override
 	public void setRecord(Object record){
 		this.record = (Record) record;
@@ -63,7 +89,8 @@ public class ShareDiscoBuilder extends DiscoBuilder  {
 	
 	/**
 	 * Convert a single SHARE JSON Record object to an DiSCO.
-	 * @param record - in this case a JSON record using the SHARE data model.
+	 *
+	 * @return the model
 	 */
 	@Override
 	public Model getModel() {		
@@ -174,10 +201,10 @@ public class ShareDiscoBuilder extends DiscoBuilder  {
 	}
 
 	/**
-	 * Generate statements for otherProperties
-	 * @param otherProperties
-	 * @param subjectIri
-	 * @return
+	 * Generate statements for otherProperties.
+	 *
+	 * @param otherProperties the other properties
+	 * @param subjectIri the subject iri
 	 */
 	private void addOtherProperties(List<OtherProperty> otherProperties, IRI subjectIri) {
 
@@ -265,10 +292,10 @@ public class ShareDiscoBuilder extends DiscoBuilder  {
 	/**
 	 * Pass in a SHARE Agent, the canonicalUri and the predicate that will connect the agent to the canonicalUri, and this will
 	 * build the RDF statements for an Agent.
-	 * @param agent
-	 * @param subjectIri
-	 * @param predicateIri
-	 * @return
+	 *
+	 * @param agent the agent
+	 * @param subjectIri the subject iri
+	 * @param predicateIri the predicate iri
 	 */
 	private void addAgent(Agent agent, Resource subjectIri, IRI predicateIri){
 		Resource primaryiri = null;
@@ -345,9 +372,9 @@ public class ShareDiscoBuilder extends DiscoBuilder  {
 
 	/**
 	 * Adds Statements for SHARE sponsorship.
-	 * @param sponsorship
-	 * @param canonicalIri
-	 * @return
+	 *
+	 * @param sponsorship the sponsorship
+	 * @param canonicalIri the canonical iri
 	 */
 	private void addSponsorship(Sponsorship sponsorship, IRI canonicalIri){
 
@@ -386,6 +413,12 @@ public class ShareDiscoBuilder extends DiscoBuilder  {
 		}
 	}
 	
+	/**
+	 * Adds the types to the model
+	 *
+	 * @param types the types
+	 * @param canonicalUri the canonical uri
+	 */
 	private void addTypes(Object types, IRI canonicalUri){
 		if (types instanceof String){
 			String type = (String) types;

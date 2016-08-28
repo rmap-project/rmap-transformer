@@ -1,3 +1,22 @@
+/*******************************************************************************
+ * Copyright 2016 Johns Hopkins University
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * This software was produced as part of the RMap Project (http://rmap-project.info),
+ * The RMap Project was funded by the Alfred P. Sloan Foundation and is a 
+ * collaboration between Data Conservancy, Portico, and IEEE.
+ *******************************************************************************/
 package info.rmapproject.transformer;
 
 import java.io.ByteArrayOutputStream;
@@ -19,21 +38,37 @@ import org.openrdf.rio.RDFFormat;
 import org.openrdf.rio.Rio;
 
 
+/**
+ * Utilities used in transform
+ * @author khanson
+ */
 public class TransformUtils {
 	
-	private static final String PROP_FILE = "rmap-transform";
+	/** Name of transform properties file. */
+	private static final String PROP_FILE = "rmaptransform";
 	
+	/** DOI HTTP URI prefix. */
 	private static final String DOI_HTTP_PREFIX = "http://dx.doi.org/";
+	
+	/** DOI non-HTTP URI prefix. */
 	private static final String DOI_COLON_PREFIX = "doi:"; //going to normalize to http://dx.doi.org/ address
+	
+	/** DOI HTTPS URI prefix. */
 	private static final String DOI_HTTPS_PREFIX = "https://dx.doi.org/"; //incorrect! Need to replace https with http
+	
+	/** DOI HTTP URI prefix - the one without a dx. */
 	private static final String DOI_HTTP_NODX_PREFIX = "http://doi.org/"; //going to normalize to http://dx.doi.org/ address
+	
+	/** DOI first characters. */
 	private static final String DOI_VALID_FIRST_CHARS = "10.";
+	
 	/**
-	 * Convenience method for extracting a single property name/value pair from a property file
-	 * @param propFileName base name for property file
-	 * @param propKey propery name
-	 * @return String containing proerty value, or null if not found
-	 * @throws MissingResourceException
+	 * Convenience method for extracting a single property name/value pair from a property file.
+	 *
+	 * @param propKey property name
+	 * @return String containing property value, or null if not found
+	 * @throws NullPointerException the null pointer exception
+	 * @throws MissingResourceException the missing resource exception
 	 */
 	public static String getPropertyValue(String propKey) throws NullPointerException, MissingResourceException {
 		String propValue = null;
@@ -50,8 +85,9 @@ public class TransformUtils {
 	/**
 	 * Extract the last subfolder name from a path.
 	 * e.g. for https://api.osf.io/v2/registrations/sdfkj/ sdfkj will be extracted
-	 * @param linkUrl
-	 * @return
+	 *
+	 * @param linkUrl the link url
+	 * @return the last subfolder
 	 */
 	public static String extractLastSubFolder(String linkUrl){
 		if (linkUrl!=null && linkUrl.length()>0 && linkUrl.contains("/")){
@@ -64,12 +100,14 @@ public class TransformUtils {
 			return null;
 		}		
 	}
+	
 	/**
-	 * Convert URL params to Map<String,String>
-	 * @param url 
-	 * @param charset
-	 * @return params
-	 * @exception URISyntaxException
+	 * Convert URL params to Map<String,String>.
+	 *
+	 * @param filters the filters
+	 * @param charset the charset
+	 * @return the URL params as a Map
+	 * @exception URISyntaxException the URI syntax exception
 	 */
 	public static HashMap<String, String> readParamsIntoMap(String filters, String charset) throws URISyntaxException {
 		HashMap<String, String> params = new HashMap<>();
@@ -91,10 +129,10 @@ public class TransformUtils {
 	
 
 	/**
-	 * Converts an issn to a URN format if possible
-	 * @param issn
-	 * @param prefix
-	 * @return
+	 * Converts an issn to a URN format if possible.
+	 *
+	 * @param issn the issn
+	 * @return the formatted issn
 	 */
 	public static String issnFormatter(String issn){
 		if (issn==null){
@@ -123,10 +161,10 @@ public class TransformUtils {
 	}
 	
 	/**
-	 * Converts an isbn to a URN format if possible
-	 * @param isbn
-	 * @param prefix - issn or eissn
-	 * @return
+	 * Converts an isbn to a URN format if possible.
+	 *
+	 * @param isbn the isbn
+	 * @return the formatted isbn
 	 */
 	public static String isbnFormatter(String isbn){
 		if (isbn==null){
@@ -147,10 +185,12 @@ public class TransformUtils {
 		}
 	}
 	
-	/** 
-	 * Generates Turtle RDF given a Model
-	 * @param model
-	 * @return
+	/**
+	 *  
+	 * Generates Turtle RDF given a Model.
+	 *
+	 * @param model the model (set of statements that form the graph)
+	 * @return the RDF as an OutputStream
 	 */
 	public static OutputStream generateTurtleRdf(Model model) {
 		OutputStream bOut = new ByteArrayOutputStream();
@@ -165,8 +205,9 @@ public class TransformUtils {
 	
 	/**
 	 * Very basic validation to check if a string looks like a doi. 
-	 * @param doi
-	 * @return
+	 *
+	 * @param doi the doi
+	 * @return true, if is doi
 	 */
 	public static boolean isDoi(String doi) {
 		//TODO: make this better, add regex validation?
@@ -187,10 +228,13 @@ public class TransformUtils {
 	}
 	
 	
-	/** 
+	/**
+	 *  
 	 * Normalizes doi:10.xxx and https://dx.doi.org/10.xxx to http://dx.doi.org/10.xxx
 	 * Will throw runtime exception if invalid doi provided
-	 * @param doi
+	 *
+	 * @param doi the doi
+	 * @return the normalized DOI
 	 */
 	public static String normalizeDoi(String doi){
 		String normalizedDoi = "";

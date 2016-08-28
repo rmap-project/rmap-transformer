@@ -1,3 +1,22 @@
+/*******************************************************************************
+ * Copyright 2016 Johns Hopkins University
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * This software was produced as part of the RMap Project (http://rmap-project.info),
+ * The RMap Project was funded by the Alfred P. Sloan Foundation and is a 
+ * collaboration between Data Conservancy, Portico, and IEEE.
+ *******************************************************************************/
 package info.rmapproject.transformer.share;
 
 import info.rmapproject.cos.share.client.model.Record;
@@ -18,24 +37,24 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class ShareLocalTransformIterator implements Iterator<RecordDTO> {
 
-	/** Root element for JSON record - will split on this field where there are multiple records **/
+	/**  Root element for JSON record - will split on this field where there are multiple records *. */
     protected static final String ROOT_ELEMENT = "results";
        
-    /**
-     * Path of folder containing local JSON files
-     */
+    /** Path of folder containing local JSON files. */
 	private String inputpath;
 	
-	/**
-	 * File extension of files containing JSON
-	 */
+	/** File extension of files containing JSON. */
 	private String inputFileExt;
 	
-	/**
-	 * Iterates over file
-	 */
+	/** Iterates over file. */
 	private Iterator<String> fileIterator;
 		
+	/**
+	 * Instantiates a new share local transform iterator.
+	 *
+	 * @param inputpath the inputpath
+	 * @param inputFileExt the input file ext
+	 */
 	public ShareLocalTransformIterator(String inputpath, String inputFileExt){
 		super();
 		if (inputpath==null){
@@ -53,6 +72,9 @@ public class ShareLocalTransformIterator implements Iterator<RecordDTO> {
 	}	
 	
 
+	/* (non-Javadoc)
+	 * @see java.util.Iterator#next()
+	 */
 	@Override
 	public RecordDTO next() {
 		RecordDTO recordDTO = null;
@@ -75,6 +97,9 @@ public class ShareLocalTransformIterator implements Iterator<RecordDTO> {
 		return recordDTO;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.util.Iterator#hasNext()
+	 */
 	@Override
 	public boolean hasNext() {
 		return fileIterator.hasNext();

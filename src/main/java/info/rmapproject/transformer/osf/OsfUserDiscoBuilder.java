@@ -1,3 +1,22 @@
+/*******************************************************************************
+ * Copyright 2016 Johns Hopkins University
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * This software was produced as part of the RMap Project (http://rmap-project.info),
+ * The RMap Project was funded by the Alfred P. Sloan Foundation and is a 
+ * collaboration between Data Conservancy, Portico, and IEEE.
+ *******************************************************************************/
 package info.rmapproject.transformer.osf;
 
 import info.rmapproject.transformer.DiscoBuilder;
@@ -15,7 +34,6 @@ import org.openrdf.model.vocabulary.FOAF;
 import org.openrdf.model.vocabulary.RDF;
 import org.openrdf.model.vocabulary.RDFS;
 
-
 /** 
  * Performs mapping from OSF Registration Java model to RDF DiSCO model.  
  * (Java Model -> RDF).
@@ -25,30 +43,55 @@ import org.openrdf.model.vocabulary.RDFS;
 
 public class OsfUserDiscoBuilder extends DiscoBuilder {
 
+	/** The User record. */
 	private User record;
+	
+	/** The user id. */
 	private IRI userId;
 
+	/** Default DiSCO creator. */
 	protected static final String DEFAULT_CREATOR = Terms.RMAPAGENT_NAMESPACE + "RMap-OSF-Harvester-0.1";
+	
+	/** Default DiSCO description. */
 	protected static final String DEFAULT_DESCRIPTION = "User record harvested from OSF API v2";
+	
+	/** OSF path prefix. */
 	protected static final String OSF_PATH_PREFIX = "https://osf.io/";
 	
+	/** ORCID path prefix. */
 	protected static final String ORCID_PREFIX = "http://orcid.org/";
+	
+	/** Researcher ID path prefix. */
 	protected static final String RESEARCHERID_PREFIX = "http://researcherid.com/rid/";
+	
+	/** Twitter path prefix. */
 	protected static final String TWITTER_PREFIX = "https://twitter.com/";
+	
+	/** GitHub path prefix. */
 	protected static final String GITHUB_PREFIX = "https://github.com/";
+	
+	/** Google Scholar path prefix. */
 	protected static final String GOOGLESCHOLAR_PREFIX = "http://scholar.google.com/citations?user=";
+	
+	/** LinkedIn path prefix. */
 	protected static final String LINKEDIN_PREFIX = "https://www.linkedin.com/";
+	
+	/** ImpactStory path prefix. */
 	protected static final String IMPACTSTORY_PREFIX = "https://impactstory.org/";
+	
+	/** ResearchGate path prefix. */
 	protected static final String RESEARCHGATE_PREFIX = "https://researchgate.net/profile/";
+	
+	/** BaiduScholar path prefix. */
 	protected static final String BAIDUSCHOLAR_PREFIX = "http://xueshu.baidu.com/scholarID/";
+	
+	/** Academia path prefix. */
 	protected static final String ACADEMIA_PREFIX = ".academia.edu/";
 	
 	
 	
 	/**
-	 * Constructor for Node to pass default params up to super()
-	 * @param discoCreator
-	 * @param discoDescription
+	 * Constructor for Node to pass default params up to super().
 	 */
 	public OsfUserDiscoBuilder(){
 		super(DEFAULT_CREATOR, DEFAULT_DESCRIPTION);
@@ -56,8 +99,9 @@ public class OsfUserDiscoBuilder extends DiscoBuilder {
 	
 	
 	/**
-	 * Constructor for Node to pass params up to super()
-	 * @param discoDescription
+	 * Constructor for Node to pass params up to super().
+	 *
+	 * @param discoDescription the disco description
 	 */
 	public OsfUserDiscoBuilder(String discoDescription){
 		super(DEFAULT_CREATOR, discoDescription);
@@ -65,15 +109,19 @@ public class OsfUserDiscoBuilder extends DiscoBuilder {
 		
 	
 	/**
-	 * Constructor for Node to pass params up to super()
-	 * @param discoCreator
-	 * @param discoDescription
+	 * Constructor for Node to pass params up to super().
+	 *
+	 * @param discoCreator the DiSCO creator
+	 * @param discoDescription the DiSCO description
 	 */
 	public OsfUserDiscoBuilder(String discoCreator, String discoDescription){
 		super(discoCreator, discoDescription);
 	}
 
 	
+	/* (non-Javadoc)
+	 * @see info.rmapproject.transformer.DiscoBuilder#setRecord(java.lang.Object)
+	 */
 	@Override
 	public void setRecord(Object record) {
 		this.record = (User) record;
@@ -81,6 +129,9 @@ public class OsfUserDiscoBuilder extends DiscoBuilder {
 		model = null;
 	}
 	
+	/* (non-Javadoc)
+	 * @see info.rmapproject.transformer.DiscoBuilder#getModel()
+	 */
 	@Override
 	public Model getModel()	{
 		model = new LinkedHashModel();		
@@ -94,6 +145,9 @@ public class OsfUserDiscoBuilder extends DiscoBuilder {
 		return model;		
 	}
 
+	/**
+	 * Adds the user to the model.
+	 */
 	private void addUser(){
 				
 		addStmt(discoId, Terms.ORE_AGGREGATES, userId);
@@ -157,6 +211,9 @@ public class OsfUserDiscoBuilder extends DiscoBuilder {
 	}
 	
 	
+	/**
+	 * Adds the institutions to the model
+	 */
 	private void addInstitutions(){
 		List<Institution> institutions = record.getInstitutions();
 		if (institutions!=null){

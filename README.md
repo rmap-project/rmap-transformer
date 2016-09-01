@@ -2,7 +2,7 @@
 This tool was developed to do transforms from SHARE and OSF API (v2) into RMap DiSCOs, more formats may be added in the future.
 
 ## Getting started
-build via 
+Build via 
 ```
 mvn clean install
 ```

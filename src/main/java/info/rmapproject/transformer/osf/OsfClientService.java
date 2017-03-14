@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2016 Johns Hopkins University
+ * Copyright 2017 Johns Hopkins University
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,37 +19,33 @@
  *******************************************************************************/
 package info.rmapproject.transformer.osf;
 
-import info.rmapproject.transformer.TransformUtils;
-
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
 
-import org.dataconservancy.cos.osf.client.model.Contributor;
-import org.dataconservancy.cos.osf.client.model.File;
-import org.dataconservancy.cos.osf.client.model.Institution;
-import org.dataconservancy.cos.osf.client.model.Node;
-import org.dataconservancy.cos.osf.client.model.NodeId;
-import org.dataconservancy.cos.osf.client.model.Registration;
-import org.dataconservancy.cos.osf.client.model.RegistrationId;
-import org.dataconservancy.cos.osf.client.model.User;
-import org.dataconservancy.cos.osf.client.model.UserId;
-import org.dataconservancy.cos.osf.client.service.OsfService;
-
-import retrofit.Call;
-import retrofit.Response;
-import retrofit.Retrofit;
+import org.dataconservancy.cos.osf.client.retrofit.RetrofitOsfServiceFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.jasminb.jsonapi.ResourceConverter;
-import com.github.jasminb.jsonapi.retrofit.JSONAPIConverterFactory;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 
+import info.rmapproject.cos.osf.client.model.Contributor;
+import info.rmapproject.cos.osf.client.model.Identifier;
+import info.rmapproject.cos.osf.client.model.Institution;
+import info.rmapproject.cos.osf.client.model.LightNode;
+import info.rmapproject.cos.osf.client.model.LightRegistration;
+import info.rmapproject.cos.osf.client.model.LightUser;
+import info.rmapproject.cos.osf.client.model.Node;
+import info.rmapproject.cos.osf.client.model.Registration;
+import info.rmapproject.cos.osf.client.model.User;
+import info.rmapproject.cos.osf.client.retrofit.OsfService;
+import retrofit.Call;
+import retrofit.Response;
+
 /**
- * This class interacts with the OSF client.
+ * This class interacts with the OSF client so that model objects are returned 
+ * instead of retrofit calls.
  *
  * @author khanson
  */
@@ -58,23 +54,17 @@ public class OsfClientService {
 	/** The osf service. */
 	private OsfService osfService = null;
 	
-	/** Property key for OSF API V2 Base URL . */
-	private static final String OSF_BASEURL_PROPNAME = "rmaptransformer.osfApiBaseUrlV2";
-	
 	/**
 	 * Instantiates a new osf client service.
 	 */
 	public OsfClientService(){
 		try {
-			String sBaseUrl = TransformUtils.getPropertyValue(OSF_BASEURL_PROPNAME);
-			URI baseUrl = new URI(sBaseUrl);
-
 	    	// Create object mapper
 	        ObjectMapper objectMapper = new ObjectMapper();
 	        OkHttpClient client = new OkHttpClient();
 
-	        ResourceConverter converter = new ResourceConverter(objectMapper, NodeId.class, RegistrationId.class, Registration.class, File.class, 
-	        													Contributor.class, User.class, UserId.class, Institution.class, Node.class);//taking out this for now... FileVersion.class, 
+	        ResourceConverter converter = new ResourceConverter(objectMapper, LightNode.class, LightRegistration.class, Registration.class, Identifier.class,
+	        													Contributor.class, User.class, LightUser.class, Institution.class, Node.class); 
 	        converter.setGlobalResolver(relUrl -> {
 	            System.err.println("Resolving " + relUrl);
 	            com.squareup.okhttp.Call req = client.newCall(new Request.Builder().url(relUrl).build());
@@ -85,70 +75,15 @@ public class OsfClientService {
 	                throw new RuntimeException(e.getMessage(), e);
 	            }
 	        });
-	        JSONAPIConverterFactory converterFactory = new JSONAPIConverterFactory(converter);
 
-	        Retrofit retrofit = new Retrofit.Builder()
-	                .baseUrl(baseUrl.toString())
-	                .addConverterFactory(converterFactory)
-	                .client(client)
-	                .build();
-
-	        osfService = retrofit.create(OsfService.class);
-		} catch (URISyntaxException e){
-			throw new RuntimeException("Could not define base URL for OSF service", e);			
+	        RetrofitOsfServiceFactory factory = new RetrofitOsfServiceFactory("classpath*:/osf-config.json");
+	        osfService = factory.getOsfService(OsfService.class);
+	        	
 		} catch (Exception e){
 			throw new RuntimeException("Could not start OSF Service", e);
 		}
 	}
 	
-
-	/**
-	 * Get list of nodes - this will walk down the branches of relationships.
-	 *
-	 * @param params the params to be applied to the API
-	 * @return a list of Node objects
-	 */
-	public List<Node> getNodeList(Map<String,String> params){	
-		
-        Call<List<Node>> listCall = osfService.nodeList(params);
-        Response<List<Node>> res;
-		try {
-			res = listCall.execute();
-		} catch (IOException e) {
-			throw new RuntimeException("cannot retrieve node list");
-		}
-       
-        List<Node> nodes = null;
-        if (res.isSuccess()) {
-        	nodes = res.body();
-        }
-        return nodes;
-	}
-
-
-	/**
-	 * Get list of registrations from OSF API. This will walk down the relationship branches
-	 *
-	 * @param params the params to be applied the API
-	 * @return a list of Registration objects
-	 */
-	public List<Registration> getRegList(Map<String,String> params){	
-
-        Call<List<Registration>> listCall = osfService.registrationList(params);
-        Response<List<Registration>> res;
-		try {
-			res = listCall.execute();
-		} catch (IOException e) {
-			throw new RuntimeException("cannot retrieve registration list");
-		}
-       
-        List<Registration> registrations = null;
-        if (res.isSuccess()) {
-         	registrations = res.body();
-        }
-        return registrations;
-	}
-
 	/**
 	 * Get single OSF registration by passing in single ID e.g. "cgur9"
 	 *
@@ -156,18 +91,20 @@ public class OsfClientService {
 	 * @return the registration
 	 */
 	public Registration getRegistration(String id){	
-
-        Call<Registration> listCall = osfService.registration(id);
+	
+        Call<Registration> listCall = osfService.getRegistrationById(id);
         Response<Registration> res;
 		try {
 			res = listCall.execute();
-		} catch (IOException e) {
-			throw new RuntimeException("cannot retrieve registration with ID " + id);
+		} catch (Exception e) {
+			throw new RuntimeException("cannot retrieve registration with ID " + id, e);
 		}
        
         Registration registration = null;
         if (res.isSuccess()) {
         	registration = res.body();
+        } else {
+			throw new RuntimeException("Cannot retrieve registration with ID " + id + "; Response code:" + res.code() + " ; Url: " + res.raw().request().urlString());
         }
         return registration;
 	}
@@ -178,20 +115,23 @@ public class OsfClientService {
 	 * @param params the params for the API
 	 * @return a list of Registration IDs list
 	 */
-	public List<RegistrationId> getRegIdList(Map<String,String> params){	
+	public List<LightRegistration> getRegistrationIds(Map<String,String> params){	
 
-        Call<List<RegistrationId>> listCall = osfService.registrationIdList(params);
-        Response<List<RegistrationId>> res;
+        Call<List<LightRegistration>> listCall = osfService.getRegistrationIds(params);
+        Response<List<LightRegistration>> res;
 		try {
 			res = listCall.execute();
-		} catch (IOException e) {
-			throw new RuntimeException("cannot retrieve Registration ID list");
+		} catch (Exception e) {
+			throw new RuntimeException("cannot retrieve Registration ID list", e);
 		}
-       
-        List<RegistrationId> registrations = null;
+
+		List<LightRegistration> registrations = null;
         if (res.isSuccess()) {
-         	registrations = res.body();
+        	registrations = res.body();
+        } else {
+			throw new RuntimeException("Cannot retrieve registration with IDs; Response code:" + res.code() + " ; Url: " + res.raw().request().urlString());
         }
+        
         return registrations;
 	}
 	
@@ -204,42 +144,46 @@ public class OsfClientService {
 	 */
 	public Node getNode(String id){	
 		
-        Call<Node> listCall = osfService.node(id);
+        Call<Node> listCall = osfService.getNodeById(id);
         Response<Node> res;
 		try {
 			res = listCall.execute();
-		} catch (IOException e) {
-			throw new RuntimeException("cannot retrieve node with ID " + id);
+		} catch (Exception e) {
+			throw new RuntimeException("cannot retrieve node with ID " + id, e);
 		}
        
         Node node = null;
         if (res.isSuccess()) {
         	node = res.body();
+        } else {
+    		throw new RuntimeException("Cannot retrieve registration with ID " + id + "; Response code:" + res.code() + " ; Url: " + res.raw().request().urlString());
         }
         return node;
 	}
 	
-
 	/**
 	 * Gets the Node ID list.
 	 *
 	 * @param params the params to filter the node list by
 	 * @return the Node ID list
 	 */
-	public List<NodeId> getNodeIdList(Map<String,String> params){	
+	public List<LightNode> getNodeIds(Map<String,String> params){	
 
-        Call<List<NodeId>> listCall = osfService.nodeIdList(params);
-        Response<List<NodeId>> res;
+        Call<List<LightNode>> listCall = osfService.getNodeIds(params);
+        Response<List<LightNode>> res;
 		try {
 			res = listCall.execute();
-		} catch (IOException e) {
-			throw new RuntimeException("cannot retrieve nodeId list");
+		} catch (Exception e) {
+			throw new RuntimeException("cannot retrieve LightNode list",e);
 		}
-       
-        List<NodeId> nodes = null;
+
+        List<LightNode> nodes = null;
         if (res.isSuccess()) {
         	nodes = res.body();
+        } else {
+			throw new RuntimeException("Cannot retrieve registration with IDs; Response code:" + res.code() + " ; Url: " + res.raw().request().urlString());
         }
+
         return nodes;
 	}
 
@@ -253,18 +197,21 @@ public class OsfClientService {
 	 */
 	public User getUser(String id){	
 		
-        Call<User> listCall = osfService.user(id);
+        Call<User> listCall = osfService.getUserById(id);
         Response<User> res;
 		try {
 			res = listCall.execute();
-		} catch (IOException e) {
-			throw new RuntimeException("cannot retrieve node with ID " + id);
+		} catch (Exception e) {
+			throw new RuntimeException("cannot retrieve node with ID " + id, e);
 		}
        
 		User user = null;
         if (res.isSuccess()) {
         	user = res.body();
+        } else {
+			throw new RuntimeException("Cannot retrieve User ID:" + id + "; Response code:" + res.code() + " ; Url: " + res.raw().request().urlString());
         }
+
         return user;
 	}
 	
@@ -275,20 +222,23 @@ public class OsfClientService {
 	 * @param params the params to filter ID list
 	 * @return the user ID list
 	 */
-	public List<UserId> getUserIdList(Map<String,String> params){	
+	public List<LightUser> getUserIds(Map<String,String> params){	
 
-        Call<List<UserId>> listCall = osfService.userIdList(params);
-        Response<List<UserId>> res;
+        Call<List<LightUser>> listCall = osfService.getUserIds(params);
+        Response<List<LightUser>> res;
 		try {
 			res = listCall.execute();
-		} catch (IOException e) {
-			throw new RuntimeException("cannot retrieve nodeId list");
+		} catch (Exception e) {
+			throw new RuntimeException("cannot retrieve User ID list",e);
 		}
        
-        List<UserId> users = null;
+        List<LightUser> users = null;
         if (res.isSuccess()) {
         	users = res.body();
+        } else {
+			throw new RuntimeException("Cannot retrieve Users; Response code:" + res.code() + " ; Url: " + res.raw().request().urlString());
         }
+
         return users;
 	}
 	

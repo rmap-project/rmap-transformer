@@ -48,20 +48,23 @@ public class TransformUtils {
 	private static final String PROP_FILE = "rmaptransform";
 	
 	/** DOI HTTP URI prefix. */
-	private static final String DOI_HTTP_PREFIX = "http://dx.doi.org/";
+	private static final String DOI_PREFERRED_HTTP_PREFIX = "https://doi.org/"; //the preferred format - normalize to this
+
+	/** DOI HTTP URI prefix. */
+	private static final String DOI_HTTP_PREFIX = "http://doi.org/"; //Incorrect! Use https
 	
 	/** DOI non-HTTP URI prefix. */
-	private static final String DOI_COLON_PREFIX = "doi:"; //going to normalize to http://dx.doi.org/ address
+	private static final String DOI_COLON_PREFIX = "doi:"; //going to normalize to https://doi.org/ address
 	
 	/** DOI HTTPS URI prefix. */
-	private static final String DOI_HTTPS_PREFIX = "https://dx.doi.org/"; //incorrect! Need to replace https with http
+	private static final String DOI_DX_HTTP_PREFIX = "http://dx.doi.org/"; //going to normalize to https://doi.org/ address
 	
-	/** DOI HTTP URI prefix - the one without a dx. */
-	private static final String DOI_HTTP_NODX_PREFIX = "http://doi.org/"; //going to normalize to http://dx.doi.org/ address
+	/** DOI HTTPS URI prefix. */
+	private static final String DOI_DX_HTTPS_PREFIX = "https://dx.doi.org/"; //going to normalize to https://doi.org/ address
 	
 	/** DOI first characters. */
 	private static final String DOI_VALID_FIRST_CHARS = "10.";
-	
+		
 	/**
 	 * Convenience method for extracting a single property name/value pair from a property file.
 	 *
@@ -215,23 +218,24 @@ public class TransformUtils {
 		if (doi!=null 
 				&& doi.contains(DOI_VALID_FIRST_CHARS)
 				&& !doi.contains(" ") 
-				&& !doi.equals(DOI_HTTPS_PREFIX) 
-				&& !doi.equals(DOI_HTTP_PREFIX)
-				&& !doi.equals(DOI_HTTP_NODX_PREFIX)
+				&& !doi.equals(DOI_PREFERRED_HTTP_PREFIX)
 				&& !doi.equals(DOI_COLON_PREFIX)
-				&& (doi.startsWith(DOI_COLON_PREFIX) || doi.startsWith(DOI_HTTP_PREFIX) || doi.startsWith(DOI_HTTPS_PREFIX)  
-						|| doi.startsWith(DOI_VALID_FIRST_CHARS) || doi.startsWith(DOI_HTTP_NODX_PREFIX) )){
+				&& !doi.equals(DOI_DX_HTTP_PREFIX) 
+				&& !doi.equals(DOI_DX_HTTPS_PREFIX) 
+				&& !doi.equals(DOI_HTTP_PREFIX)
+				&& (doi.startsWith(DOI_PREFERRED_HTTP_PREFIX) || doi.startsWith(DOI_HTTP_PREFIX) 
+						|| doi.startsWith(DOI_COLON_PREFIX) || doi.startsWith(DOI_DX_HTTP_PREFIX) 
+						|| doi.startsWith(DOI_DX_HTTPS_PREFIX) || doi.startsWith(DOI_VALID_FIRST_CHARS))){
 			return true;
 		} 
-		
+
 		return false;
 	}
 	
 	
 	/**
-	 *  
-	 * Normalizes doi:10.xxx and https://dx.doi.org/10.xxx to http://dx.doi.org/10.xxx
-	 * Will throw runtime exception if invalid doi provided
+	 * Normalizes doi:10.xxx, https://dx.doi.org/10.xxx and other variations to currently recommended
+	 * https://doi.org/10.xxx. Will throw runtime exception if invalid doi provided
 	 *
 	 * @param doi the doi
 	 * @return the normalized DOI
@@ -248,17 +252,38 @@ public class TransformUtils {
 		}		
 		
 		if (doi.startsWith(DOI_VALID_FIRST_CHARS)) {
-			doi = DOI_HTTP_PREFIX + doi;
-		} else if (doi.startsWith(DOI_HTTPS_PREFIX)){
-			doi = doi.replace(DOI_HTTPS_PREFIX, DOI_HTTP_PREFIX);
+			doi = DOI_PREFERRED_HTTP_PREFIX + doi;
+		} else if (doi.startsWith(DOI_HTTP_PREFIX)){
+			doi = doi.replace(DOI_HTTP_PREFIX, DOI_PREFERRED_HTTP_PREFIX);
 		} else if (doi.startsWith(DOI_COLON_PREFIX)){
-			doi = doi.replace(DOI_COLON_PREFIX, DOI_HTTP_PREFIX);
-		} else if (doi.startsWith(DOI_HTTP_NODX_PREFIX)){
-			doi = doi.replace(DOI_HTTP_NODX_PREFIX, DOI_HTTP_PREFIX);
+			doi = doi.replace(DOI_COLON_PREFIX, DOI_PREFERRED_HTTP_PREFIX);
+		} else if (doi.startsWith(DOI_DX_HTTP_PREFIX)){
+			doi = doi.replace(DOI_DX_HTTP_PREFIX, DOI_PREFERRED_HTTP_PREFIX);
+		} else if (doi.startsWith(DOI_DX_HTTPS_PREFIX)){
+			doi = doi.replace(DOI_DX_HTTPS_PREFIX, DOI_PREFERRED_HTTP_PREFIX);
 		}
 		return doi;
 	}
 	
+	
+	/**
+	 * Returns preferred DOI HTTP prefix
+	 *
+	 * @return the normalized DOI
+	 */
+	public static String getHttpDoiPrefix() {
+		return DOI_PREFERRED_HTTP_PREFIX;
+	}
+
+	
+	/**
+	 * Returns preferred DOI non-HTTP prefix
+	 *
+	 * @return the normalized DOI
+	 */
+	public static String getNonHttpDoiPrefix() {
+		return DOI_COLON_PREFIX;
+	}
 	
 	
 }

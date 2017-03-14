@@ -19,24 +19,18 @@
  *******************************************************************************/
 package info.rmapproject.transformer.osf;
 
-import info.rmapproject.transformer.TransformUtils;
-import info.rmapproject.transformer.vocabulary.Terms;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
-import org.dataconservancy.cos.osf.client.model.Registration;
-import org.json.JSONObject;
 import org.openrdf.model.IRI;
 import org.openrdf.model.Model;
 import org.openrdf.model.Resource;
 import org.openrdf.model.vocabulary.DCTERMS;
 import org.openrdf.model.vocabulary.RDF;
+
+import info.rmapproject.cos.osf.client.model.Identifier;
+import info.rmapproject.cos.osf.client.model.Registration;
+import info.rmapproject.transformer.TransformUtils;
+import info.rmapproject.transformer.vocabulary.Terms;
 
 /** 
  * Performs mapping from OSF Registration Java model to RDF DiSCO model.  
@@ -49,21 +43,15 @@ public class OsfRegistrationDiscoBuilder extends OsfNodeDiscoBuilder {
 	/** The registration record. */
 	private Registration record;
 	
-	/** DOI prefix (non-http). */
-	private static final String DOI_COLON_PREFIX = "doi:";
+	/** DOI identifier category String **/
+	private static final String DOI_ID_CATEGORY = "doi";
 	
-	/** DOI prefix (http). */
-	private static final String DOI_HTTP_PREFIX = "http://dx.doi.org/";
+	/** ARK identifier category String **/
+	private static final String ARK_ID_CATEGORY = "ark";
 	
 	/** ARK prefix. */
 	private static final String ARK_PREFIX = "ark:/";
-	
-	/** Prop key for OSF API V1 Base URL. */
-	private static final String OSF_APIV1_BASEURL_PROPNAME = "rmaptransformer.osfApiBaseUrlV1";
-	
-	/** OSF API V1 Base URL. */
-	private String apiBaseUrlV1 = null;	
-		
+			
 	/**
 	 * Initiates converter - will assign default values to discoCreator and discoDescription.
 	 */
@@ -86,15 +74,6 @@ public class OsfRegistrationDiscoBuilder extends OsfNodeDiscoBuilder {
 	@Override
 	public void setRecord(Object record){
 		this.record = (Registration) record;
-	}
-	
-	/**
-	 * Sets the v1 API base url.
-	 *
-	 * @param apiBaseUrlV1 the new V1 API base url
-	 */
-	public void setV1ApiBaseUrl(String apiBaseUrlV1) {
-		this.apiBaseUrlV1=apiBaseUrlV1;
 	}
 	
 	/* (non-Javadoc)
@@ -133,11 +112,7 @@ public class OsfRegistrationDiscoBuilder extends OsfNodeDiscoBuilder {
 		
 		addLiteralStmt(regId, DCTERMS.ISSUED, registration.getDate_registered());
 		
-//		//TODO: add these - not yet part of API, but soon...
-//		addIriStmt(regId, DCTERMS.IDENTIFIER, registration.getArkId());
-//		addIriStmt(regId, DCTERMS.IDENTIFIER, registration.getDoi());
-		//temporary measure that goes to api v1:
-		addIdentifiers(regId, registration.getId());
+		addIdentifiers(registration.getIdentifiers(), regId);
 		
 		IRI category = mapCategoryToIri(registration.getCategory());
 		addStmt(regId, RDF.TYPE, category);
@@ -145,12 +120,6 @@ public class OsfRegistrationDiscoBuilder extends OsfNodeDiscoBuilder {
 		addLiteralStmt(regId, DCTERMS.TITLE, registration.getTitle());
 		addLiteralStmt(regId, DCTERMS.DESCRIPTION, registration.getDescription());
 
-		
-		//TODO:Not mapped yet
-//		if (reg.getRegistered_meta()!=null){
-//			addLiteralStmt(discoNode, DCTERMS.DESCRIPTION, registration.getRegistered_meta().getSummary());
-//		}
-		
 		addContributors(registration.getContributors(), regId);				
 		addChildRegistrations(registration.getChildren(), regId);
 		
@@ -160,9 +129,8 @@ public class OsfRegistrationDiscoBuilder extends OsfNodeDiscoBuilder {
 		addStmt(regId, DCTERMS.IS_VERSION_OF, origNodeId);
 		addIriStmt(origNodeId, RDF.TYPE, OSF_PROJECT);
 		
-		addFiles(registration, regId);
+		//addFiles(registration, regId);
 	}
-	
 	
 	/**
 	 * Add child registration metadata to model.
@@ -180,89 +148,28 @@ public class OsfRegistrationDiscoBuilder extends OsfNodeDiscoBuilder {
 	}
 	
 	/**
-	 * Adds the identifiers to the model.
-	 *
-	 * @param regIdIri the reg id iri
-	 * @param regId the reg id
+	 * Adds the identifiers (ark, doi) to the model.
+	 * @param identifiers list of identifiers
+	 * @param regIdIri registration IRI
 	 */
-	private void addIdentifiers(IRI regIdIri, String regId){
-		List<String> identifiers = getIdentifiers(regId, this.apiBaseUrlV1);
+	private void addIdentifiers(List<Identifier> identifiers, IRI regIdIri){
 		if (identifiers!=null){
-			for (String identifier : identifiers) {
-				addIriStmt(regIdIri, DCTERMS.IDENTIFIER, identifier);
-			}
-		}
-		
-	}
-	
-	/**
-	 * temporary measure until identifiers (doi, ark) are included in version 2 api.
-	 *
-	 * @param identifier the identifier
-	 * @param baseUrl the base url
-	 * @return the identifiers
-	 */
-	public static List<String> getIdentifiers(String identifier, String baseUrl){
-		if (identifier==null || identifier.length()==0){
-			throw new IllegalArgumentException("identifier cannot be null or empty");
-		}
-
-		if (baseUrl==null||baseUrl.length()==0){
-			baseUrl = TransformUtils.getPropertyValue(OSF_APIV1_BASEURL_PROPNAME);
-		}
-		
-		List<String> identifiers = new ArrayList<String>();
-		String surl = baseUrl + "project/" + identifier + "/";
-		URL url;
-		try {
-			StringBuffer text = new StringBuffer();
-			url = new URL(surl);
-			HttpURLConnection connection = (HttpURLConnection)url.openConnection(); 
-			connection.setRequestMethod("GET"); 
-			connection.connect(); 
-		    InputStreamReader in = new InputStreamReader((InputStream) connection.getContent());
-		    BufferedReader buff = new BufferedReader(in);
-		    String line;
-		    do {
-		      line = buff.readLine();
-		      text.append(line + "\n");
-		    } while (line != null);
-						
-			String jsonString = text.toString();
-			JSONObject root = new JSONObject(jsonString);
-			JSONObject node = root.getJSONObject("node");
-			JSONObject jsonIds = node.getJSONObject("identifiers");
-			if (jsonIds!=null){
-				String doi = jsonIds.get("doi").toString();
-
-				if (jsonIds.has("doi") && !doi.equals("null") && TransformUtils.isDoi(doi)){
-					doi=TransformUtils.normalizeDoi(doi);
-					if (!doi.startsWith(DOI_HTTP_PREFIX)){
-						doi = DOI_HTTP_PREFIX + doi;	
-					} 
-					if (doi.startsWith(DOI_HTTP_PREFIX + "10.")){
-						//going to include the doi: and http://dx.doi.org/ prefixes to improve interconnectedness
-						identifiers.add(doi);
-						identifiers.add(doi.replace(DOI_HTTP_PREFIX, DOI_COLON_PREFIX));						
-					}
+			for (Identifier identifier : identifiers) {
+				String category = identifier.getCategory();
+				String value = identifier.getValue();
+				if (category.equals(DOI_ID_CATEGORY) && TransformUtils.isDoi(value)){ 
 					
-				}
-				String ark = jsonIds.get("ark").toString();
-				if (jsonIds.has("ark") && !ark.equals("null")){
-					if (!ark.startsWith(ARK_PREFIX) && !ark.startsWith("http")){
-						ark = ARK_PREFIX + ark;
-					}
-					identifiers.add(ark);
+					String doi = TransformUtils.normalizeDoi(value);
+					addIriStmt(regIdIri, DCTERMS.IDENTIFIER, doi); // https://doi.org format
+					
+					//also add non-http format of ID - replace 
+					doi = doi.replace(TransformUtils.getHttpDoiPrefix(), TransformUtils.getNonHttpDoiPrefix());
+					addIriStmt(regIdIri, DCTERMS.IDENTIFIER, doi); //doi: format
+					
+				} else if (category.equals(ARK_ID_CATEGORY)) {
+					addIriStmt(regIdIri, DCTERMS.IDENTIFIER, ARK_PREFIX + value);
 				}
 			}
-
-		} catch (Exception e) {
-			throw new RuntimeException("Could not retrieve other identifiers for Registration");
-		} 
-				
-		return identifiers;
-	}
-	
-	
-		
+		}	
+	}		
 }

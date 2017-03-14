@@ -19,16 +19,6 @@
  *******************************************************************************/
 package info.rmapproject.transformer;
 
-import info.rmapproject.transformer.model.RecordDTO;
-import info.rmapproject.transformer.model.RecordType;
-import info.rmapproject.transformer.model.TransformType;
-import info.rmapproject.transformer.osf.OsfClientService;
-import info.rmapproject.transformer.osf.OsfNodeApiIterator;
-import info.rmapproject.transformer.osf.OsfRegistrationApiIterator;
-import info.rmapproject.transformer.osf.OsfUserApiIterator;
-import info.rmapproject.transformer.share.ShareApiTransformIterator;
-import info.rmapproject.transformer.share.ShareLocalTransformIterator;
-
 import java.util.Iterator;
 
 import org.kohsuke.args4j.Argument;
@@ -38,6 +28,16 @@ import org.kohsuke.args4j.Option;
 import org.kohsuke.args4j.ParserProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import info.rmapproject.transformer.model.RecordDTO;
+import info.rmapproject.transformer.model.RecordType;
+import info.rmapproject.transformer.model.TransformType;
+import info.rmapproject.transformer.osf.OsfClientService;
+import info.rmapproject.transformer.osf.OsfNodeApiIterator;
+import info.rmapproject.transformer.osf.OsfRegistrationApiIterator;
+import info.rmapproject.transformer.osf.OsfUserApiIterator;
+import info.rmapproject.transformer.share.ShareApiTransformIterator;
+import info.rmapproject.transformer.share.ShareLocalTransformIterator;
 
 /**
  * Imports SHARE JSON into a SHARE object and then transforms it to and RMap DiSCO.

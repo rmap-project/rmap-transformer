@@ -19,11 +19,13 @@
  *******************************************************************************/
 package info.rmapproject.transformer.osf;
 
+import java.util.List;
+
+import info.rmapproject.cos.osf.client.model.LightRegistration;
+import info.rmapproject.cos.osf.client.model.NodeBase;
+import info.rmapproject.cos.osf.client.model.Registration;
 import info.rmapproject.transformer.model.RecordDTO;
 import info.rmapproject.transformer.model.RecordType;
-
-import org.dataconservancy.cos.osf.client.model.NodeBase;
-import org.dataconservancy.cos.osf.client.model.Registration;
 
 /**
  * Retrieves and iterates over OSF Registration data.
@@ -31,6 +33,9 @@ import org.dataconservancy.cos.osf.client.model.Registration;
  * @author khanson
  */
 public class OsfRegistrationApiIterator extends OsfNodeBaseApiIterator {
+	
+	/** The list of IDs to iterate over. */
+	protected List<LightRegistration> ids = null;
 	
     /**
      * Instantiates a new osf registration api iterator.
@@ -57,13 +62,34 @@ public class OsfRegistrationApiIterator extends OsfNodeBaseApiIterator {
 			page=page+1;
 			params.put("page", page.toString());
 			log.info("Loading page " + page);
-    		ids = osfClient.getRegIdList(params);
+    		ids = osfClient.getRegistrationIds(params);
 			nextId = ids.get(0).getId();
 		} catch(Exception e){
 			log.error("Could not load list of records to iterate over.");
 			throw new RuntimeException("Could not load list of records to iterate over.", e);
 		}	
     }
+    
+    
+    /* (non-Javadoc)
+     * @see info.rmapproject.transformer.osf.OsfNodeBaseApiIterator#isLastRow()
+     */
+    @Override
+	protected boolean isLastRow() {
+		return (position==(ids.size()-1));
+	}
+
+    /* (non-Javadoc)
+     * @see info.rmapproject.transformer.osf.OsfNodeBaseApiIterator#loadNextId()
+     */
+    @Override
+	protected void loadNextId(){
+		if (ids==null || isLastRow()){
+			loadBatch();
+		}
+		position = position+1;
+		nextId = ids.get(position).getId();
+	}
     
 	/* (non-Javadoc)
 	 * @see java.util.Iterator#next()

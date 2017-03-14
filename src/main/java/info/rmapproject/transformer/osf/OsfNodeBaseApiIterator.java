@@ -19,21 +19,19 @@
  *******************************************************************************/
 package info.rmapproject.transformer.osf;
 
-import info.rmapproject.transformer.TransformUtils;
-import info.rmapproject.transformer.model.RecordDTO;
-
 import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
-import org.dataconservancy.cos.osf.client.model.NodeBase;
-import org.dataconservancy.cos.osf.client.model.NodeBaseId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import info.rmapproject.cos.osf.client.model.NodeBase;
+import info.rmapproject.transformer.TransformUtils;
+import info.rmapproject.transformer.model.RecordDTO;
 
 /**
  * An abstract iterator class to iterate over a list of OSF Nodes. 
@@ -46,9 +44,6 @@ public abstract class OsfNodeBaseApiIterator implements Iterator<RecordDTO>{
     
     /** The params. */
     protected Map<String, String> params = null;
-	
-	/** The list of IDs to iterate over. */
-	protected List<? extends NodeBaseId> ids = null;
 	
 	/** The next id. */
 	protected String nextId = null;
@@ -100,27 +95,18 @@ public abstract class OsfNodeBaseApiIterator implements Iterator<RecordDTO>{
 	 */
 	protected abstract void loadBatch();
 
-
 	/**
 	 * Returns true if this is the last row in the current id list.
 	 *
 	 * @return true, if is last row
 	 */
-	protected boolean isLastRow() {
-		return (position==(ids.size()-1));
-	}
+	protected abstract boolean isLastRow();
 
 	/**
 	 * load next Id to check using hasNext.
 	 */
-	protected void loadNextId(){
-		if (ids==null || isLastRow()){
-			loadBatch();
-		}
-		position = position+1;
-		nextId = ids.get(position).getId();
-	}
-	
+	protected abstract void loadNextId();
+
     /**
      * Checks for any criteria that would exclude this record.
      *

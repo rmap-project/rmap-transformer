@@ -19,20 +19,20 @@
  *******************************************************************************/
 package info.rmapproject.transformer.osf;
 
-import info.rmapproject.transformer.TransformUtils;
-import info.rmapproject.transformer.model.RecordDTO;
-import info.rmapproject.transformer.model.RecordType;
-
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.dataconservancy.cos.osf.client.model.User;
-import org.dataconservancy.cos.osf.client.model.UserId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import info.rmapproject.cos.osf.client.model.LightUser;
+import info.rmapproject.cos.osf.client.model.User;
+import info.rmapproject.transformer.TransformUtils;
+import info.rmapproject.transformer.model.RecordDTO;
+import info.rmapproject.transformer.model.RecordType;
 
 /**
  * OSF User Iterator class
@@ -46,7 +46,7 @@ public class OsfUserApiIterator implements Iterator<RecordDTO>{
     private Map<String, String> params = null;
     
     /** The list of User IDs. */
-    private List<UserId> ids = null;
+    private List<LightUser> ids = null;
 	
 	/** The next id. */
 	protected String nextId = null;
@@ -104,15 +104,11 @@ public class OsfUserApiIterator implements Iterator<RecordDTO>{
 				//load next
 				user = osfClient.getUser(nextId);
 				loadNextId();
-				//we only want users that have nodes assigned when doing an iteration.
-				if (user.getNodes()==null || user.getNodes().size()==0){
-					user=null;
-				}
 			} 
 		} catch (Exception e){
 			//load failed... though there may be another record... so let's load it for the next iteration
 			loadNextId();
-			throw new RuntimeException("Iterator failed to load Record for import",e);
+			throw new RuntimeException("Iterator failed to load Record for import:" + nextId,e);
 		}
 
 		if (user!=null){
@@ -139,7 +135,7 @@ public class OsfUserApiIterator implements Iterator<RecordDTO>{
 			page=page+1;
 			params.put("page", page.toString());
 			log.info("Loading page " + page);
-    		ids = osfClient.getUserIdList(params);
+    		ids = osfClient.getUserIds(params);
 			nextId = ids.get(0).getId();
 		} catch(Exception e){
 			log.error("Could not load list of records to iterate over.");

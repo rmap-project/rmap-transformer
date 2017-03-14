@@ -20,11 +20,11 @@
 package info.rmapproject.transformer;
 
 import static org.junit.Assert.assertTrue;
-import info.rmapproject.transformer.osf.OsfRegistrationDiscoBuilder;
 
 import java.io.File;
-import java.util.List;
 
+import org.apache.commons.io.FileUtils;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -45,25 +45,39 @@ public class OSFTransformerTest {
 	public void setUp() throws Exception {
 	}
 	
-//	@After
-//	public void removefiles() throws Exception {
-//		File file1 = new File("testregosf");
-//		if (file1.exists()){
-//			FileUtils.deleteDirectory(new File("testregosf"));
-//		}
-//		File file2 = new File("testnodesosf");
-//		if (file2.exists()){
-//			FileUtils.deleteDirectory(new File("testnodesosf"));
-//		}
-	//	File file3 = new File("testOneNode");
-	//	if (file3.exists()){
-	//		FileUtils.deleteDirectory(new File("testOneNode"));
-	//	}
-	//	File file4 = new File("testusersosf");
-	//	if (file4.exists()){
-	//		FileUtils.deleteDirectory(new File("testusersosf"));
-	//	}
-//	}
+	@After
+	public void removefiles() throws Exception {
+		File file1 = new File("testnodepagedosf");
+		if (file1.exists()){
+			FileUtils.deleteDirectory(file1);
+		}
+		File file2 = new File("testOneUser");
+		if (file2.exists()){
+			FileUtils.deleteDirectory(file2);
+		}
+		File file3 = new File("testuserosf");
+		if (file3.exists()){
+			FileUtils.deleteDirectory(file3);
+		}
+		File file4 = new File("testOneReg");
+		if (file4.exists()){
+			FileUtils.deleteDirectory(file4);
+		}
+		File file5 = new File("testnodeosf");
+		if (file5.exists()){
+			FileUtils.deleteDirectory(file5);
+		}
+		File file6 = new File("testOneNode");
+		if (file6.exists()){
+			FileUtils.deleteDirectory(file6);
+		}
+		File file7 = new File("testregosf");
+		if (file7.exists()){
+			FileUtils.deleteDirectory(file7);
+		}
+		
+		
+	}
 
 	/**
 	 * Test OSF Registration API transform.
@@ -117,8 +131,9 @@ public class OSFTransformerTest {
 	 */
 	@Test 
 	public void testSingleRegTransform() throws Exception {
-		String id = "pt2d7";
-		String[] args = {"osf_registration","-id",id, "-o", "prezz/"};
+		//String id = "pt2d7"; //live api example
+		String id = "h48cy";
+		String[] args = {"osf_registration","-id",id, "-o", "testOneReg/"};
 		RMapTransformerCLI.main(args);
 		//check output files
 		Integer numfiles = new File("testOneReg").list().length;
@@ -132,7 +147,8 @@ public class OSFTransformerTest {
 	 */
 	@Test 
 	public void testSingleNodeTransform() throws Exception {
-		String id = "pu6sd";
+		//String id = "7gwtr"; //live api example
+		String id = "zr4bx";
 		String[] args = {"osf_node","-id",id, "-o", "testOneNode/"};
 		RMapTransformerCLI.main(args);
 		//check output files
@@ -147,10 +163,9 @@ public class OSFTransformerTest {
 	 */
 	@Test 
 	public void testSingleUserTransform() throws Exception {
-		//String id = "km4wh";
-		//String id = "cdi38";
-		String id = "6suwb";
-		String[] args = {"osf_user","-id",id, "-o", "prezz/"};
+		//String id = "6suwb"; //live api example
+		String id = "sguxh";
+		String[] args = {"osf_user","-id",id, "-o", "testOneUser/"};
 		RMapTransformerCLI.main(args);
 		//check output files
 		Integer numfiles = new File("testOneUser").list().length;
@@ -170,19 +185,5 @@ public class OSFTransformerTest {
 		Integer numfiles = new File("testuserosf").list().length;
 		assertTrue(numfiles>0);
 	}	
-	
-	/**
-	 * Test the temporary method for retrieving alternative identifiers from API v1 (doi, ark).
-	 *
-	 * @throws Exception the exception
-	 */
-	@Test
-	public void testTempAltIdentifierRetrieval() throws Exception{
-		String regid= "rxgmb";
-		List<String> identifiers = OsfRegistrationDiscoBuilder.getIdentifiers(regid, null);
-		assertTrue(identifiers.size()==2);
-		assertTrue(identifiers.get(0).equals("doi:10.17605/OSF.IO/RXGMB"));
-		assertTrue(identifiers.get(1).equals("ark:/c7605/osf.io/rxgmb"));
-	}
 	
 }

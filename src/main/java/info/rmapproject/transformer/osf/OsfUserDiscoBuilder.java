@@ -19,13 +19,13 @@
  *******************************************************************************/
 package info.rmapproject.transformer.osf;
 
+import info.rmapproject.cos.osf.client.model.Institution;
+import info.rmapproject.cos.osf.client.model.User;
 import info.rmapproject.transformer.DiscoBuilder;
 import info.rmapproject.transformer.vocabulary.Terms;
 
 import java.util.List;
 
-import org.dataconservancy.cos.osf.client.model.Institution;
-import org.dataconservancy.cos.osf.client.model.User;
 import org.openrdf.model.IRI;
 import org.openrdf.model.Model;
 import org.openrdf.model.Resource;
@@ -169,13 +169,12 @@ public class OsfUserDiscoBuilder extends DiscoBuilder {
 //				addIriStmt(userId, RDFS.SEEALSO, website);				
 //			}
 //		}
-
-		if (record.getAcademiaProfileID()!=null 
-				&& record.getAcademiaInstitution()!=null
-				&& record.getAcademiaProfileID().length()>0 
-				&& record.getAcademiaInstitution().length()>0){
-			String academiaUrl = "https://" + record.getAcademiaInstitution() 
-								+ ACADEMIA_PREFIX + record.getAcademiaProfileID();
+		if (record.getAcademiaProfileId()!=null 
+				&& record.getAcademicaInstitution()!=null
+				&& record.getAcademiaProfileId().length()>0 
+				&& record.getAcademicaInstitution().length()>0){
+			String academiaUrl = "https://" + record.getAcademicaInstitution() 
+								+ ACADEMIA_PREFIX + record.getAcademiaProfileId();
 			addIriStmt(userId, RDFS.SEEALSO, academiaUrl);
 		}
 		

@@ -19,10 +19,12 @@
  *******************************************************************************/
 package info.rmapproject.transformer.osf;
 
+import java.util.List;
+
+import info.rmapproject.cos.osf.client.model.LightNode;
+import info.rmapproject.cos.osf.client.model.Node;
 import info.rmapproject.transformer.model.RecordDTO;
 import info.rmapproject.transformer.model.RecordType;
-
-import org.dataconservancy.cos.osf.client.model.Node;
 
 /**
  * Retrieves and iterates over OSF Node data.
@@ -30,7 +32,11 @@ import org.dataconservancy.cos.osf.client.model.Node;
  * @author khanson
  */
 public class OsfNodeApiIterator extends OsfNodeBaseApiIterator {
-	        
+	   
+
+	/** The list of IDs to iterate over. */
+	protected List<LightNode> ids = null;
+	
     /**
      * Instantiates a new OSF Node API iterator.
      *
@@ -40,7 +46,27 @@ public class OsfNodeApiIterator extends OsfNodeBaseApiIterator {
     public OsfNodeApiIterator(String filters) throws Exception{
     	super(filters);
     }    
+    
+    /* (non-Javadoc)
+     * @see info.rmapproject.transformer.osf.OsfNodeBaseApiIterator#isLastRow()
+     */
+    @Override
+	protected boolean isLastRow() {
+		return (position==(ids.size()-1));
+	}
 
+    /* (non-Javadoc)
+     * @see info.rmapproject.transformer.osf.OsfNodeBaseApiIterator#loadNextId()
+     */
+    @Override
+	protected void loadNextId(){
+		if (ids==null || isLastRow()){
+			loadBatch();
+		}
+		position = position+1;
+		nextId = ids.get(position).getId();
+	}
+	
     /* (non-Javadoc)
      * @see info.rmapproject.transformer.osf.OsfNodeBaseApiIterator#loadBatch()
      */
@@ -57,7 +83,7 @@ public class OsfNodeApiIterator extends OsfNodeBaseApiIterator {
 			page=page+1;
 			params.put("page", page.toString());
 			log.info("Loading page " + page);
-			ids = osfClient.getNodeIdList(params);
+			ids = osfClient.getNodeIds(params);
 			nextId = ids.get(0).getId();
 		} catch(Exception e){
 			log.error("Could not load list of records to iterate over.");

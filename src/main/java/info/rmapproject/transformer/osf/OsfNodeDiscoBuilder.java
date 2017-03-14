@@ -19,26 +19,22 @@
  *******************************************************************************/
 package info.rmapproject.transformer.osf;
 
-import info.rmapproject.transformer.DiscoBuilder;
-import info.rmapproject.transformer.TransformUtils;
-import info.rmapproject.transformer.vocabulary.Terms;
-
 import java.util.List;
 import java.util.Map;
 
-import org.dataconservancy.cos.osf.client.model.Category;
-import org.dataconservancy.cos.osf.client.model.Contributor;
-import org.dataconservancy.cos.osf.client.model.File;
-import org.dataconservancy.cos.osf.client.model.Node;
-import org.dataconservancy.cos.osf.client.model.NodeBase;
-import org.dataconservancy.cos.osf.client.model.Registration;
 import org.openrdf.model.IRI;
 import org.openrdf.model.Model;
 import org.openrdf.model.impl.LinkedHashModel;
 import org.openrdf.model.vocabulary.DCTERMS;
 import org.openrdf.model.vocabulary.FOAF;
 import org.openrdf.model.vocabulary.RDF;
-import org.openrdf.model.vocabulary.RDFS;
+
+import info.rmapproject.cos.osf.client.model.Category;
+import info.rmapproject.cos.osf.client.model.Contributor;
+import info.rmapproject.cos.osf.client.model.Node;
+import info.rmapproject.transformer.DiscoBuilder;
+import info.rmapproject.transformer.TransformUtils;
+import info.rmapproject.transformer.vocabulary.Terms;
 
 /** 
  * Performs mapping from OSF Registration Java model to RDF DiSCO model.  
@@ -155,7 +151,8 @@ public class OsfNodeDiscoBuilder extends DiscoBuilder {
 		
 		addContributors(node.getContributors(), nodeId);				
 		addChildNodes(node.getChildren(), nodeId);
-		addFiles(node, nodeId);
+
+		//addFiles(node, nodeId); 
 	}
 	
 	
@@ -217,7 +214,7 @@ public class OsfNodeDiscoBuilder extends DiscoBuilder {
 	 * @param root the root
 	 * @param regId the reg id
 	 */
-	protected void addFiles(Object root, IRI regId) {
+	/*protected void addFiles(Object root, IRI regId) {
 		List<File> files = null;
 		if (root instanceof Registration) {
 			Registration registration = (Registration) root;
@@ -235,7 +232,7 @@ public class OsfNodeDiscoBuilder extends DiscoBuilder {
 				addFile(file, regId);
 			}
 		}
-	}
+	}*/
 
 	/**
 	 * Add OSF file metadata to model.
@@ -243,7 +240,7 @@ public class OsfNodeDiscoBuilder extends DiscoBuilder {
 	 * @param file the file
 	 * @param parentRegId the parent reg id
 	 */
-	protected void addFile(File file, IRI parentRegId){
+	/*protected void addFile(File file, IRI parentRegId){
 		if (file.getKind().equals("file")){
 			IRI fileId = factory.createIRI(file.getLinks().get("download").toString());
 			addStmt(parentRegId, DCTERMS.HAS_PART, fileId);
@@ -265,7 +262,7 @@ public class OsfNodeDiscoBuilder extends DiscoBuilder {
 		} else {
 			addFiles(file, parentRegId);
 		}
-	}
+	}*/
 	
 	
 	

@@ -1,5 +1,5 @@
 # RMap Transformer
-This tool was developed to transform [SHARE](https://share.osf.io/) API (V1) and [OSF](https://osf.io) API (v2) data to RMap DiSCOs.  To do the transforms, it uses separate SHARE and OSF clients to convert JSON API data to a Java model. It is a work in progress. Some refactoring in the CLI and model would be required to support plug in and play transforms, but for now it may provide a few useful tools for other kinds of transforms.
+This tool was developed to transform [SHARE](https://share.osf.io/) API (V1) and [OSF](https://osf.io) API (v2) data to RMap DiSCOs.  To do the transforms, it uses separate [SHARE client](https://github.com/rmap-project/share-client) and [OSF client](https://github.com/rmap-project/rmap-osf-client-extension) to convert JSON API data to a Java model. It is a work in progress. Some refactoring in the CLI and model would be required to support plug in and play transforms, but for now it may provide a few useful tools for other kinds of transforms.
 
 ## Getting started
 Build via 

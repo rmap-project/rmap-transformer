@@ -2,6 +2,7 @@
 Note: this tool will no longer work. Both the SHARE API and OSF API have changed. Several new tools are available instead:
 * [The RMap loader](https://github.com/rmap-project/rmap-loader) contains a toolkit for harvesting, transforming, and ingesting DiSCOs.
 * [The OSF to RMap transform tool](https://github.com/rmap-project/rmap-loader-osf) makes use of the loader to generate DiSCOs from OSF Users, Registrations, and Projects.
+---
 
 This tool was developed to transform [SHARE](https://share.osf.io/) API (V1) and [OSF](https://osf.io) API (v2) data to RMap DiSCOs.  To do the transforms, it uses a separate [SHARE client](https://github.com/rmap-project/share-client) and [OSF client](https://github.com/rmap-project/rmap-osf-client-extension) to convert JSON API data to a Java model. It is a work in progress. Some refactoring in the CLI and model would be required to support plug in and play transforms, but for now it may provide a few useful tools for other kinds of transforms.
 
